@@ -8,7 +8,7 @@ using System.Text;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace CecilTest2
+namespace npcc
 {
     public enum NPCLevels
     {
@@ -22,6 +22,22 @@ namespace CecilTest2
         NPCLevel6Authorized,
         NPCLevel7Optimized,
         NPCEndMarker
+    }
+
+    public class NPCAssemblyInfo
+    {
+        public string assemblyInputName;
+        public string moduleFileFullyQualifiedName;
+
+        public NPCAssemblyInfo(string name,string moduleFullyQualifiedName)
+        {
+            Debug.Assert(!String.IsNullOrEmpty(name), "name");
+
+            assemblyInputName = name;
+            moduleFileFullyQualifiedName = moduleFullyQualifiedName;
+
+            Console.WriteLine("**INFO*** NPCAssemblyInfo:\t" + name, ", " + moduleFileFullyQualifiedName);
+        }
     }
 
     public class NPCClassInfo
@@ -123,151 +139,29 @@ namespace CecilTest2
 
     public class NPCCompilerContext
     {
+        public static string[] listDefaultAssemblies = { "Neo.SmartContract.Framework", "Neo.SmartContract.Framework.Services.System", "System.Numerics" };
+
+        public List<NPCAssemblyInfo> listAssemblyInfo = null;
         public List<NPCClassInfo> listClassInfo = null;
         public List<NPCFieldInfo> listFieldInfo = null;
         public List<NPCInterfaceInfo> listInterfaceInfo = null;
 
         public NPCCompilerContext()
         {
+            listAssemblyInfo = new List<NPCAssemblyInfo>();
             listClassInfo = new List<NPCClassInfo>();
             listFieldInfo = new List<NPCFieldInfo>();
             listInterfaceInfo = new List<NPCInterfaceInfo>();
+
+            foreach (string arName in listDefaultAssemblies)
+            {
+                listAssemblyInfo.Add(new NPCAssemblyInfo(arName, ""));
+            }
         }
     }
 
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("*********************************************************");
-            Console.WriteLine(" npcc - NEO Class Framework (NPC) 2.0 Compiler v"  + Assembly.GetEntryAssembly().GetName().Version);
-            Console.WriteLine("*********************************************************");
-
-            NPCCompilerContext ctx = new NPCCompilerContext();
-
-            bool success = false;
-            DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPCPoint0\bin\debug");
-            foreach (FileInfo fi in di.GetFiles("*.dll"))
-            {
-                success = ParseAssembly(ctx, fi);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): parse failed", fi.FullName);
-                Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
-
-                success = ValidateAssembly(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): validation failed", fi.FullName);
-                Console.WriteLine("**INFO*** Validation succeeded:\t" + fi.FullName);
-
-                success = GenerateCodeLevel0Basic(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
-
-                success = GenerateCodeLevel1Managed(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
-
-                success = GenerateCodeLevel2Persistable(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
-
-                success = GenerateCodeLevel3Deletable(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
-
-                success = GenerateCodeLevel4Collectible(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
-            }
-
-            //var type = module.Types.First(x => x.Name == "A");
-            //var method = type.Methods.First(x => x.Name == "test");
-
-            //PrintMethods(method);
-            //PrintFields(method);
-
-            Console.WriteLine("Press enter to exit...");
-            Console.ReadLine();
-        }
-
-        private static bool GenerateCodeLevel0Basic(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            throw new NotImplementedException();
-
-            return success;
-        }
-
-        private static bool GenerateCodeLevel1Managed(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            throw new NotImplementedException();
-
-            return success;
-        }
-
-        private static bool GenerateCodeLevel2Persistable(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            throw new NotImplementedException();
-
-            return success;
-        }
-
-        private static bool GenerateCodeLevel3Deletable(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            throw new NotImplementedException();
-
-            return success;
-        }
-
-        private static bool GenerateCodeLevel4Collectible(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            throw new NotImplementedException();
-
-            return success;
-        }
-
-        private static bool ValidateAssembly(NPCCompilerContext ctx)
-        {
-            bool success = true;
-
-            if (ctx.listClassInfo.Count != 1)
-            {
-                string message = "**ERROR** Input assembly file must only contain 1 class definition. Not " + ctx.listClassInfo.Count.ToString();
-                Console.WriteLine(message);
-                success = false;
-            }
-
-            if (ctx.listFieldInfo.Count < 1)
-            {
-                string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
-                Console.WriteLine(message);
-                success = false;
-            }
-
-            if (ctx.listInterfaceInfo.Count < 1)
-            {
-                string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listInterfaceInfo.Count.ToString();
-                Console.WriteLine(message);
-                success = false;
-            }
-
-            if (ctx.listInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
-            {
-                string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listInterfaceInfo.Count.ToString();
-                Console.WriteLine(message);
-                success = false;
-            }
-
-            return success;
-        }
-
         private static bool ParseAssembly(NPCCompilerContext ctx, FileInfo fi)
         {
             bool success = true;
@@ -296,7 +190,15 @@ namespace CecilTest2
                     Console.WriteLine("  Assembly Reference FullName:\t" + ar.FullName);
                     Console.WriteLine("  Assembly Reference Version:\t" + ar.Version.ToString());
                     //Console.WriteLine("Assembly IsWindowsRuntime:\t" + ar.IsWindowsRuntime.ToString());
-                }
+
+                    // Add it if it is not already there
+                    NPCAssemblyInfo arFind = ctx.listAssemblyInfo.Find(
+                    delegate (NPCAssemblyInfo dar)
+                    {
+                        return (dar.assemblyInputName == ar.Name);
+                    });
+                    if (arFind == null && ar.Name != "mscorlib") ctx.listAssemblyInfo.Add(new NPCAssemblyInfo(ar.Name, module.FullyQualifiedName));
+                };
 
                 Console.WriteLine("Module Types...");
                 foreach (TypeDefinition t in module.Types)
@@ -370,50 +272,106 @@ namespace CecilTest2
                         Console.WriteLine("      m.Fullname:\t" + m.FullName);
                         //Console.WriteLine("      m.Module.FullyQualifiedName:\t" + m.Module.FullyQualifiedName);
                         Console.WriteLine("      m.ReturnType:\t" + m.ReturnType.ToString());
-                        PrintMethods(m);
-                        PrintFields(m);
+                        Helpers.PrintMethods(m);
+                        Helpers.PrintFields(m);
                     }
                 }
+            }
+            return success;
+        }
+
+        private static bool ValidateAssembly(NPCCompilerContext ctx)
+        {
+            bool success = true;
+
+            if (ctx.listAssemblyInfo.Count < NPCCompilerContext.listDefaultAssemblies.Length)
+            {
+                string message = "**ERROR** ctx.listAssemblyInfo.Count < NPCCompilerContext.listDefaultAssemblies.Length. Not " +
+                                 NPCCompilerContext.listDefaultAssemblies.Length.ToString();
+                Console.WriteLine(message);
+                success = false;
+            }
+
+            if (ctx.listClassInfo.Count != 1)
+            {
+                string message = "**ERROR** Input assembly file must only contain 1 class definition. Not " + ctx.listClassInfo.Count.ToString();
+                Console.WriteLine(message);
+                success = false;
+            }
+
+            if (ctx.listFieldInfo.Count < 1)
+            {
+                string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
+                Console.WriteLine(message);
+                success = false;
+            }
+
+            if (ctx.listInterfaceInfo.Count < 1)
+            {
+                string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listInterfaceInfo.Count.ToString();
+                Console.WriteLine(message);
+                success = false;
+            }
+
+            if (ctx.listInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
+            {
+                string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listInterfaceInfo.Count.ToString();
+                Console.WriteLine(message);
+                success = false;
             }
 
             return success;
         }
 
-        public static void PrintMethods(MethodDefinition method)
+        static void Main(string[] args)
         {
-            Console.WriteLine("      Methods called by:\t" + method.Name);
-            if (method.Body != null && method.Body.Instructions != null) foreach (var instruction in method.Body.Instructions)
-                {
-                    if (instruction.OpCode == OpCodes.Call)
-                    {
-                        MethodReference methodCalled = instruction.Operand as MethodReference;
-                        if (methodCalled != null)
-                        {
-                            Console.WriteLine("\tmethodCalled.Name:\t" + methodCalled.Name);
-                            Console.WriteLine("\t  mc.Name:\t" + methodCalled.FullName);
-                            //Console.WriteLine("\t  mc.Module.FullyQualifiedName:\t" + methodCalled.Module.FullyQualifiedName);
-                            Console.WriteLine("\t  mc.ReturnType:\t" + methodCalled.ReturnType.ToString());
-                        }
-                    }
-                }
-        }
+            Console.WriteLine("*********************************************************");
+            Console.WriteLine(" npcc - NEO Class Framework (NPC) 2.0 Compiler v" + Assembly.GetEntryAssembly().GetName().Version);
+            Console.WriteLine("*********************************************************");
 
-        public static void PrintFields(MethodDefinition method)
-        {
-            Console.WriteLine("      Fields in " + method.Name);
-            if(method.Body != null && method.Body.Instructions != null) foreach (var instruction in method.Body.Instructions)
+            NPCCompilerContext ctx = new NPCCompilerContext();
+
+            bool success = false;
+            DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPCPoint0\bin\debug");
+            foreach (FileInfo fi in di.GetFiles("*.dll"))
             {
-                if (instruction.OpCode == OpCodes.Ldfld)
-                {
-                    FieldReference field = instruction.Operand as FieldReference;
-                    if (field != null)
-                    {
-                        Console.WriteLine("\tfield.Name:\t" + field.Name);
-                        Console.WriteLine("\t  f.FullName:\t" + field.FullName);
-                        Console.WriteLine("\t  f.FieldType:\t" + field.FieldType.ToString());
-                    }
-                }
+                success = ParseAssembly(ctx, fi);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): parse failed", fi.FullName);
+                Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
+
+                success = ValidateAssembly(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): validation failed", fi.FullName);
+                Console.WriteLine("**INFO*** Validation succeeded:\t" + fi.FullName);
+
+                success = GenCode.GenerateCodeLevel0Basic(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+
+                success = GenCode.GenerateCodeLevel1Managed(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+
+                success = GenCode.GenerateCodeLevel2Persistable(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+
+                success = GenCode.GenerateCodeLevel3Deletable(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+
+                success = GenCode.GenerateCodeLevel4Collectible(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
             }
+
+            //var type = module.Types.First(x => x.Name == "A");
+            //var method = type.Methods.First(x => x.Name == "test");
+
+            //PrintMethods(method);
+            //PrintFields(method);
+
+            Console.WriteLine("Press enter to exit...");
+            Console.ReadLine();
         }
     }
 }
