@@ -7,13 +7,27 @@ using System.Threading.Tasks;
 
 namespace NPCPoint0
 {
-    public interface NPCLevel0 { }
-    public interface NPCLevel1 { }
-    public interface NPCLevel2 { }
+    public interface NPCLevel0Basic { }
+    public interface NPCLevel1Managed { }
+    public interface NPCLevel2Persistable { }
+    public interface NPCLevel3Deletable { }
+    public interface NPCLevel4Collectible { }
 
-    public class Point : NPCLevel0, NPCLevel1, NPCLevel2
+    public class Point : NPCLevel0Basic, NPCLevel1Managed, NPCLevel2Persistable
     {
         public BigInteger x;
         public BigInteger y;
+        public string s;
+        public byte[] bytes;
+        //public double d;
     }
+
+    //public class Point2 
+    //{
+    //    public BigInteger x;
+    //    public BigInteger y;
+    //    public string s;
+    //    public byte[] bytes;
+    //    //public double d;
+    //}
 }
