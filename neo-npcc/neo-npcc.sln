@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPCPoint0", "NPCPoint0\NPCP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "npcc", "npcc\npcc.csproj", "{06DF25AE-C692-4DCE-A00C-6041DDD42480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialClassTest1", "PartialClasses1.cs\PartialClassTest1.csproj", "{3D1E1310-8AD3-4C1C-9459-C50D89A3086D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialClassTest1", "PartialClassTest1\PartialClassTest1.csproj", "{3D1E1310-8AD3-4C1C-9459-C50D89A3086D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
