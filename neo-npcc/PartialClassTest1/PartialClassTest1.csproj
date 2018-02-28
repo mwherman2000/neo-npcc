@@ -49,7 +49,11 @@
     <Compile Include="NeoEntityModel.cs" />
     <Compile Include="NeoTrace.cs" />
     <Compile Include="Contract1.cs" />
+    <Compile Include="NeoStorageKey.cs" />
+    <Compile Include="NeoVersionedAppUser.cs" />
     <Compile Include="PointL0Basic.cs" />
+    <Compile Include="PointL4Collectible.cs" />
+    <Compile Include="PointL3Deletable.cs" />
     <Compile Include="PointL2Persistsable.cs" />
     <Compile Include="PointL1Managed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

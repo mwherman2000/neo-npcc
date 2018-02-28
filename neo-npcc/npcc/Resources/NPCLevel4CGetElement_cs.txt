@@ -1,0 +1,2 @@
+﻿
+                    BigInteger x = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bX)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt

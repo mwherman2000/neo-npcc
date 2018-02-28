@@ -1,0 +1,39 @@
+﻿
+            LogExt("PutElement(vau,i).p", p); // Template: NPCLevel4BGetElement_cs.txt
+            return true;
+        }
+
+        /// <summary>
+        /// Get an element of an array of entities from Storage based on a NeoStorageKey (NPC Level 4)
+        /// </summary>
+        /// <param name="vau">vau</param>
+        /// <param name="index">index</param>
+        /// <returns>Point</returns>
+        public static Point GetElement(NeoVersionedAppUser vau, int index)
+        {
+            if (NeoVersionedAppUser.IsNull(vau)) return Null();
+
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+
+            Point p;
+            byte[] bkey;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
+            NeoTrace.Trace("Get(kb).bs", bsta.Length, bsta);
+            if (bsta.Length == 0)
+            {
+                p = Point.Missing();
+            }
+            else // not MISSING
+            {
+                /*EXT*/
+                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bEXT));
+                int ista = (int)bsta.AsBigInteger();
+                NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
+                if (sta == NeoEntityModel.EntityState.TOMBSTONED)
+                {
+                    p = Point.Tombstone();
+                }
+                else // not MISSING && not TOMBSTONED
+                {
+                    p = new Point();

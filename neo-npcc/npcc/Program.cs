@@ -217,8 +217,12 @@ namespace npcc
     public class NPCCompilerContext
     {
         public const string NeoConvertTaskDllName = "Neo.ConvertTask.dll";
+
         public const string NeoEntityModel_csName = "NeoEntityModel_cs.txt";
         public const string NeoTrace_csName = "NeoTrace_cs.txt";
+        public const string NeoStorageKey_csName = "NeoStorageKey_cs.txt";
+        public const string NeoVersionedAppUser_csName = "NeoVersionedAppUser_cs.txt";
+
         public const string NPCLevel0Part1_csName = "NPCLevel0Part1_cs.txt";
         public const string NPCLevel0Part2_csName = "NPCLevel0Part2_cs.txt";
 
@@ -241,6 +245,9 @@ namespace npcc
 
         public const string NPCLevel3Part1_csName = "NPCLevel3Part1_cs.txt";
         public const string NPCLevel3Part2_csName = "NPCLevel3Part2_cs.txt";
+        public const string NPCLevel3ABury_csName = "NPCLevel3ABury_cs.txt";
+        public const string NPCLevel3BBury_csName = "NPCLevel3BBury_cs.txt";
+        public const string NPCLevel3CBury_csName = "NPCLevel3CBury_cs.txt";
 
         public const string NPCLevel4Part1_csName = "NPCLevel4Part1_cs.txt";
         public const string NPCLevel4Part2_csName = "NPCLevel4Part2_cs.txt";

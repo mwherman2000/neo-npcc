@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 2 Persistable
 ///
-/// Generated:		2018-02-28 12:56:50 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Generated:		2018-02-28 4:58:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -98,7 +98,7 @@ namespace NPC.TestCases.T1.Main
 
 			Point e;
 			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-			NeoTrace.Trace("Get(bkey).bs", bsta.Length, bsta);
+			NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
 			if (bsta.Length == 0)
 			{
 				e = Point.Missing();
@@ -128,7 +128,7 @@ namespace NPC.TestCases.T1.Main
 
 			Point e;
 			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-			NeoTrace.Trace("Get(skey)Point.bs", bsta.Length, bsta);
+			NeoTrace.Trace("Get(skey)Point.bsta", bsta.Length, bsta);
 			if (bsta.Length == 0)
 			{
 				e = Point.Missing();

@@ -1,0 +1,2 @@
+﻿
+                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _s#PUBLICFIELDNAME#, p.#PRIVATEFIELDNAME#); // Template: NPCLevel3CBury_cs.txt

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 1 Managed
 ///
-/// Generated:		2018-02-28 12:56:50 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Generated:		2018-02-28 4:58:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>

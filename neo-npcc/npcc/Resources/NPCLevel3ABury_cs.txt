@@ -1,0 +1,2 @@
+﻿
+                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _b#PUBLICFIELDNAME#), e.#PRIVATEFIELDNAME#); // Template: NPCLevel3ABury_cs.txt

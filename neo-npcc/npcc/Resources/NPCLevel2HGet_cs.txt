@@ -15,7 +15,7 @@
 
 			#CLASSNAME# e;
 			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-			NeoTrace.Trace("Get(skey)#CLASSNAME#.bs", bsta.Length, bsta);
+			NeoTrace.Trace("Get(skey)#CLASSNAME#.bsta", bsta.Length, bsta);
 			if (bsta.Length == 0)
 			{
 				e = #CLASSNAME#.Missing();

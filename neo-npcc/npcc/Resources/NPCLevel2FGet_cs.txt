@@ -12,7 +12,7 @@
 
 			#CLASSNAME# e;
 			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-			NeoTrace.Trace("Get(bkey).bs", bsta.Length, bsta);
+			NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
 			if (bsta.Length == 0)
 			{
 				e = #CLASSNAME#.Missing();

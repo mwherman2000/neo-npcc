@@ -50,11 +50,17 @@
     <Compile Include="LineL0Basic.cs" />
     <Compile Include="LineL1Managed.cs" />
     <Compile Include="LineL2Persistable.cs" />
+    <Compile Include="LineL3Deletable.cs" />
+    <Compile Include="LineL4Collectible.cs" />
     <Compile Include="NeoEntityModel.cs" />
+    <Compile Include="NeoStorageKey.cs" />
     <Compile Include="NeoTrace.cs" />
+    <Compile Include="NeoVersionedAppUser.cs" />
     <Compile Include="PointL0Basic.cs" />
     <Compile Include="PointL1Managed.cs" />
     <Compile Include="PointL2Persistable.cs" />
+    <Compile Include="PointL3Deletable.cs" />
+    <Compile Include="PointL4Collectible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

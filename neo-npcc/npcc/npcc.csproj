@@ -58,6 +58,8 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Resources\NeoStorageKey_cs.txt" />
+    <EmbeddedResource Include="Resources\NeoVersionedAppUser_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel0Part2_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel0Part1_cs.txt" />
     <EmbeddedResource Include="Resources\NeoEntityModel_cs.txt" />
@@ -89,6 +91,28 @@
     <EmbeddedResource Include="Resources\NPCLevel2GGet_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel2HGet_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel2IGet_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel3ABury_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel3BBury_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel3CBury_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel3Part2_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel3Part1_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel4Part1_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4Part2_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel4APutElement_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4BGetElement_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4CGetElement_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel4DBuryElement_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\NPCLevel4EBuryElement_cs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
