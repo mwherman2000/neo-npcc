@@ -17,8 +17,8 @@ namespace NPCPoint0
     {
         public BigInteger x;
         public BigInteger y;
-        public string s;
-        public byte[] bytes;
+        //public string s;
+        //public byte[] bytes;
         //public double d;
     }
 

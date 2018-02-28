@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mwherman2000.NPC;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -11,6 +12,11 @@ namespace PartialClassTest1
     {
         private NeoEntityModel.EntityState _state;
 
+        // Hidden constructor
+        private Point()
+        {
+        }
+
         // Accessors
         public static void SetX(Point p, BigInteger value)
         { p._x = value; p._state = NeoEntityModel.EntityState.SET; }
@@ -22,13 +28,9 @@ namespace PartialClassTest1
         { p._x = xvalue; p._y = yvalue; p._state = NeoEntityModel.EntityState.SET; }
 
         // Factory methods
-        private Point()
-        {
-        }
         private static Point _Initialize(Point p)
         {
-            p._x = 0;
-            p._y = 0;
+            p._x = 0; p._y = 0;
             p._state = NeoEntityModel.EntityState.NULL; ;
             LogExt("_Initialize(p).p", p);
             return p;
@@ -43,8 +45,7 @@ namespace PartialClassTest1
         public static Point New(int x, int y)
         {
             Point p = new Point();
-            p._x = x;
-            p._y = y;
+            p._x = x; p._y = y;
             p._state = NeoEntityModel.EntityState.INIT;
             LogExt("New(x,y).p", p);
             return p;

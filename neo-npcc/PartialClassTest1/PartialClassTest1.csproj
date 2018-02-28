@@ -48,9 +48,9 @@
   <ItemGroup>
     <Compile Include="NeoEntityModel.cs" />
     <Compile Include="NeoTrace.cs" />
-    <Compile Include="PartialClassTestMain.cs" />
-    <Compile Include="Point0Basic.cs" />
-    <Compile Include="Point1Managed.cs" />
+    <Compile Include="Contract1.cs" />
+    <Compile Include="PointL0Basic.cs" />
+    <Compile Include="PointL1Managed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

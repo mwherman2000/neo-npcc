@@ -2,7 +2,9 @@
 using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +12,22 @@ namespace npcc
 {
     public class Helpers
     {
+        // Reference: https://support.microsoft.com/en-ca/help/319292/how-to-embed-and-access-resources-by-using-visual-c
+        public static string GetTextResource(string resName)
+        {
+            string text;
+
+            Assembly _assembly;
+            StreamReader _textStreamReader;
+
+            _assembly = Assembly.GetExecutingAssembly();
+            _textStreamReader = new StreamReader(_assembly.GetManifestResourceStream("npcc.Resources." + resName));
+
+            text = _textStreamReader.ReadToEnd();
+
+            return text;
+        }
+
         public static void PrintMethods(MethodDefinition method)
         {
             Console.WriteLine("      Methods called by:\t" + method.Name);
@@ -45,6 +63,39 @@ namespace npcc
                         }
                     }
                 }
+        }
+
+        public static string ZeroByType(string fieldInputType)
+        {
+            string zeroString = "";
+
+            switch (fieldInputType)
+            {
+                case "System.Numerics.BigInteger":
+                    {
+                        zeroString = "0";
+                        break;
+                    }
+                case "System.String":
+                    {
+                        zeroString = "\"\"";
+                        break;
+                    }
+                case "System.Byte[]":
+                    {
+                        zeroString = "NeoEntityModel.NullByteArray";
+                        break;
+                    }
+                default:
+                    {
+                        string message = "**ERROR** Field type '" + fieldInputType + "' is not supported in C#.NPC. Use BigInteger, byte[], or string.";
+                        Console.WriteLine(message);
+                        throw new ArgumentOutOfRangeException(fieldInputType, message);
+                        //break;
+                    }
+            }
+
+            return zeroString;
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Neo.SmartContract.Framework;
+﻿using mwherman2000.NPC;
+using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
 using System;
 using System.Numerics;
 
 namespace PartialClassTest1
 {
-    public class PartialClassTestMain : SmartContract
+    public class Contract1 : SmartContract
     {
         public static object Main(string operation, params object[] args)
         {

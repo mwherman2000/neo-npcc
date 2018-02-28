@@ -58,10 +58,22 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Resources\NPCLevel0Part2_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel0Part1_cs.txt" />
+    <EmbeddedResource Include="Resources\NeoEntityModel_cs.txt" />
+    <EmbeddedResource Include="Resources\NeoTrace_cs.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel1Part2_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel1Part1_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel1Set_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel1SetXGetX_cs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

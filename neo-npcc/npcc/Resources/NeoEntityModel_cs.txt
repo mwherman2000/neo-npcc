@@ -29,6 +29,6 @@ namespace mwherman2000.NPC
         }
 
         public static readonly byte[] NullScriptHash = "".ToScriptHash();
-        public static readonly byte[] NullByteArray = "".AsByteArray();
+        public static readonly byte[] NullByteArray = { 0x0 };
     }
 }

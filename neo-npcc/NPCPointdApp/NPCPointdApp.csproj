@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract1.cs" />
+    <Compile Include="LineL0Basic.cs" />
+    <Compile Include="LineL1Managed.cs" />
+    <Compile Include="NeoEntityModel.cs" />
+    <Compile Include="NeoTrace.cs" />
+    <Compile Include="PointL0Basic.cs" />
+    <Compile Include="PointL1Managed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
