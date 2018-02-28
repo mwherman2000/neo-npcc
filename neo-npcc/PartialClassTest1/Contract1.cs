@@ -1,4 +1,4 @@
-﻿using mwherman2000.NPC;
+﻿using NPC.Runtime;
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
 using System;

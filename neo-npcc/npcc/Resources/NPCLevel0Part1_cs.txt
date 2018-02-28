@@ -5,7 +5,15 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// #NAMESPACE#.#CLASSNAME# - Level 0 Basic
+///
+/// Generated:		#NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
+/// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
+/// </summary>
+
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# /* Level 0 */
+    public partial class #CLASSNAME# /* Level 0 Basic */
     {

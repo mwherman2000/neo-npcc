@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mwherman2000.NPC
+namespace NPC.Runtime
 {
     public class NeoTrace /* Level *all* */
     {

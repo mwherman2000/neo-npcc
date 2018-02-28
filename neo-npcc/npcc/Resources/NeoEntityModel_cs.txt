@@ -6,7 +6,15 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mwherman2000.NPC
+/// <summary>
+/// #NAMESPACE#.#CLASSNAME#
+///
+/// Generated:		#NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
+/// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
+/// </summary>
+
+namespace NPC.Runtime
 {
     public static class NeoEntityModel /* Level 4 Collectible */
     {

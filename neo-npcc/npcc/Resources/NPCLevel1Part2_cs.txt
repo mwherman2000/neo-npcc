@@ -1,9 +1,9 @@
 ﻿        
-		// Factory methods
+		// Factory methods // Template: NPCLevel1Part2_cs.txt
         private static #CLASSNAME# _Initialize(#CLASSNAME# e)
         {
             #ALLFIELDSASSIGNEDZERO#
-            e._state = NeoEntityModel.EntityState.NULL; ;
+            e._state = NeoEntityModel.EntityState.NULL;
             LogExt("_Initialize(e).#CLASSNAME#", e);
             return e;
         }

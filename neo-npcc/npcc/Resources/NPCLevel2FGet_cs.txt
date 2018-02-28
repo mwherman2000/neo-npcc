@@ -1,0 +1,25 @@
+﻿
+			LogExt("Put(skey).#CLASSNAME#", e); // Template: NPCLevel2FGet_cs.txt
+			return true;
+		}
+
+		public static #CLASSNAME# Get(byte[] key)
+		{
+			if (key.Length == 0) return Null();
+
+			Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+			byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
+
+			#CLASSNAME# e;
+			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
+			NeoTrace.Trace("Get(bkey).bs", bsta.Length, bsta);
+			if (bsta.Length == 0)
+			{
+				e = #CLASSNAME#.Missing();
+			}
+			else // not MISSING
+			{
+				byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEXT));
+				int ista = (int)bsta.AsBigInteger();
+				NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
+				e = new #CLASSNAME#();

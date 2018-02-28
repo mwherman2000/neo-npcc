@@ -1,0 +1,35 @@
+﻿
+        private const string _sSTA = "_STA"; // Template: NPCLevel2BMissing_cs.txt
+        private static readonly byte[] _bSTA = Helper.AsByteArray(_sSTA);
+
+        private const string _sEXT = "_EXT";
+        private static readonly byte[] _bEXT = Helper.AsByteArray(_sEXT);
+        
+        // Internal fields
+        private const string _classKeyTag = "/#" + _className + ".";
+        private static readonly byte[] _bclassKeyTag = Helper.AsByteArray(_classKeyTag);
+ 
+        // Persistable methods
+        public static bool IsMissing(#CLASSNAME# e)
+        {
+            return (e._state == NeoEntityModel.EntityState.MISSING);
+        }
+
+        public static #CLASSNAME# Missing()
+        {
+            #CLASSNAME# e = new #CLASSNAME#();
+            #ALLFIELDSASSIGNEDZERO#
+            e._state = NeoEntityModel.EntityState.MISSING;
+            LogExt("Missing().#CLASSNAME#", e);
+            return e;
+        }
+
+        public static bool Put(#CLASSNAME# e, byte[] key)
+        {
+            if (key.Length == 0) return false;
+
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
+
+            e._state = NeoEntityModel.EntityState.PUTTED;
+			Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());

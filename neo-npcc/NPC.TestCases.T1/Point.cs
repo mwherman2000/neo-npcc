@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NPCPoint0
+namespace NPC.TestCases.T1
 {
     public interface NPCLevel0Basic { }
     public interface NPCLevel1Managed { }

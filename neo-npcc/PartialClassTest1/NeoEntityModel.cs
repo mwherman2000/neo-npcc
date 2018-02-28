@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace mwherman2000.NPC
+namespace NPC.Runtime
 {
     public static class NeoEntityModel /* Level 4 Collectible */
     {

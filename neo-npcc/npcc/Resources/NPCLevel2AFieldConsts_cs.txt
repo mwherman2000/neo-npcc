@@ -1,0 +1,3 @@
+﻿
+        private const string _s#PUBLICFIELDNAME# = "#PUBLICFIELDNAME#"; // Template: NPCLevel2AFieldConsts_cs.txt
+        private static readonly byte[] _b#PUBLICFIELDNAME# = Helper.AsByteArray(_s#PUBLICFIELDNAME#);

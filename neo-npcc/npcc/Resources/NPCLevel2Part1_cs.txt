@@ -1,4 +1,5 @@
 ﻿using NPC.Runtime;
+using Neo.SmartContract.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
-/// #NAMESPACE#.#CLASSNAME# - Level 1 Managed
+/// #NAMESPACE#.#CLASSNAME# - Level 2 Persistable
 ///
 /// Generated:		#NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
 /// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
@@ -16,13 +17,7 @@ using System.Threading.Tasks;
 
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# : NeoTrace /* Level 1 Managed */
+    public partial class #CLASSNAME# : NeoTrace /* Level 2 Persistable */
     {
-        private NeoEntityModel.EntityState _state;
-
-        // Hidden constructor
-        private #CLASSNAME#()
-        {
-        }
-
-        // Accessors
+        // Class name and property names
+        private const string _className = "#CLASSNAME#";

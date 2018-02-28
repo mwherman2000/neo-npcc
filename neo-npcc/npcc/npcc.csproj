@@ -75,5 +75,20 @@
     <EmbeddedResource Include="Resources\NPCLevel1Set_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel1SetXGetX_cs.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel2Part2_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2Part1_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel2AFieldConsts_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2BMissing_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2CPut_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2DPut_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2EPut_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2FGet_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2GGet_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2HGet_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel2IGet_cs.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,10 @@
+﻿                NeoTrace.Trace("Get(skey).#ALLFIELDARGS#", #ALLFIELDARGS#); // Template: NPCLevel2Part2_cs.txt
+                #ALLFIELDASSIGNMENTS#
+                e._state = sta;
+                e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
+            }
+            LogExt("Get(skey).#CLASSNAME#", e);
+            return e;
+        }
+    }
+}

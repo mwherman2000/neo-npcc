@@ -67,9 +67,9 @@ namespace npcc
             Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleProjectName + "', '" + moduleFullyQualifiedProjectFolder + "', '" + moduleFullyQualifiedRepositoryFolder + "'");
         }
 
-        public string SetTargetProjectName(string className)
+        public string SetTargetProjectName(string snamespace)
         {
-            moduleTargetProjectName = "NPC" + className + "dApp";
+            moduleTargetProjectName = snamespace + ".Main";
             moduleTargetFullyQualifiedProjectFolder = moduleFullyQualifiedRepositoryFolder + "\\" + moduleTargetProjectName;
             Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleTargetProjectName + "', '" + moduleTargetFullyQualifiedProjectFolder + "'");
             return moduleTargetProjectName;
@@ -94,15 +94,18 @@ namespace npcc
     {
         public string classInputName;
         public string classOutputName;
+        public string classNamespace;
 
-        public NPCClassInfo(string name)
+        public NPCClassInfo(string name, string snamespace)
         {
             Debug.Assert(!String.IsNullOrEmpty(name), "name");
+            Debug.Assert(!String.IsNullOrEmpty(snamespace), "snamespace");
 
             classInputName = name;
             classOutputName = name.Substring(0, 1).ToUpper() + name.Substring(1);
+            classNamespace = snamespace;
 
-            Console.WriteLine("**INFO*** NPCClassInfo:\t" + name);
+            Console.WriteLine("**INFO*** NPCClassInfo:\t" + name + " " + snamespace);
         }
     }
 
@@ -226,6 +229,15 @@ namespace npcc
 
         public const string NPCLevel2Part1_csName = "NPCLevel2Part1_cs.txt";
         public const string NPCLevel2Part2_csName = "NPCLevel2Part2_cs.txt";
+        public const string NPCLevel2AFieldConsts_csName = "NPCLevel2AFieldConsts_cs.txt";
+        public const string NPCLevel2BMissing_csName = "NPCLevel2BMissing_cs.txt";
+        public const string NPCLevel2CPut_csName = "NPCLevel2CPut_cs.txt";
+        public const string NPCLevel2DPut_csName = "NPCLevel2DPut_cs.txt";
+        public const string NPCLevel2EPut_csName = "NPCLevel2EPut_cs.txt";
+        public const string NPCLevel2FGet_csName = "NPCLevel2FGet_cs.txt";
+        public const string NPCLevel2GGet_csName = "NPCLevel2GGet_cs.txt";
+        public const string NPCLevel2HGet_csName = "NPCLevel2HGet_cs.txt";
+        public const string NPCLevel2IGet_csName = "NPCLevel2IGet_cs.txt";
 
         public const string NPCLevel3Part1_csName = "NPCLevel3Part1_cs.txt";
         public const string NPCLevel3Part2_csName = "NPCLevel3Part2_cs.txt";
@@ -258,6 +270,8 @@ namespace npcc
 
     class Program
     {
+        public static string ProgramName = "npcc - NEO Class Framework (NPC) 2.0 Compiler";
+        
         private static bool ParseAssembly(NPCCompilerContext ctx, FileInfo fi)
         {
             bool success = true;
@@ -319,11 +333,13 @@ namespace npcc
                     Console.WriteLine("  t.HasMethods:\t" + t.HasMethods.ToString());
                     Console.WriteLine("  t.HasProperties:\t" + t.HasProperties.ToString());
                     Console.WriteLine("  t.HasMethods:\t" + t.HasProperties.ToString());
+                    Console.WriteLine("  t.Namespace:\t" + t.Namespace);
+                   
 
                     if (t.IsClass & t.Name != "<Module>")
                     {
-                        ctx.listClassInfo.Add(new NPCClassInfo(t.Name));
-                        ctx.listModuleInfo[0].SetTargetProjectName(t.Name);
+                        ctx.listClassInfo.Add(new NPCClassInfo(t.Name, t.Namespace));
+                        ctx.listModuleInfo[0].SetTargetProjectName(t.Namespace);
                     }
 
                     if (t.BaseType != null)
@@ -437,13 +453,13 @@ namespace npcc
         static void Main(string[] args)
         {
             Console.WriteLine("*********************************************************");
-            Console.WriteLine(" npcc - NEO Class Framework (NPC) 2.0 Compiler v" + Assembly.GetEntryAssembly().GetName().Version);
+            Console.WriteLine(" " + ProgramName + " " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Console.WriteLine("*********************************************************");
 
             NPCCompilerContext ctx = new NPCCompilerContext();
 
             bool success = false;
-            DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPCPoint0\bin\debug");
+            DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPC.TestCases.T1\bin\debug");
             foreach (FileInfo fi in di.GetFiles("*.dll"))
             {
                 success = ParseAssembly(ctx, fi);
