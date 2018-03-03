@@ -1,4 +1,4 @@
-﻿using Neo.SmartContract.Framework;
+using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
 using Neo.SmartContract.Framework.Services.System;
 using System;
@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
-/// #NAMESPACE#.#CLASSNAME#
+/// NPC.Runtime.NeoEntityModel
 ///
-/// Generated:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// Generated:       2018-03-03 8:24:47 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>

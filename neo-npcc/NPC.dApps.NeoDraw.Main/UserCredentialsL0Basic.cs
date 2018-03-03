@@ -6,19 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
-/// NPC.TestCases.T1.Main.Point - Level 0 Basic
+/// NPC.dApps.NeoDraw.Main.UserCredentials - Level 0 Basic
 ///
-/// Generated:       2018-03-03 1:07:07 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Generated:       2018-03-03 8:24:47 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
-namespace NPC.TestCases.T1.Main
+namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class Point /* Level 0 Basic */
+    public partial class UserCredentials /* Level 0 Basic */
     {
-        private	BigInteger	_x;
-        private	BigInteger	_y;
+        private	byte[]	_encodedUsername;
+        private	byte[]	_encodedPassword;
 
     } // Template: NPCLevel0Part2_cs.txt
 }

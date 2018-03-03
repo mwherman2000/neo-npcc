@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.TestCases.T1", "NPC.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.TestCases.T1.Main", "NPC.TestCases.T1.Main\NPC.TestCases.T1.Main.csproj", "{9C2BF2FF-9AF4-4F24-98BE-B4089D51C9EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.dApps.NeoDraw.Main", "NPC.dApps.NeoDraw.Main\NPC.dApps.NeoDraw.Main.csproj", "{750544C0-7748-4105-8BB9-31957AAA153E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPC.dApps.NeoDraw", "NPC.dApps.NeoDraw\NPC.dApps.NeoDraw.csproj", "{4297A3F9-4FA1-40D9-BE71-0C9F1DA65183}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{9C2BF2FF-9AF4-4F24-98BE-B4089D51C9EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2BF2FF-9AF4-4F24-98BE-B4089D51C9EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2BF2FF-9AF4-4F24-98BE-B4089D51C9EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750544C0-7748-4105-8BB9-31957AAA153E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750544C0-7748-4105-8BB9-31957AAA153E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750544C0-7748-4105-8BB9-31957AAA153E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750544C0-7748-4105-8BB9-31957AAA153E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4297A3F9-4FA1-40D9-BE71-0C9F1DA65183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4297A3F9-4FA1-40D9-BE71-0C9F1DA65183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4297A3F9-4FA1-40D9-BE71-0C9F1DA65183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4297A3F9-4FA1-40D9-BE71-0C9F1DA65183}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
