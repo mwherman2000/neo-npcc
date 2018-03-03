@@ -168,14 +168,17 @@ namespace npcc
         }
     }
 
-    public class NPCInterfaceInfo
+    public class NPCClassInterfaceInfo
     {
-        string interfaceInputName;
-        string interfaceOutputName;
+        public int interfaceClassIndex;
+        public string interfaceInputName;
+        public string interfaceOutputName;
 
-        public NPCInterfaceInfo(string name)
+        public NPCClassInterfaceInfo(string name, int classIndex)
         {
             Debug.Assert(!String.IsNullOrEmpty(name), "name");
+
+            interfaceClassIndex = classIndex;
 
             NPCLevels level;
             if (!Enum.TryParse<NPCLevels>(name, out level))
@@ -263,7 +266,7 @@ namespace npcc
         public List<NPCReferencedAssemblyInfo> listAssemblyInfo = null;
         public List<NPCClassInfo> listClassInfo = null;
         public List<NPCFieldInfo> listFieldInfo = null;
-        public List<NPCInterfaceInfo> listInterfaceInfo = null;
+        public List<NPCClassInterfaceInfo> listClassInterfaceInfo = null;
 
         public NPCCompilerContext()
         {
@@ -271,7 +274,7 @@ namespace npcc
             listAssemblyInfo = new List<NPCReferencedAssemblyInfo>();
             listClassInfo = new List<NPCClassInfo>();
             listFieldInfo = new List<NPCFieldInfo>();
-            listInterfaceInfo = new List<NPCInterfaceInfo>();
+            listClassInterfaceInfo = new List<NPCClassInterfaceInfo>();
 
             foreach (string arName in listDefaultAssemblies)
             {
@@ -316,6 +319,7 @@ namespace npcc
                     //Console.WriteLine("Assembly IsWindowsRuntime:\t" + ar.IsWindowsRuntime.ToString());
 
                     // Add it if it is not already there
+                    // https://msdn.microsoft.com/en-us/library/x0b5b5bc(v=vs.110).aspx
                     NPCReferencedAssemblyInfo arFind = ctx.listAssemblyInfo.Find(
                     delegate (NPCReferencedAssemblyInfo dar)
                     {
@@ -371,7 +375,7 @@ namespace npcc
 
                         if (t.IsClass & t.Name != "<Module>")
                         {
-                            ctx.listInterfaceInfo.Add(new NPCInterfaceInfo(i.Name));
+                            ctx.listClassInterfaceInfo.Add(new NPCClassInterfaceInfo(i.Name, classIndex));
                         }
                     }
 
@@ -445,16 +449,16 @@ namespace npcc
                 success = false;
             }
 
-            if (ctx.listInterfaceInfo.Count < 1)
+            if (ctx.listClassInterfaceInfo.Count < 1)
             {
-                string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listInterfaceInfo.Count.ToString();
+                string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString();
                 Console.WriteLine(message);
                 success = false;
             }
 
-            if (ctx.listInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
+            if (ctx.listClassInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
             {
-                string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listInterfaceInfo.Count.ToString();
+                string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listClassInterfaceInfo.Count.ToString();
                 Console.WriteLine(message);
                 success = false;
             }
@@ -488,25 +492,65 @@ namespace npcc
 
                 for (int classIndex = 0; classIndex < ctx.listClassInfo.Count; classIndex++)
                 {
-                    success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
-                    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                    Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+                    List<NPCClassInterfaceInfo> listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel0Basic.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
+                    }
 
-                    success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
-                    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                    Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel1Managed.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
+                    }
 
-                    success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
-                    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                    Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel2Persistable.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
+                    }
 
-                    success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
-                    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                    Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel3Deletable.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
+                    }
 
-                    success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
-                    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                    Console.WriteLine("**INFO*** Code generation succeeded:\t" + NPCLevels.NPCEndMarker.ToString());
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4Collectible.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                    }
                 }
             }
 

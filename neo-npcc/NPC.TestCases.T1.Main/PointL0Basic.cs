@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 0 Basic
 ///
-/// Generated:       2018-03-02 9:30:06 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Generated:       2018-03-02 10:21:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
