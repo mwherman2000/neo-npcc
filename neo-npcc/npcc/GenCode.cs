@@ -54,7 +54,7 @@ namespace npcc
                 {
                     string fieldName = f.fieldPrivateFieldName;
                     string fieldType = f.fieldOutputType;
-                    text2 += "\t\t" + "private" + "\t" + fieldType + "\t" + fieldName + ";\r\n";
+                    text2 += "        " + "private" + "\t" + fieldType + "\t" + fieldName + ";\r\n";
                 }
             }
 
