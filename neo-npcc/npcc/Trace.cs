@@ -11,7 +11,7 @@ namespace npcc
         static public bool Splash = true;
         static public bool Error = true;
         static public bool Info = true;
-        static public bool Verbose = false;
+        static public bool Verbose = true;
         static public bool Exit = true;
     }
 }

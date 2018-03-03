@@ -515,7 +515,19 @@ namespace npcc
                         if (Trace.Verbose) Console.WriteLine("      f.FieldType:\t" + f.FieldType.ToString());
                         if (Trace.Verbose) Console.WriteLine("      f.IsPrivate:\t" + f.IsPrivate.ToString());
                         if (Trace.Verbose) Console.WriteLine("      f.IsPublic:\t" + f.IsPublic.ToString());
-                        if (Trace.Verbose) Console.WriteLine("      f.InitialValue.Length:\t" + f.InitialValue.Length.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.HasConstant:\t" + f.HasConstant.ToString());
+                        if (f.Constant != null) if (Trace.Verbose) Console.WriteLine("      f.Constant:\t" + f.Constant.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.HasDefault:\t" + f.HasDefault.ToString());
+                        if (f.InitialValue != null)
+                        {
+                            if (Trace.Verbose) Console.WriteLine("      f.InitialValue:\t" + f.InitialValue.ToString());
+                            if (Trace.Verbose) Console.WriteLine("      f.InitialValue.Length:\t" + f.InitialValue.Length.ToString());
+                            if (f.InitialValue.Length > 0)
+                            {
+                                Int32 initialValue = BitConverter.ToInt32(f.InitialValue, 0);
+                                if (Trace.Verbose) Console.WriteLine("      f.InitialValue:\t" + initialValue.ToString());
+                            }
+                        }
 
                         if (t.IsClass & t.Name != "<Module>")
                         {
