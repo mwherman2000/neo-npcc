@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Diagnostics;
+using System.Threading;
 
 namespace npcc
 {
@@ -24,6 +25,7 @@ namespace npcc
         NPCLevel8Auditable,
         NPCEndMarker
     }
+
     public enum NPCLevelsForFileNames
     {
         L0Basic_cs,
@@ -442,32 +444,128 @@ namespace npcc
                 success = false;
             }
 
-            if (ctx.listFieldInfo.Count < 1)
+            List<NPCClassInterfaceInfo> listClassInterfaces;
+            for (int classIndex = 0; classIndex < ctx.listClassInfo.Count; classIndex++)
             {
-                string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
-                if (Trace.Error) Console.WriteLine(message);
-                success = false;
-            }
+                List<NPCFieldInfo> listClassFields = ctx.listFieldInfo.FindAll(
+                   delegate (NPCFieldInfo dfi)
+                   {
+                       return (dfi.fieldClassIndex == classIndex);
+                   });
+                if (listClassFields.Count < 1)
+                {
+                    string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
+                    if (Trace.Error) Console.WriteLine(message);
+                    success = false;
+                }
 
-            if (ctx.listClassInterfaceInfo.Count < 1)
-            {
-                string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString();
-                if (Trace.Error) Console.WriteLine(message);
-                success = false;
-            }
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex);
+                   });
+                if (listClassInterfaces.Count < 1)
+                {
+                    string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString();
+                    if (Trace.Error) Console.WriteLine(message);
+                    success = false;
+                }
 
-            if (ctx.listClassInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
-            {
-                string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listClassInterfaceInfo.Count.ToString();
-                if (Trace.Error) Console.WriteLine(message);
-                success = false;
-            }
+                bool NPCLevel0BasicInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel0Basic.ToString());
+                   });
+                if (listClassInterfaces.Count == 1) NPCLevel0BasicInterface = true;
 
+                bool NPCLevel1ManagedInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel1Managed.ToString());
+                   });
+                if (listClassInterfaces.Count == 1)
+                {
+                    NPCLevel1ManagedInterface = true;
+                    if (!NPCLevel0BasicInterface)
+                    {
+                        string message = "**ERROR** Class " + ctx.listClassInfo[classIndex].classInputName + " : " + NPCLevels.NPCLevel1Managed.ToString() + " requires interface " + NPCLevels.NPCLevel0Basic.ToString();
+                        if (Trace.Error) Console.WriteLine(message);
+                        success = false;
+                    }
+                }
+
+                bool NPCLevel2PersistableInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel2Persistable.ToString());
+                   });
+                if (listClassInterfaces.Count == 1)
+                {
+                    NPCLevel2PersistableInterface = true;
+                    if (!NPCLevel1ManagedInterface)
+                    {
+                        string message = "**ERROR** Class " + ctx.listClassInfo[classIndex].classInputName + " : " + NPCLevels.NPCLevel2Persistable.ToString() + " requires interface " + NPCLevels.NPCLevel1Managed.ToString();
+                        if (Trace.Error) Console.WriteLine(message);
+                        success = false;
+                    }
+                }
+
+                bool NPCLevel3DeletableInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel3Deletable.ToString());
+                   });
+                if (listClassInterfaces.Count == 1)
+                {
+                    NPCLevel3DeletableInterface = true;
+                    if (!NPCLevel2PersistableInterface)
+                    {
+                        string message = "**ERROR** Class " + ctx.listClassInfo[classIndex].classInputName + " : " + NPCLevels.NPCLevel3Deletable.ToString() + " requires interface " + NPCLevels.NPCLevel2Persistable.ToString();
+                        if (Trace.Error) Console.WriteLine(message);
+                        success = false;
+                    }
+                }
+
+                bool NPCLevel4CollectibleInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4Collectible.ToString());
+                   });
+                if (listClassInterfaces.Count == 1)
+                {
+                    NPCLevel4CollectibleInterface = true;
+                    if (!NPCLevel3DeletableInterface)
+                    {
+                        string message = "**ERROR** Class " + ctx.listClassInfo[classIndex].classInputName + " : " + NPCLevels.NPCLevel4Collectible.ToString() + " requires interface " + NPCLevels.NPCLevel3Deletable.ToString();
+                        if (Trace.Error) Console.WriteLine(message);
+                        success = false;
+                    }
+                }
+            }
             return success;
+        }
+
+        // Reference: https://stackoverflow.com/questions/6518979/catch-all-error-handling-on-application-level
+        // Reference: http://www.csharp-examples.net/catching-unhandled-exceptions/
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            string message = "**ERROR** Compile failed: CurrentDomain_UnhandledException: " + (e.ExceptionObject as Exception).ToString();
+            if (Trace.Error) Console.WriteLine(message);
+
+            if (Trace.Exit) Console.WriteLine("Press enter to exit...");
+            if (Trace.Exit) Console.ReadLine();
+            Environment.Exit(-1);
         }
 
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
             if (Trace.Splash) Console.WriteLine("*********************************************************");
             if (Trace.Splash) Console.WriteLine(" " + ProgramName + " " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             if (Trace.Splash) Console.WriteLine("*********************************************************");
@@ -569,6 +667,7 @@ namespace npcc
 
             if (Trace.Exit) Console.WriteLine("Press enter to exit...");
             if (Trace.Exit) Console.ReadLine();
+            Environment.Exit(0);
         }
 
         private static bool ValidateTargetProjectEnvironment(NPCCompilerContext ctx)
