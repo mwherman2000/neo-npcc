@@ -32,4 +32,4 @@
             byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
 
             e._state = NeoEntityModel.EntityState.PUTTED;
-			Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());

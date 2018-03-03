@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 2 Persistable
 ///
-/// Generated:		2018-02-28 4:58:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
-/// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
-/// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
+/// Generated:       2018-03-02 8:00:24 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
+/// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.TestCases.T1.Main
@@ -61,84 +61,84 @@ namespace NPC.TestCases.T1.Main
             byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
 
             e._state = NeoEntityModel.EntityState.PUTTED;
-			Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bX), e._x); // Template: NPCLevel2CPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bY), e._y); // Template: NPCLevel2CPut_cs.txt
 
-			LogExt("Put(bkey).Point", e); // Template: NPCLevel2DPut_cs.txt
-			return true;
-		}
+            LogExt("Put(bkey).Point", e); // Template: NPCLevel2DPut_cs.txt
+            return true;
+        }
 
-		public static bool Put(Point e, string key)
-		{
-			if (key.Length == 0) return false;
-			LogExt("Put(skey).Point", e);
+        public static bool Put(Point e, string key)
+        {
+            if (key.Length == 0) return false;
+            LogExt("Put(skey).Point", e);
 
-			Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-			string _skeyTag = key + _classKeyTag;
-			Trace("Put(skey)._skeyTag", _skeyTag);
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            string _skeyTag = key + _classKeyTag;
+            Trace("Put(skey)._skeyTag", _skeyTag);
 
-			e._state = NeoEntityModel.EntityState.PUTTED;
-			BigInteger bis = e._state.AsBigInteger();
-			Trace("Put(skey).bis", bis);
-			Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, bis);
+            e._state = NeoEntityModel.EntityState.PUTTED;
+            BigInteger bis = e._state.AsBigInteger();
+            Trace("Put(skey).bis", bis);
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, bis);
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sX, e._x); // Template: NPCLevel2EPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sY, e._y); // Template: NPCLevel2EPut_cs.txt
 
-			LogExt("Put(skey).Point", e); // Template: NPCLevel2FGet_cs.txt
-			return true;
-		}
+            LogExt("Put(skey).Point", e); // Template: NPCLevel2FGet_cs.txt
+            return true;
+        }
 
-		public static Point Get(byte[] key)
-		{
-			if (key.Length == 0) return Null();
+        public static Point Get(byte[] key)
+        {
+            if (key.Length == 0) return Null();
 
-			Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-			byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            byte[] _bkeyTag = Helper.Concat(key, _bclassKeyTag);
 
-			Point e;
-			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-			NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
-			if (bsta.Length == 0)
-			{
-				e = Point.Missing();
-			}
-			else // not MISSING
-			{
-				byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEXT));
-				int ista = (int)bsta.AsBigInteger();
-				NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
-				e = new Point();
+            Point e;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
+            NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
+            if (bsta.Length == 0)
+            {
+                e = Point.Missing();
+            }
+            else // not MISSING
+            {
+                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEXT));
+                int ista = (int)bsta.AsBigInteger();
+                NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
+                e = new Point();
                 BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bX)).AsBigInteger(); //NPCLevel2GGet_cs.txt
                 BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bY)).AsBigInteger(); //NPCLevel2GGet_cs.txt
-				e._x = X; e._y = Y;  // Template: NPCLevel2HGet_cs.txt
-				e._state = sta;
-				e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
-			}
-			LogExt("Get(bkey).Point", e);
-			return e;
-		}
+                e._x = X; e._y = Y;  // Template: NPCLevel2HGet_cs.txt
+                e._state = sta;
+                e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
+            }
+            LogExt("Get(bkey).Point", e);
+            return e;
+        }
 
-		public static Point Get(string key)
-		{
-			if (key.Length == 0) return Null();
+        public static Point Get(string key)
+        {
+            if (key.Length == 0) return Null();
 
-			Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-			string _skeyTag = key + _classKeyTag;
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            string _skeyTag = key + _classKeyTag;
 
-			Point e;
-			byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-			NeoTrace.Trace("Get(skey)Point.bsta", bsta.Length, bsta);
-			if (bsta.Length == 0)
-			{
-				e = Point.Missing();
-			}
-			else // not MISSING
-			{
-				byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sEXT);
-				int ista = (int)bsta.AsBigInteger();
-				NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
-				e = new Point();
+            Point e;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
+            NeoTrace.Trace("Get(skey)Point.bsta", bsta.Length, bsta);
+            if (bsta.Length == 0)
+            {
+                e = Point.Missing();
+            }
+            else // not MISSING
+            {
+                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sEXT);
+                int ista = (int)bsta.AsBigInteger();
+                NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
+                e = new Point();
                 BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sX).AsBigInteger(); //NPCLevel2IGet_cs.txt
                 BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sY).AsBigInteger(); //NPCLevel2IGet_cs.txt
                 NeoTrace.Trace("Get(skey).e._x, e._y", e._x, e._y); // Template: NPCLevel2Part2_cs.txt

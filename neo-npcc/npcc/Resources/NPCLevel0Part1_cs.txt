@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 /// <summary>
 /// #NAMESPACE#.#CLASSNAME# - Level 0 Basic
 ///
-/// Generated:		#NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
-/// NPC Project:	https://github.com/mwherman2000/neo-npcc/blob/master/README.md
-/// NPC Lead:		Michael Herman (Toronto) (mwherman@parallelspace.net)
+/// Generated:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
+/// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace #NAMESPACE#
