@@ -135,7 +135,7 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "BigInteger";
-                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 case "System.String":
@@ -146,7 +146,7 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "string";
-                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 case "System.Byte[]":
@@ -157,7 +157,7 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "byte[]";
-                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 default:
@@ -287,8 +287,132 @@ namespace npcc
 
     class Program
     {
-        public static string ProgramName = "npcc - NEO Class Framework (NPC) 2.0 Compiler";
-        
+        public const string ProgramName = "npcc - NEO Class Framework (NPC) 2.0 Compiler";
+        public static string pathProjectBinDebug = "";
+
+        static void Main(string[] args)
+        {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+            if (Trace.Splash) Console.WriteLine("*********************************************************");
+            if (Trace.Splash) Console.WriteLine(" " + ProgramName + " v" + Assembly.GetEntryAssembly().GetName().Version.ToString());
+            if (Trace.Splash) Console.WriteLine("*********************************************************");
+            if (Trace.Splash) Console.WriteLine();
+            
+            if (args.Length == 1)
+            {
+                pathProjectBinDebug = args[0];
+            }
+            else
+            {
+                if (Trace.Splash) Console.WriteLine("Usage: " + Assembly.GetEntryAssembly().GetName().Name + " <projectbinfolder>");
+                if (Trace.Splash) Console.WriteLine();
+                if (Trace.Exit) Console.WriteLine("Press enter to exit...");
+                if (Trace.Exit) Console.ReadLine();
+                Environment.Exit(0);
+            }
+
+            if (Trace.Info) Console.WriteLine("**INFO*** Project bin\\Debug Folder:\t\"" + pathProjectBinDebug + "\"");
+
+            NPCCompilerContext ctx = new NPCCompilerContext();
+
+            bool success = false;
+            DirectoryInfo di = new DirectoryInfo(pathProjectBinDebug); //  @"..\..\...\NPC.TestCases.T1\bin\debug"
+            foreach (FileInfo fi in di.GetFiles("*.dll"))
+            {
+                if (Trace.Info) Console.WriteLine("**INFO*** Assembly:\t" + fi.FullName);
+
+                if (Trace.Info) Console.WriteLine();
+                success = ParseAssembly(ctx, fi);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): parse failed", fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
+
+                if (Trace.Info) Console.WriteLine();
+                success = ValidateAssembly(ctx);
+                if (!success) throw new ArgumentException("Bad input assembly file (DLL): validation failed", fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Assembly validation succeeded:\t" + fi.FullName);
+
+                if (Trace.Info) Console.WriteLine();
+                success = ValidateTargetProjectEnvironment(ctx);
+                if (!success) throw new ArgumentException("Bad target project environment/prerequisites: validation failed", fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Target project environment/prerequisites validation succeeded:\t" + fi.FullName);
+
+                for (int classIndex = 0; classIndex < ctx.listClassInfo.Count; classIndex++)
+                {
+                    if (Trace.Info) Console.WriteLine();
+                    List<NPCClassInterfaceInfo> listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel0Basic.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel1Managed.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel2Persistable.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel3Deletable.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4Collectible.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                    }
+                }
+            }
+
+            //var type = module.Types.First(x => x.Name == "A");
+            //var method = type.Methods.First(x => x.Name == "test");
+
+            //if (Trace.Verbose) PrintMethods(method);
+            //if (Trace.Verbose) PrintFields(method);
+
+            if (Trace.Exit) Console.WriteLine("Press enter to exit...");
+            if (Trace.Exit) Console.ReadLine();
+            Environment.Exit(0);
+        }
+
         private static bool ParseAssembly(NPCCompilerContext ctx, FileInfo fi)
         {
             bool success = true;
@@ -560,114 +684,6 @@ namespace npcc
             if (Trace.Exit) Console.WriteLine("Press enter to exit...");
             if (Trace.Exit) Console.ReadLine();
             Environment.Exit(-1);
-        }
-
-        static void Main(string[] args)
-        {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
-            if (Trace.Splash) Console.WriteLine("*********************************************************");
-            if (Trace.Splash) Console.WriteLine(" " + ProgramName + " " + Assembly.GetEntryAssembly().GetName().Version.ToString());
-            if (Trace.Splash) Console.WriteLine("*********************************************************");
-            if (Trace.Splash) Console.WriteLine();
-
-            NPCCompilerContext ctx = new NPCCompilerContext();
-
-            bool success = false;
-            DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPC.TestCases.T1\bin\debug");
-            foreach (FileInfo fi in di.GetFiles("*.dll"))
-            {
-                if (Trace.Info) Console.WriteLine("**INFO*** Assembly:\t" + fi.FullName);
-
-                if (Trace.Info) Console.WriteLine();
-                success = ParseAssembly(ctx, fi);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): parse failed", fi.FullName);
-                if (Trace.Info) Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
-
-                if (Trace.Info) Console.WriteLine();
-                success = ValidateAssembly(ctx);
-                if (!success) throw new ArgumentException("Bad input assembly file (DLL): validation failed", fi.FullName);
-                if (Trace.Info) Console.WriteLine("**INFO*** Assembly validation succeeded:\t" + fi.FullName);
-
-                if (Trace.Info) Console.WriteLine();
-                success = ValidateTargetProjectEnvironment(ctx);
-                if (!success) throw new ArgumentException("Bad target project environment/prerequisites: validation failed", fi.FullName);
-                if (Trace.Info) Console.WriteLine("**INFO*** Target project environment/prerequisites validation succeeded:\t" + fi.FullName);
-
-                for (int classIndex = 0; classIndex < ctx.listClassInfo.Count; classIndex++)
-                {
-                    if (Trace.Info) Console.WriteLine();
-                    List<NPCClassInterfaceInfo> listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
-                       delegate (NPCClassInterfaceInfo dci)
-                       {
-                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel0Basic.ToString());
-                       });
-                    if (listClassInterfaces.Count == 1)
-                    {
-                        success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
-                    }
-
-                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
-                       delegate (NPCClassInterfaceInfo dci)
-                       {
-                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel1Managed.ToString());
-                       });
-                    if (listClassInterfaces.Count == 1)
-                    {
-                        success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
-                    }
-
-                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
-                       delegate (NPCClassInterfaceInfo dci)
-                       {
-                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel2Persistable.ToString());
-                       });
-                    if (listClassInterfaces.Count == 1)
-                    {
-                        success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
-                    }
-
-                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
-                       delegate (NPCClassInterfaceInfo dci)
-                       {
-                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel3Deletable.ToString());
-                       });
-                    if (listClassInterfaces.Count == 1)
-                    {
-                        success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
-                    }
-
-                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
-                       delegate (NPCClassInterfaceInfo dci)
-                       {
-                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4Collectible.ToString());
-                       });
-                    if (listClassInterfaces.Count == 1)
-                    {
-                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
-                    }
-                }
-            }
-
-            //var type = module.Types.First(x => x.Name == "A");
-            //var method = type.Methods.First(x => x.Name == "test");
-
-            //if (Trace.Verbose) PrintMethods(method);
-            //if (Trace.Verbose) PrintFields(method);
-
-            if (Trace.Exit) Console.WriteLine("Press enter to exit...");
-            if (Trace.Exit) Console.ReadLine();
-            Environment.Exit(0);
         }
 
         private static bool ValidateTargetProjectEnvironment(NPCCompilerContext ctx)

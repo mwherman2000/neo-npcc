@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 4 Collectible
 ///
-/// Generated:      2018-03-03 12:40:42 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Generated:      2018-03-03 12:56:55 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
