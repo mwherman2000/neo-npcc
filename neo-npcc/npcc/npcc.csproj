@@ -112,7 +112,7 @@
     <EmbeddedResource Include="Resources\NPCLevel4DBuryElement_cs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\NPCLevel4EBuryElement_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4EBuryElement_cs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,11 +1,11 @@
 ﻿
-                    p._x = x; p._y = y; // NPCLevel4DBuryElement_cs.txt
-                    p._state = sta;
-                    p._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
+                    #ALLFIELDASSIGNMENTS# // NPCLevel4DBuryElement_cs.txt
+                    e._state = sta;
+                    e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
             }
-            LogExt("Get(kb).p", p);
-            return p;
+            LogExt("Get(bkey).#CLASSNAME#.e", e);
+            return e;
         }
 
         /// <summary>
@@ -13,27 +13,27 @@
         /// </summary>
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
-        /// <returns>Point</returns>
-        public static Point BuryElement(NeoVersionedAppUser vau, int index)
+        /// <returns>#CLASSNAME#</returns>
+        public static #CLASSNAME# BuryElement(NeoVersionedAppUser vau, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
-                return Point.Null();
+                return #CLASSNAME#.Null();
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, "#CLASSNAME#");
 
             byte[] bkey;
-            Point p;
+            #CLASSNAME# e;
             /*STA*/
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
-            NeoTrace.Trace("Bury(vau,index).bs", bsta.Length, bsta);
+            NeoTrace.Trace("Bury(vau,index).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
-                p = Point.Missing();
+                e = #CLASSNAME#.Missing();
             }
             else // not MISSING - bury it
             {
-                p = Point.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), p._state.AsBigInteger());
+                e = #CLASSNAME#.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());

@@ -1,4 +1,5 @@
-﻿                NeoTrace.Trace("Get(skey).#ALLFIELDARGS#", #ALLFIELDARGS#); // Template: NPCLevel2Part2_cs.txt
+﻿
+                NeoTrace.Trace("Get(skey).#ALLFIELDARGS#", #ALLFIELDARGS#); // Template: NPCLevel2Part2_cs.txt
                 #ALLFIELDASSIGNMENTS#
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */

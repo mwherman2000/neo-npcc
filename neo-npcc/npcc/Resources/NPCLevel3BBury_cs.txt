@@ -13,7 +13,7 @@
 
             #CLASSNAME# e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Bury(skey)#CLASSNAME#.bsta", bsta.Length, bsta);
+            NeoTrace.Trace("Bury(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();

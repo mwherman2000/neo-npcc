@@ -1,2 +1,3 @@
-﻿    } // Template: NPCLevel0Part2_cs.txt
+﻿
+    } // Template: NPCLevel0Part2_cs.txt
 }

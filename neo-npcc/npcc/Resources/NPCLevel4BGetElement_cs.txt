@@ -1,5 +1,5 @@
 ﻿
-            LogExt("PutElement(vau,i).p", p); // Template: NPCLevel4BGetElement_cs.txt
+            LogExt("PutElement(vau,i).#CLASSNAME#", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
 
@@ -8,21 +8,21 @@
         /// </summary>
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
-        /// <returns>Point</returns>
-        public static Point GetElement(NeoVersionedAppUser vau, int index)
+        /// <returns>#CLASSNAME#</returns>
+        public static #CLASSNAME# GetElement(NeoVersionedAppUser vau, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, "#CLASSNAME#");
 
-            Point p;
+            #CLASSNAME# e;
             byte[] bkey;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
-            NeoTrace.Trace("Get(kb).bs", bsta.Length, bsta);
+            NeoTrace.Trace("Get(bkey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
-                p = Point.Missing();
+                e = #CLASSNAME#.Missing();
             }
             else // not MISSING
             {
@@ -32,8 +32,8 @@
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 if (sta == NeoEntityModel.EntityState.TOMBSTONED)
                 {
-                    p = Point.Tombstone();
+                    e = #CLASSNAME#.Tombstone();
                 }
                 else // not MISSING && not TOMBSTONED
                 {
-                    p = new Point();
+                    e = new #CLASSNAME#();

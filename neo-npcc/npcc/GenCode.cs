@@ -78,7 +78,6 @@ namespace npcc
             text1 = text1.Replace("#CLASSNAME#", ctx.listClassInfo[classIndex].classOutputName);
             File.WriteAllText(targetFileName, text1);
 
-            // #CLASSNAME#, #FIELDTYPE#, #PUBLICFIELDNAME#,  #PRIVATEFIELDNAME# 
             string textSetXGetXTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel1SetXGetX_csName);
             string textSetXGetX = "";
             string allFieldParameters = "";
@@ -283,7 +282,6 @@ namespace npcc
                 }
             }
 
-            // # CLASSNAME#, #ALLFIELDSASSIGNEDZERO#, #ALLFIELDASSIGNMENTS#, #ALLFIELDARGS#
             string part2Template = Helpers.GetTextResource(NPCCompilerContext.NPCLevel2Part2_csName);
             string part2 = part2Template.Replace("#CLASSNAME#", ctx.listClassInfo[classIndex].classOutputName);
             part2 = part2.Replace("#ALLFIELDPARAMETERS#", allFieldParameters.Substring(0, allFieldParameters.Length - 2)); // drop last ", "
@@ -366,28 +364,28 @@ namespace npcc
         {
             bool success = true;
 
-            string text1 = "";
+            string text = "";
             string targetFileName = "";
 
-            text1 = Helpers.GetTextResource(NPCCompilerContext.NeoVersionedAppUser_csName);
+            text = Helpers.GetTextResource(NPCCompilerContext.NeoVersionedAppUser_csName);
             targetFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
                                     NPCCompilerContext.NeoVersionedAppUser_csName.Replace("_cs.txt", ".cs");
-            text1 = text1.Replace("#PROGRAMNAME#", Program.ProgramName);
-            text1 = text1.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            text1 = text1.Replace("#NOWDATETIME#", DateTime.Now.ToString());
-            text1 = text1.Replace("#NAMESPACE#", "NPC.Runtime");
-            text1 = text1.Replace("#CLASSNAME#", "NeoVersionedAppUser");
-            File.WriteAllText(targetFileName, text1);
+            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
+            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
+            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
+            text = text.Replace("#CLASSNAME#", "NeoVersionedAppUser");
+            File.WriteAllText(targetFileName, text);
 
-            text1 = Helpers.GetTextResource(NPCCompilerContext.NeoStorageKey_csName);
+            text = Helpers.GetTextResource(NPCCompilerContext.NeoStorageKey_csName);
             targetFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
                                     NPCCompilerContext.NeoStorageKey_csName.Replace("_cs.txt", ".cs");
-            text1 = text1.Replace("#PROGRAMNAME#", Program.ProgramName);
-            text1 = text1.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            text1 = text1.Replace("#NOWDATETIME#", DateTime.Now.ToString());
-            text1 = text1.Replace("#NAMESPACE#", "NPC.Runtime");
-            text1 = text1.Replace("#CLASSNAME#", "NeoStorageKey");
-            File.WriteAllText(targetFileName, text1);
+            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
+            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
+            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
+            text = text.Replace("#CLASSNAME#", "NeoStorageKey");
+            File.WriteAllText(targetFileName, text);
 
             string part1Template = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4Part1_csName);
             targetFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
@@ -398,6 +396,80 @@ namespace npcc
             part1 = part1.Replace("#NAMESPACE#", ctx.listModuleInfo[0].moduleTargetProjectName);
             part1 = part1.Replace("#CLASSNAME#", ctx.listClassInfo[classIndex].classOutputName);
             File.WriteAllText(targetFileName, part1);
+
+            string text4APutElementTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4APutElement_csName);
+            foreach (NPCFieldInfo f in ctx.listFieldInfo)
+            {
+                if (f.fieldClassIndex == classIndex) // TODO Performance
+                {
+                    string fieldPrivateName = f.fieldPrivateFieldName;
+                    string fieldPublicName = f.fieldPublicFieldName;
+                    text = text4APutElementTemplate.Replace("#PUBLICFIELDNAME#", fieldPublicName);
+                    text = text.Replace("#PRIVATEFIELDNAME#", fieldPrivateName);
+                    File.AppendAllText(targetFileName, text);
+                }
+            }
+
+            string text4BGetElementTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4BGetElement_csName);
+            text = text4BGetElementTemplate.Replace("#CLASSNAME#", ctx.listClassInfo[classIndex].classOutputName);
+            File.AppendAllText(targetFileName, text);
+
+            string allFieldParameters = "";
+            string allFieldAssignments = "";
+            string allFieldsAssignedZero = "";
+            string allFieldArgs = "";
+            string text4CGetElementTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4CGetElement_csName);
+            foreach (NPCFieldInfo f in ctx.listFieldInfo)
+            {
+                if (f.fieldClassIndex == classIndex) // TODO Performance
+                {
+                    string fieldPrivateName = f.fieldPrivateFieldName;
+                    string fieldPublicName = f.fieldPublicFieldName;
+                    string fieldType = f.fieldOutputType;
+
+                    string fieldParameter = fieldType + " " + fieldPublicName;
+                    allFieldParameters += fieldParameter + ", ";
+                    string fieldAssignment = "e." + fieldPrivateName + " = " + fieldPublicName + "; ";
+                    allFieldAssignments += fieldAssignment;
+                    fieldAssignment = "e." + fieldPrivateName + " = " + Helpers.ZeroByType(f.fieldInputType) + ";";
+                    allFieldsAssignedZero += fieldAssignment + " ";
+                    allFieldArgs += "e." + fieldPrivateName + ", ";
+
+                    text = text4CGetElementTemplate.Replace("#PUBLICFIELDNAME#", fieldPublicName);
+                    text = text.Replace("#PRIVATEFIELDNAME#", fieldPrivateName);
+                    text = text.Replace("#FIELDTYPE#", fieldType);
+                    if (fieldType == "BigInteger")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                    }
+                    else
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", "");
+                    }
+                    File.AppendAllText(targetFileName, text);
+                }
+            }
+
+            string text4DBuryElementTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4DBuryElement_csName);
+            text = text4DBuryElementTemplate.Replace("#CLASSNAME#", ctx.listClassInfo[classIndex].classOutputName);
+            text = text.Replace("#ALLFIELDPARAMETERS#", allFieldParameters.Substring(0, allFieldParameters.Length - 2)); // drop last ", "
+            text = text.Replace("#ALLFIELDSASSIGNEDZERO#", allFieldsAssignedZero);
+            text = text.Replace("#ALLFIELDASSIGNMENTS#", allFieldAssignments);
+            text = text.Replace("#ALLFIELDARGS#", allFieldArgs.Substring(0, allFieldArgs.Length - 2)); // drop last ", "
+            File.AppendAllText(targetFileName, text);
+
+            string text4EBuryElementTemplate = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4EBuryElement_csName);
+            foreach (NPCFieldInfo f in ctx.listFieldInfo)
+            {
+                if (f.fieldClassIndex == classIndex) // TODO Performance
+                {
+                    string fieldPrivateName = f.fieldPrivateFieldName;
+                    string fieldPublicName = f.fieldPublicFieldName;
+                    text = text4EBuryElementTemplate.Replace("#PUBLICFIELDNAME#", fieldPublicName);
+                    text = text.Replace("#PRIVATEFIELDNAME#", fieldPrivateName);
+                    File.AppendAllText(targetFileName, text);
+                }
+            }
 
             string part2Template = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4Part2_csName);
             string part2 = part2Template.Replace("#PROGRAMNAME#", Program.ProgramName);

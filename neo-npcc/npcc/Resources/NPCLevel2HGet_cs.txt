@@ -1,4 +1,5 @@
-﻿                #ALLFIELDASSIGNMENTS# // Template: NPCLevel2HGet_cs.txt
+﻿
+                #ALLFIELDASSIGNMENTS# // Template: NPCLevel2HGet_cs.txt
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
@@ -15,7 +16,7 @@
 
             #CLASSNAME# e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Get(skey)#CLASSNAME#.bsta", bsta.Length, bsta);
+            NeoTrace.Trace("Get(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();

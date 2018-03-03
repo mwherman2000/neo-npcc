@@ -1,4 +1,4 @@
-﻿        public static void Set#PUBLICFIELDNAME#(#CLASSNAME# e, #FIELDTYPE# value) // Template: NPCLevel1SetXGetX_cs.txt
-                           { e.#PRIVATEFIELDNAME# = value; e._state = NeoEntityModel.EntityState.SET; }
+﻿
+        public static void Set#PUBLICFIELDNAME#(#CLASSNAME# e, #FIELDTYPE# value) // Template: NPCLevel1SetXGetX_cs.txt
+                               { e.#PRIVATEFIELDNAME# = value; e._state = NeoEntityModel.EntityState.SET; }
         public static #FIELDTYPE# Get#PUBLICFIELDNAME#(#CLASSNAME# e) { return e.#PRIVATEFIELDNAME#; }
-

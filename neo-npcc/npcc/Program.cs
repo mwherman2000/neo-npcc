@@ -251,6 +251,11 @@ namespace npcc
 
         public const string NPCLevel4Part1_csName = "NPCLevel4Part1_cs.txt";
         public const string NPCLevel4Part2_csName = "NPCLevel4Part2_cs.txt";
+        public const string NPCLevel4APutElement_csName = "NPCLevel4APutElement_cs.txt";
+        public const string NPCLevel4BGetElement_csName = "NPCLevel4BGetElement_cs.txt";
+        public const string NPCLevel4CGetElement_csName = "NPCLevel4CGetElement_cs.txt";
+        public const string NPCLevel4DBuryElement_csName = "NPCLevel4DBuryElement_cs.txt";
+        public const string NPCLevel4EBuryElement_csName = "NPCLevel4EBuryElement_cs.txt";
 
         public static string[] listDefaultAssemblies = { "Neo.SmartContract.Framework", "Neo.SmartContract.Framework.Services.System", "System.Numerics" };
 

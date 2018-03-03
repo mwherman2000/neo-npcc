@@ -1,1 +1,2 @@
-﻿            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _s#PUBLICFIELDNAME#, e.#PRIVATEFIELDNAME#); // Template: NPCLevel2EPut_cs.txt
+﻿
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _s#PUBLICFIELDNAME#, e.#PRIVATEFIELDNAME#); // Template: NPCLevel2EPut_cs.txt

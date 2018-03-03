@@ -1,2 +1,3 @@
-﻿        public static void Set(#CLASSNAME# e, #ALLFIELDPARAMETERS#) // Template: NPCLevel1Set_cs.txt
+﻿
+        public static void Set(#CLASSNAME# e, #ALLFIELDPARAMETERS#) // Template: NPCLevel1Set_cs.txt
                                 { #ALLFIELDASSIGNMENTS# e._state = NeoEntityModel.EntityState.SET; }
