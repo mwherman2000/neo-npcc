@@ -13,21 +13,13 @@ namespace NPC.TestCases.T1
     public interface NPCLevel3Deletable { }
     public interface NPCLevel4Collectible { }
 
-    public class Point : NPCLevel0Basic, NPCLevel1Managed, NPCLevel2Persistable
+    public class Point : NPCLevel0Basic, 
+                         NPCLevel1Managed, 
+                         NPCLevel2Persistable, 
+                         NPCLevel3Deletable,  
+                         NPCLevel4Collectible
     {
         public BigInteger x;
         public BigInteger y;
-        //public string s;
-        //public byte[] bytes;
-        //public double d;
     }
-
-    //public class Point2 
-    //{
-    //    public BigInteger x;
-    //    public BigInteger y;
-    //    public string s;
-    //    public byte[] bytes;
-    //    //public double d;
-    //}
 }

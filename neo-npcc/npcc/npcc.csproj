@@ -58,6 +58,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trace.cs" />
     <EmbeddedResource Include="Resources\NeoStorageKey_cs.txt" />
     <EmbeddedResource Include="Resources\NeoVersionedAppUser_cs.txt" />
     <EmbeddedResource Include="Resources\NPCLevel0Part2_cs.txt" />

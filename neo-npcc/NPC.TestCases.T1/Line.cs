@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace NPC.TestCases.T1
 {
-    //public interface NPCLevel0Basic { }
-    //public interface NPCLevel1Managed { }
-    //public interface NPCLevel2Persistable { }
-    //public interface NPCLevel3Deletable { }
-    //public interface NPCLevel4Collectible { }
-
-    public class Line : NPCLevel0Basic, NPCLevel1Managed, NPCLevel2Persistable
+    public class Line : NPCLevel0Basic, 
+                        NPCLevel1Managed, 
+                        NPCLevel2Persistable, 
+                        NPCLevel3Deletable, 
+                        NPCLevel4Collectible
     {
         byte[] bKeyP1;
         byte[] bKeyP2;

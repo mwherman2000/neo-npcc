@@ -63,15 +63,15 @@ namespace npcc
             moduleFullyQualifiedProjectFolder = moduleFileFullyQualifiedName.Substring(0, binPos - 1);
             moduleFullyQualifiedRepositoryFolder = moduleFileFullyQualifiedName.Substring(0, projectPos);
 
-            Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + name + "', '" + moduleFileFullyQualifiedName);
-            Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleProjectName + "', '" + moduleFullyQualifiedProjectFolder + "', '" + moduleFullyQualifiedRepositoryFolder + "'");
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + name + "', '" + moduleFileFullyQualifiedName);
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleProjectName + "', '" + moduleFullyQualifiedProjectFolder + "', '" + moduleFullyQualifiedRepositoryFolder + "'");
         }
 
         public string SetTargetProjectName(string snamespace)
         {
             moduleTargetProjectName = snamespace + ".Main";
             moduleTargetFullyQualifiedProjectFolder = moduleFullyQualifiedRepositoryFolder + "\\" + moduleTargetProjectName;
-            Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleTargetProjectName + "', '" + moduleTargetFullyQualifiedProjectFolder + "'");
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleTargetProjectName + "', '" + moduleTargetFullyQualifiedProjectFolder + "'");
             return moduleTargetProjectName;
         }
     }
@@ -86,7 +86,7 @@ namespace npcc
 
             assemblyInputName = name;
 
-            Console.WriteLine("**INFO*** NPCAssemblyInfo:\t" + name);
+            if (Trace.Verbose) Console.WriteLine("**VERB*** NPCAssemblyInfo:\t" + name);
         }
     }
 
@@ -105,7 +105,7 @@ namespace npcc
             classOutputName = name.Substring(0, 1).ToUpper() + name.Substring(1);
             classNamespace = snamespace;
 
-            Console.WriteLine("**INFO*** NPCClassInfo:\t" + name + " " + snamespace);
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCClassInfo:\t" + name + " " + snamespace);
         }
     }
 
@@ -133,7 +133,7 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "BigInteger";
-                        Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 case "System.String":
@@ -144,7 +144,7 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "string";
-                        Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 case "System.Byte[]":
@@ -155,12 +155,12 @@ namespace npcc
                         fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
                         fieldInputType = type;
                         fieldOutputType = "byte[]";
-                        Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t" + name + ", " + type + ", " + fieldOutputType);
                         break;
                     }
                 default:
                     {   string message  = "**ERROR** Field type '" + type + "' is not supported in C#.NPC. Use BigInteger, byte[], or string.";
-                        Console.WriteLine(message);
+                        if (Trace.Error) Console.WriteLine(message);
                         throw new ArgumentOutOfRangeException(fieldInputName, message);
                         //break;
                     }
@@ -184,7 +184,7 @@ namespace npcc
             if (!Enum.TryParse<NPCLevels>(name, out level))
             {
                 string message = "**ERROR** Interface level name '" + name + "' is not supported in C#.NPC. Use NPCLevel0Basic, NPCLevel1Managed, NPCLevel2Persistable, NPCLevel3Deletable, NPCLevel4Collectible, NPCLevel5Extendible, NPCLevel6Authorized, or NPCLevel7Optimized.";
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 throw new ArgumentOutOfRangeException(name, message);
             }
             else
@@ -202,13 +202,13 @@ namespace npcc
                         {
                             interfaceInputName = name;
                             interfaceOutputName = name.Substring(0, 1).ToUpper() + name.Substring(1);
-                            Console.WriteLine("**INFO*** NPCInterfaceInfo:\t" + name);
+                            if (Trace.Info) Console.WriteLine("**INFO*** NPCInterfaceInfo:\t" + name);
                             break;
                         }
                     default:
                         {
                             string message = "**ERROR** Unexpected interface level name '" + name + "' is not supported in C#.NPC. Use NPCLevel1, NPCLevel2, NPCLevel3, NPCLevel4, NPCLevel5, NPCLevel6, or NPCLevel7.";
-                            Console.WriteLine(message);
+                            if (Trace.Error) Console.WriteLine(message);
                             throw new ArgumentOutOfRangeException(name, message);
                             //break;
                         }
@@ -297,26 +297,26 @@ namespace npcc
             }
             else
             {
-                Console.WriteLine("File " + fi.FullName);
+                if (Trace.Verbose) Console.WriteLine("File " + fi.FullName);
                 var module = ModuleDefinition.ReadModule(fi.FullName);
 
-                Console.WriteLine("Module Name:\t" + module.Name);
-                Console.WriteLine("  Module FullyQualifiedName:\t" + module.FullyQualifiedName);
-                Console.WriteLine("  Module RuntimeVersion:\t" + module.RuntimeVersion);
-                Console.WriteLine("  Module HasExportedTypes:\t" + module.HasExportedTypes.ToString());
-                Console.WriteLine("  Module HasTypes:\t" + module.HasTypes.ToString());
-                Console.WriteLine("  Module HasCustomAttributes:\t" + module.HasCustomAttributes.ToString());
-                Console.WriteLine("  Module HasModuleReferences:\t" + module.HasModuleReferences.ToString());
-                Console.WriteLine("  Module HasAssemblyReferences:\t" + module.HasAssemblyReferences.ToString());
+                if (Trace.Verbose) Console.WriteLine("Module Name:\t" + module.Name);
+                if (Trace.Verbose) Console.WriteLine("  Module FullyQualifiedName:\t" + module.FullyQualifiedName);
+                if (Trace.Verbose) Console.WriteLine("  Module RuntimeVersion:\t" + module.RuntimeVersion);
+                if (Trace.Verbose) Console.WriteLine("  Module HasExportedTypes:\t" + module.HasExportedTypes.ToString());
+                if (Trace.Verbose) Console.WriteLine("  Module HasTypes:\t" + module.HasTypes.ToString());
+                if (Trace.Verbose) Console.WriteLine("  Module HasCustomAttributes:\t" + module.HasCustomAttributes.ToString());
+                if (Trace.Verbose) Console.WriteLine("  Module HasModuleReferences:\t" + module.HasModuleReferences.ToString());
+                if (Trace.Verbose) Console.WriteLine("  Module HasAssemblyReferences:\t" + module.HasAssemblyReferences.ToString());
 
                 ctx.listModuleInfo.Add(new NPCModuleInfo(module.Name, module.FullyQualifiedName));
 
                 foreach (AssemblyNameReference ar in module.AssemblyReferences)
                 {
-                    Console.WriteLine("Assembly Reference Name:\t" + ar.Name);
-                    Console.WriteLine("  Assembly Reference FullName:\t" + ar.FullName);
-                    Console.WriteLine("  Assembly Reference Version:\t" + ar.Version.ToString());
-                    //Console.WriteLine("Assembly IsWindowsRuntime:\t" + ar.IsWindowsRuntime.ToString());
+                    if (Trace.Verbose) Console.WriteLine("Assembly Reference Name:\t" + ar.Name);
+                    if (Trace.Verbose) Console.WriteLine("  Assembly Reference FullName:\t" + ar.FullName);
+                    if (Trace.Verbose) Console.WriteLine("  Assembly Reference Version:\t" + ar.Version.ToString());
+                    //if (Trace.Verbose) Console.WriteLine("Assembly IsWindowsRuntime:\t" + ar.IsWindowsRuntime.ToString());
 
                     // Add it if it is not already there
                     // https://msdn.microsoft.com/en-us/library/x0b5b5bc(v=vs.110).aspx
@@ -329,27 +329,27 @@ namespace npcc
                 };
 
                 int classIndex = 0;
-                Console.WriteLine("Module Types...");
+                if (Trace.Verbose) Console.WriteLine("Module Types...");
                 foreach (TypeDefinition t in module.Types)
                 {
-                    Console.WriteLine("Type Name:\t" + t.Name);
-                    Console.WriteLine("  t.Fullname:\t" + t.FullName);
-                    Console.WriteLine("  t.IsAbstract:\t" + t.IsAbstract.ToString());
-                    Console.WriteLine("  t.IsClass:\t" + t.IsClass.ToString());
-                    Console.WriteLine("  t.BaseType:\t" + (t.BaseType == null ? "<null>" : t.BaseType.ToString()));
-                    Console.WriteLine("  t.DeclaringType:\t" + (t.DeclaringType == null ? "<null>" : t.DeclaringType.ToString()));
-                    Console.WriteLine("  t.IsEnum:\t" + t.IsEnum.ToString());
-                    Console.WriteLine("  t.IsInterface:\t" + t.IsInterface.ToString());
-                    Console.WriteLine("  t.IsNotPublic:\t" + t.IsNotPublic.ToString());
-                    Console.WriteLine("  t.IsPublic:\t" + t.IsPublic.ToString());
-                    Console.WriteLine("  t.HasInterfaces:\t" + t.HasInterfaces.ToString());
-                    Console.WriteLine("  t.HasNestedTypes:\t" + t.HasNestedTypes.ToString());
-                    Console.WriteLine("  t.HasCustomAttributes:\t" + t.HasCustomAttributes.ToString());
-                    Console.WriteLine("  t.HasFields:\t" + t.HasFields.ToString());
-                    Console.WriteLine("  t.HasMethods:\t" + t.HasMethods.ToString());
-                    Console.WriteLine("  t.HasProperties:\t" + t.HasProperties.ToString());
-                    Console.WriteLine("  t.HasMethods:\t" + t.HasProperties.ToString());
-                    Console.WriteLine("  t.Namespace:\t" + t.Namespace);
+                    if (Trace.Verbose) Console.WriteLine("Type Name:\t" + t.Name);
+                    if (Trace.Verbose) Console.WriteLine("  t.Fullname:\t" + t.FullName);
+                    if (Trace.Verbose) Console.WriteLine("  t.IsAbstract:\t" + t.IsAbstract.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.IsClass:\t" + t.IsClass.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.BaseType:\t" + (t.BaseType == null ? "<null>" : t.BaseType.ToString()));
+                    if (Trace.Verbose) Console.WriteLine("  t.DeclaringType:\t" + (t.DeclaringType == null ? "<null>" : t.DeclaringType.ToString()));
+                    if (Trace.Verbose) Console.WriteLine("  t.IsEnum:\t" + t.IsEnum.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.IsInterface:\t" + t.IsInterface.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.IsNotPublic:\t" + t.IsNotPublic.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.IsPublic:\t" + t.IsPublic.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasInterfaces:\t" + t.HasInterfaces.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasNestedTypes:\t" + t.HasNestedTypes.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasCustomAttributes:\t" + t.HasCustomAttributes.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasFields:\t" + t.HasFields.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasMethods:\t" + t.HasMethods.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasProperties:\t" + t.HasProperties.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.HasMethods:\t" + t.HasProperties.ToString());
+                    if (Trace.Verbose) Console.WriteLine("  t.Namespace:\t" + t.Namespace);
                    
 
                     if (t.IsClass & t.Name != "<Module>")
@@ -361,17 +361,17 @@ namespace npcc
                     if (t.BaseType != null)
                     {
                         TypeReference trBaseType = t.BaseType;
-                        Console.WriteLine("    trBaseType Name:\t" + trBaseType.Name);
-                        //Console.WriteLine("    trBaseType DeclaringType:\t" + trBaseType.DeclaringType.ToString());
+                        if (Trace.Verbose) Console.WriteLine("    trBaseType Name:\t" + trBaseType.Name);
+                        //if (Trace.Verbose) Console.WriteLine("    trBaseType DeclaringType:\t" + trBaseType.DeclaringType.ToString());
                     }
 
-                    Console.WriteLine("Type Interfaces...");
+                    if (Trace.Verbose) Console.WriteLine("Type Interfaces...");
                     foreach (var i in t.Interfaces)
                     {
-                        Console.WriteLine("    Field Name:\t" + i.Name);
-                        Console.WriteLine("      f.Fullname:\t" + i.FullName);
-                        //Console.WriteLine("      f.Module.FullyQualifiedName:\t" + i.Module.FullyQualifiedName);
-                        Console.WriteLine("      f.DeclaringType:\t" + (i.DeclaringType == null ? "<null>" : i.DeclaringType.ToString()));
+                        if (Trace.Verbose) Console.WriteLine("    Field Name:\t" + i.Name);
+                        if (Trace.Verbose) Console.WriteLine("      f.Fullname:\t" + i.FullName);
+                        //if (Trace.Verbose) Console.WriteLine("      f.Module.FullyQualifiedName:\t" + i.Module.FullyQualifiedName);
+                        if (Trace.Verbose) Console.WriteLine("      f.DeclaringType:\t" + (i.DeclaringType == null ? "<null>" : i.DeclaringType.ToString()));
 
                         if (t.IsClass & t.Name != "<Module>")
                         {
@@ -379,17 +379,17 @@ namespace npcc
                         }
                     }
 
-                    Console.WriteLine("Type Fields...");
+                    if (Trace.Verbose) Console.WriteLine("Type Fields...");
                     foreach (FieldDefinition f in t.Fields)
                     {
-                        Console.WriteLine("    Field Name:\t" + f.Name);
-                        Console.WriteLine("      f.Fullname:\t" + f.FullName);
-                        //Console.WriteLine("      f.Module.FullyQualifiedName:\t" + f.Module.FullyQualifiedName);
-                        Console.WriteLine("      f.DeclaringType:\t" + f.DeclaringType.ToString());
-                        Console.WriteLine("      f.FieldType:\t" + f.FieldType.ToString());
-                        Console.WriteLine("      f.IsPrivate:\t" + f.IsPrivate.ToString());
-                        Console.WriteLine("      f.IsPublic:\t" + f.IsPublic.ToString());
-                        Console.WriteLine("      f.InitialValue.Length:\t" + f.InitialValue.Length.ToString());
+                        if (Trace.Verbose) Console.WriteLine("    Field Name:\t" + f.Name);
+                        if (Trace.Verbose) Console.WriteLine("      f.Fullname:\t" + f.FullName);
+                        //if (Trace.Verbose) Console.WriteLine("      f.Module.FullyQualifiedName:\t" + f.Module.FullyQualifiedName);
+                        if (Trace.Verbose) Console.WriteLine("      f.DeclaringType:\t" + f.DeclaringType.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.FieldType:\t" + f.FieldType.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.IsPrivate:\t" + f.IsPrivate.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.IsPublic:\t" + f.IsPublic.ToString());
+                        if (Trace.Verbose) Console.WriteLine("      f.InitialValue.Length:\t" + f.InitialValue.Length.ToString());
 
                         if (t.IsClass & t.Name != "<Module>")
                         {
@@ -397,15 +397,15 @@ namespace npcc
                         }
                     }
 
-                    Console.WriteLine("Type Methods...");
+                    if (Trace.Verbose) Console.WriteLine("Type Methods...");
                     foreach (MethodDefinition m in t.Methods)
                     {
-                        Console.WriteLine("    Method Name:\t" + m.Name);
-                        Console.WriteLine("      m.Fullname:\t" + m.FullName);
-                        //Console.WriteLine("      m.Module.FullyQualifiedName:\t" + m.Module.FullyQualifiedName);
-                        Console.WriteLine("      m.ReturnType:\t" + m.ReturnType.ToString());
-                        Helpers.PrintMethods(m);
-                        Helpers.PrintFields(m);
+                        if (Trace.Verbose) Console.WriteLine("    Method Name:\t" + m.Name);
+                        if (Trace.Verbose) Console.WriteLine("      m.Fullname:\t" + m.FullName);
+                        //if (Trace.Verbose) Console.WriteLine("      m.Module.FullyQualifiedName:\t" + m.Module.FullyQualifiedName);
+                        if (Trace.Verbose) Console.WriteLine("      m.ReturnType:\t" + m.ReturnType.ToString());
+                        if (Trace.Verbose) Helpers.PrintMethods(m);
+                        if (Trace.Verbose) Helpers.PrintFields(m);
                     }
                     if (t.IsClass & t.Name != "<Module>")
                     {
@@ -423,7 +423,7 @@ namespace npcc
             if (ctx.listModuleInfo.Count != 1)
             {
                 string message = "**ERROR** Input assembly file must only contain 1 module definition/file. Not " + ctx.listModuleInfo.Count.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
@@ -431,35 +431,35 @@ namespace npcc
             {
                 string message = "**ERROR** ctx.listAssemblyInfo.Count < NPCCompilerContext.listDefaultAssemblies.Length. Not " +
                                  NPCCompilerContext.listDefaultAssemblies.Length.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
             if (ctx.listClassInfo.Count < 1)
             {
                 string message = "**ERROR** Input assembly file must contain 1 or more class definitions. Not " + ctx.listClassInfo.Count.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
             if (ctx.listFieldInfo.Count < 1)
             {
                 string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
             if (ctx.listClassInterfaceInfo.Count < 1)
             {
                 string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
             if (ctx.listClassInterfaceInfo.Count > (int)NPCLevels.NPCEndMarker)
             {
                 string message = "**ERROR** Input assembly file class is derived from too many interfaces. Not " + ctx.listClassInterfaceInfo.Count.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
@@ -468,9 +468,10 @@ namespace npcc
 
         static void Main(string[] args)
         {
-            Console.WriteLine("*********************************************************");
-            Console.WriteLine(" " + ProgramName + " " + Assembly.GetEntryAssembly().GetName().Version.ToString());
-            Console.WriteLine("*********************************************************");
+            if (Trace.Splash) Console.WriteLine("*********************************************************");
+            if (Trace.Splash) Console.WriteLine(" " + ProgramName + " " + Assembly.GetEntryAssembly().GetName().Version.ToString());
+            if (Trace.Splash) Console.WriteLine("*********************************************************");
+            if (Trace.Splash) Console.WriteLine();
 
             NPCCompilerContext ctx = new NPCCompilerContext();
 
@@ -478,20 +479,26 @@ namespace npcc
             DirectoryInfo di = new DirectoryInfo(@"..\..\...\NPC.TestCases.T1\bin\debug");
             foreach (FileInfo fi in di.GetFiles("*.dll"))
             {
+                if (Trace.Info) Console.WriteLine("**INFO*** Assembly:\t" + fi.FullName);
+
+                if (Trace.Info) Console.WriteLine();
                 success = ParseAssembly(ctx, fi);
                 if (!success) throw new ArgumentException("Bad input assembly file (DLL): parse failed", fi.FullName);
-                Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Parsing succeeded:\t" + fi.FullName);
 
+                if (Trace.Info) Console.WriteLine();
                 success = ValidateAssembly(ctx);
                 if (!success) throw new ArgumentException("Bad input assembly file (DLL): validation failed", fi.FullName);
-                Console.WriteLine("**INFO*** Assembly validation succeeded:\t" + fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Assembly validation succeeded:\t" + fi.FullName);
 
+                if (Trace.Info) Console.WriteLine();
                 success = ValidateTargetProjectEnvironment(ctx);
                 if (!success) throw new ArgumentException("Bad target project environment/prerequisites: validation failed", fi.FullName);
-                Console.WriteLine("**INFO*** Target project environment/prerequisites validation succeeded:\t" + fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** Target project environment/prerequisites validation succeeded:\t" + fi.FullName);
 
                 for (int classIndex = 0; classIndex < ctx.listClassInfo.Count; classIndex++)
                 {
+                    if (Trace.Info) Console.WriteLine();
                     List<NPCClassInterfaceInfo> listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
                        delegate (NPCClassInterfaceInfo dci)
                        {
@@ -501,7 +508,7 @@ namespace npcc
                     {
                         success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -513,7 +520,7 @@ namespace npcc
                     {
                         success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -525,7 +532,7 @@ namespace npcc
                     {
                         success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -537,7 +544,7 @@ namespace npcc
                     {
                         success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -549,7 +556,7 @@ namespace npcc
                     {
                         success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
                     }
                 }
             }
@@ -557,11 +564,11 @@ namespace npcc
             //var type = module.Types.First(x => x.Name == "A");
             //var method = type.Methods.First(x => x.Name == "test");
 
-            //PrintMethods(method);
-            //PrintFields(method);
+            //if (Trace.Verbose) PrintMethods(method);
+            //if (Trace.Verbose) PrintFields(method);
 
-            Console.WriteLine("Press enter to exit...");
-            Console.ReadLine();
+            if (Trace.Exit) Console.WriteLine("Press enter to exit...");
+            if (Trace.Exit) Console.ReadLine();
         }
 
         private static bool ValidateTargetProjectEnvironment(NPCCompilerContext ctx)
@@ -572,20 +579,20 @@ namespace npcc
             FileInfo[] files = di.GetFiles("*.dll");
             foreach (FileInfo fi in files)
             {
-                Console.WriteLine("**INFO*** ValidateEnvironment:\t" + fi.FullName);
+                if (Trace.Info) Console.WriteLine("**INFO*** ValidateEnvironment:\t" + fi.FullName);
             }
 
             if (files.Length != 1)
             {
                 string message = "**ERROR** Project needs to be a standard NeoContract project with containing 1 DLL in the project folder. Not " + files.Length.ToString();
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
             if (files[0].Name != NPCCompilerContext.NeoConvertTaskDllName)
             {
                 string message = "**ERROR** Project needs to be a standard NeoContract project with containing " + NPCCompilerContext.NeoConvertTaskDllName + ". Not " + files[0].Name;
-                Console.WriteLine(message);
+                if (Trace.Error) Console.WriteLine(message);
                 success = false;
             }
 
