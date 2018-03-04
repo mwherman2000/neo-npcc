@@ -1,6 +1,8 @@
 # neo-npcc
 NEO Persistable Class (NPC) Compiler (npcc) - Automatic code generation of NEO Persistable Classes
 
+This independent, open source project is 100% community-supported by people like yourself through your contributions of time, energy, passion, promotion, and donations.  To learn more about contributing to this project or any of the `neo-csharpcoe` projects, click [here](https://github.com/mwherman2000/neo-csharpcoe/blob/master/CONTRIBUTE.md).
+
 CURRENT NPC V2.0 PROJECT can be found [here](https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md) ([https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md](https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md)).
 
 PREVIOUS NPC V1.0 PROJECT can be found [here](https://github.com/mwherman2000/neo-persistibleclasses/blob/master/README.md) ([https://github.com/mwherman2000/neo-persistibleclasses/blob/master/README.md](https://github.com/mwherman2000/neo-persistibleclasses/blob/master/README.md)) (with the mispelled project name :-)). 
