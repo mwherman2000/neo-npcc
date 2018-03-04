@@ -1,5 +1,5 @@
 # neo-npcc
-NEO Persistable Class Compiler (npcc) - Auto-generation of NPC Class implementations based on desired NPC Levels
+NEO Persistable Class (NPC) Compiler (npcc) - Automatic code generation of NEO Persistable Classes
 
 CURRENT NPC V2.0 PROJECT can be found [here](https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md) ([https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md](https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md)).
 
