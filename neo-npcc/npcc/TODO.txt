@@ -1,0 +1,7 @@
+﻿NeoStorageKey.cs
+public static byte[] StorageKey(NeoStorageKey nsk, int index, byte[] fieldName) 
+Change int index to BigInteger index
+
+npcc
+public static bool PutElement(UserCredentials e, NeoVersionedAppUser vau, int index)
+Change int index to BigInteger index

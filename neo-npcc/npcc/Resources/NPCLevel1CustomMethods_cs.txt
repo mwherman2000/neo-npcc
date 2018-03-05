@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 /// <summary>
-/// #NAMESPACE#.#CLASSNAME# - Level 0 Basic
+/// #NAMESPACE#.#CLASSNAME# Custom Methods
 ///
 /// Processed:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
@@ -15,5 +11,11 @@ using System.Threading.Tasks;
 
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# /* Level 0 Basic */
+    public partial class #CLASSNAME#
     {
+        public static void L1CustomMethod1(NeoCounter e) // TODO: Change the method name
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

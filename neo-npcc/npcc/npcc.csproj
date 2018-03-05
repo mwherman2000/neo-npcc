@@ -115,5 +115,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\NPCLevel4EBuryElement_cs.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel2CustomMethods_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel3CustomMethods_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel0CustomMethods_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel1CustomMethods_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4CustomMethods_cs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 2 Persistable
 ///
-/// Generated:       2018-03-03 9:06:59 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -22,8 +22,8 @@ namespace NPC.dApps.NeoDraw.Main
         // Class name and property names
         private const string _className = "NeoCounter";
 
-        private const string _sNextIndex = "NextIndex"; // Template: NPCLevel2AFieldConsts_cs.txt
-        private static readonly byte[] _bNextIndex = Helper.AsByteArray(_sNextIndex);
+        private const string _sCurrentNumber = "CurrentNumber"; // Template: NPCLevel2AFieldConsts_cs.txt
+        private static readonly byte[] _bCurrentNumber = Helper.AsByteArray(_sCurrentNumber);
         private const string _sSTA = "_STA"; // Template: NPCLevel2BMissing_cs.txt
         private static readonly byte[] _bSTA = Helper.AsByteArray(_sSTA);
 
@@ -43,7 +43,7 @@ namespace NPC.dApps.NeoDraw.Main
         public static NeoCounter Missing()
         {
             NeoCounter e = new NeoCounter();
-            e._nextIndex = 0; 
+            e._currentNumber = 0; 
             e._state = NeoEntityModel.EntityState.MISSING;
             LogExt("Missing().NeoCounter", e);
             return e;
@@ -59,7 +59,7 @@ namespace NPC.dApps.NeoDraw.Main
             e._state = NeoEntityModel.EntityState.PUTTED;
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());
 
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bNextIndex), e._nextIndex); // Template: NPCLevel2CPut_cs.txt
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bCurrentNumber), e._currentNumber); // Template: NPCLevel2CPut_cs.txt
             LogExt("Put(bkey).NeoCounter", e); // Template: NPCLevel2DPut_cs.txt
             return true;
         }
@@ -77,7 +77,7 @@ namespace NPC.dApps.NeoDraw.Main
             BigInteger bis = e._state.AsBigInteger();
             Trace("Put(skey).bis", bis);
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, bis);
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sNextIndex, e._nextIndex); // Template: NPCLevel2EPut_cs.txt
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sCurrentNumber, e._currentNumber); // Template: NPCLevel2EPut_cs.txt
             LogExt("Put(skey).NeoCounter", e); // Template: NPCLevel2FGet_cs.txt
             return true;
         }
@@ -103,8 +103,8 @@ namespace NPC.dApps.NeoDraw.Main
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new NeoCounter();
 
-                BigInteger NextIndex = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bNextIndex)).AsBigInteger(); //NPCLevel2GGet_cs.txt
-                e._nextIndex = NextIndex;  // Template: NPCLevel2HGet_cs.txt
+                BigInteger CurrentNumber = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bCurrentNumber)).AsBigInteger(); //NPCLevel2GGet_cs.txt
+                e._currentNumber = CurrentNumber;  // Template: NPCLevel2HGet_cs.txt
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
@@ -133,9 +133,9 @@ namespace NPC.dApps.NeoDraw.Main
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new NeoCounter();
 
-                BigInteger NextIndex = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sNextIndex).AsBigInteger(); //NPCLevel2IGet_cs.txt
-                NeoTrace.Trace("Get(skey).e._nextIndex", e._nextIndex); // Template: NPCLevel2Part2_cs.txt
-                e._nextIndex = NextIndex; 
+                BigInteger CurrentNumber = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sCurrentNumber).AsBigInteger(); //NPCLevel2IGet_cs.txt
+                NeoTrace.Trace("Get(skey).e._currentNumber", e._currentNumber); // Template: NPCLevel2Part2_cs.txt
+                e._currentNumber = CurrentNumber; 
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }

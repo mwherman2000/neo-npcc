@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 3 Deletable
 ///
-/// Generated:      2018-03-03 9:06:59 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -28,7 +28,7 @@ namespace NPC.dApps.NeoDraw.Main
         public static NeoCounter Tombstone()
         {
             NeoCounter e = new NeoCounter();
-            e._nextIndex = 0; 
+            e._currentNumber = 0; 
             e._state = NeoEntityModel.EntityState.TOMBSTONED;
             LogExt("Tombstone().NeoCounter", e);
             return e;
@@ -53,7 +53,7 @@ namespace NPC.dApps.NeoDraw.Main
                 e = NeoCounter.Tombstone(); // but don't overwrite existing field values - just tombstone it
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bSTA), e._state.AsBigInteger());
 
-                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bNextIndex), e._nextIndex); // Template: NPCLevel3ABury_cs.txt
+                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bCurrentNumber), e._currentNumber); // Template: NPCLevel3ABury_cs.txt
             } // Template: NPCLevel3BBury_cs.txt
             LogExt("Bury(bkey).NeoCounter", e); 
             return e; // return Entity e to signal if key is Missing or bad key
@@ -78,7 +78,7 @@ namespace NPC.dApps.NeoDraw.Main
                 e = NeoCounter.Tombstone(); // but don't overwrite existing field values - just tombstone it
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, e._state.AsBigInteger());
 
-                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sNextIndex, e._nextIndex); // Template: NPCLevel3CBury_cs.txt
+                //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sCurrentNumber, e._currentNumber); // Template: NPCLevel3CBury_cs.txt
             } // Template: NPCLevel3Part2_cs.txt
             LogExt("Bury(skey).NeoCounter", e);
             return e; // return Entity e to signal if key is Missing or bad key

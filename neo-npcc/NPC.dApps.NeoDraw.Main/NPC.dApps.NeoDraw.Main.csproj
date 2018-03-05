@@ -52,6 +52,7 @@
     <Compile Include="NeoCounterL2Persistable.cs" />
     <Compile Include="NeoCounterL3Deletable.cs" />
     <Compile Include="NeoCounterL4Collectible.cs" />
+    <Compile Include="NeoCounterL4CustomMethods.cs" />
     <Compile Include="NeoEntityModel.cs" />
     <Compile Include="NeoStorageKey.cs" />
     <Compile Include="NeoTrace.cs" />

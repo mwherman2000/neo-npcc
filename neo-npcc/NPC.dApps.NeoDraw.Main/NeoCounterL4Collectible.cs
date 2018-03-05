@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 4 Collectible
 ///
-/// Generated:      2018-03-03 9:06:59 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -37,7 +37,7 @@ namespace NPC.dApps.NeoDraw.Main
             e._state = NeoEntityModel.EntityState.PUTTED;
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
  
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bNextIndex), e._nextIndex); // Template: NPCLevel4APutElement_cs.txt
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bCurrentNumber), e._currentNumber); // Template: NPCLevel4APutElement_cs.txt
             LogExt("PutElement(vau,i).NeoCounter", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
@@ -76,8 +76,8 @@ namespace NPC.dApps.NeoDraw.Main
                 else // not MISSING && not TOMBSTONED
                 {
                     e = new NeoCounter();
-                    BigInteger NextIndex = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bNextIndex)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
-                    e._nextIndex = NextIndex;  // NPCLevel4DBuryElement_cs.txt
+                    BigInteger CurrentNumber = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bCurrentNumber)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
+                    e._currentNumber = CurrentNumber;  // NPCLevel4DBuryElement_cs.txt
                     e._state = sta;
                     e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
@@ -116,7 +116,7 @@ namespace NPC.dApps.NeoDraw.Main
                 e = NeoCounter.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
 
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bNextIndex), e._nextIndex); // NPCLevel4EBuryElement_cs.txt
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bCurrentNumber), e._currentNumber); // NPCLevel4EBuryElement_cs.txt
             } // Template: NPCLevel4Part2_cs.txt
             LogExt("Bury(vau,i).NeoCounter", e);
             return e;

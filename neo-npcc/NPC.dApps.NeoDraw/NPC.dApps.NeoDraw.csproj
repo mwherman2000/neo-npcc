@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NeoCounterL4CustomMethods.cs" />
     <Compile Include="NeoCounter.cs" />
     <Compile Include="UserPoint.cs" />
     <Compile Include="UserCredentials.cs" />

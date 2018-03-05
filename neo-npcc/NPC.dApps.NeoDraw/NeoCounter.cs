@@ -1,13 +1,14 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace NPC.dApps.NeoDraw
 {
-    public class NeoCounter:   NPCLevel0Basic,
-                        NPCLevel1Managed,
-                        NPCLevel2Persistable,
-                        NPCLevel3Deletable,
-                        NPCLevel4Collectible
+    public partial class NeoCounter:    NPCLevel0Basic,
+                                        NPCLevel1Managed,
+                                        NPCLevel2Persistable,
+                                        NPCLevel3Deletable,
+                                        NPCLevel4Collectible
     {
-        public BigInteger nextIndex = 1234;
+        public BigInteger currentNumber; // Current value of a counter. The last number given out.
     }
 }

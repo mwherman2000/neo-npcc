@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 1 Managed
 ///
-/// Generated:       2018-03-03 9:06:59 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -27,15 +27,15 @@ namespace NPC.dApps.NeoDraw.Main
 
         // Accessors
 
-        public static void SetNextIndex(NeoCounter e, BigInteger value) // Template: NPCLevel1SetXGetX_cs.txt
-                               { e._nextIndex = value; e._state = NeoEntityModel.EntityState.SET; }
-        public static BigInteger GetNextIndex(NeoCounter e) { return e._nextIndex; }
-        public static void Set(NeoCounter e, BigInteger NextIndex) // Template: NPCLevel1Set_cs.txt
-                                { e._nextIndex = NextIndex;  e._state = NeoEntityModel.EntityState.SET; }        
+        public static void SetCurrentNumber(NeoCounter e, BigInteger value) // Template: NPCLevel1SetXGetX_cs.txt
+                               { e._currentNumber = value; e._state = NeoEntityModel.EntityState.SET; }
+        public static BigInteger GetCurrentNumber(NeoCounter e) { return e._currentNumber; }
+        public static void Set(NeoCounter e, BigInteger CurrentNumber) // Template: NPCLevel1Set_cs.txt
+                                { e._currentNumber = CurrentNumber;  e._state = NeoEntityModel.EntityState.SET; }        
         // Factory methods // Template: NPCLevel1Part2_cs.txt
         private static NeoCounter _Initialize(NeoCounter e)
         {
-            e._nextIndex = 0; 
+            e._currentNumber = 0; 
             e._state = NeoEntityModel.EntityState.NULL;
             LogExt("_Initialize(e).NeoCounter", e);
             return e;
@@ -47,10 +47,10 @@ namespace NPC.dApps.NeoDraw.Main
             LogExt("New().NeoCounter", e);
             return e;
         }
-        public static NeoCounter New(BigInteger NextIndex)
+        public static NeoCounter New(BigInteger CurrentNumber)
         {
             NeoCounter e = new NeoCounter();
-            e._nextIndex = NextIndex; 
+            e._currentNumber = CurrentNumber; 
             e._state = NeoEntityModel.EntityState.INIT;
             LogExt("New(.,.).NeoCounter", e);
             return e;
@@ -72,11 +72,11 @@ namespace NPC.dApps.NeoDraw.Main
         // Log/trace methods
         public static void Log(string label, NeoCounter e)
         {
-            NeoTrace.Trace(label, e._nextIndex);
+            NeoTrace.Trace(label, e._currentNumber);
         }
         public static void LogExt(string label, NeoCounter e)
         {
-            NeoTrace.Trace(label, e._nextIndex, e._state);
+            NeoTrace.Trace(label, e._currentNumber, e._state);
         }
     }
 }

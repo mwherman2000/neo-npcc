@@ -12,6 +12,12 @@ namespace NPC.dApps.NeoDraw
     public interface NPCLevel3Deletable { }
     public interface NPCLevel4Collectible { }
 
+    public interface NPCLevel0CustomMethods { }
+    public interface NPCLevel1CustomMethods { }
+    public interface NPCLevel2CustomMethods { }
+    public interface NPCLevel3CustomMethods { }
+    public interface NPCLevel4CustomMethods { }
+
     public class UserCredentials :   NPCLevel0Basic,
                                      NPCLevel1Managed,
                                      NPCLevel2Persistable,

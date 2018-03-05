@@ -23,6 +23,13 @@ namespace npcc
         NPCLevel6Authorized,
         NPCLevel7Optimized,
         NPCLevel8Auditable,
+
+        NPCLevel0CustomMethods,
+        NPCLevel1CustomMethods,
+        NPCLevel2CustomMethods,
+        NPCLevel3CustomMethods,
+        NPCLevel4CustomMethods,
+
         NPCEndMarker
     }
 
@@ -36,17 +43,23 @@ namespace npcc
         L5Extendible_cs,
         L6Authorized_cs,
         L7Optimized_cs,
-        L8Auditable_cs
+        L8Auditable_cs,
+
+        L0CustomMethods_cs,
+        L1CustomMethods_cs,
+        L2CustomMethods_cs,
+        L3CustomMethods_cs,
+        L4CustomMethods_cs,
     }
 
 
     public class NPCModuleInfo
     {
         public string moduleInputName;
-        public string moduleFileFullyQualifiedName;
-        public string moduleProjectName;
-        public string moduleFullyQualifiedProjectFolder;
-        public string moduleFullyQualifiedRepositoryFolder;
+        public string moduleDLLFullyQualifiedName;
+        public string moduleModelClassProjectName;
+        public string moduleModelClassFullyQualifiedProjectFolder;
+        public string moduleModelClassFullyQualifiedRepositoryFolder;
         public string moduleTargetProjectName;
         public string moduleTargetFullyQualifiedProjectFolder;
 
@@ -56,24 +69,24 @@ namespace npcc
             Debug.Assert(!String.IsNullOrEmpty(moduleFullyQualifiedName), "moduleFullyQualifiedName");
 
             moduleInputName = name;
-            moduleFileFullyQualifiedName = moduleFullyQualifiedName;
+            moduleDLLFullyQualifiedName = moduleFullyQualifiedName;
 
-            int binPos = moduleFileFullyQualifiedName.IndexOf("\\bin");
-            int projectPos = moduleFileFullyQualifiedName.Substring(0, binPos).LastIndexOf("\\");
+            int binPos = moduleDLLFullyQualifiedName.IndexOf("\\bin");
+            int projectPos = moduleDLLFullyQualifiedName.Substring(0, binPos).LastIndexOf("\\");
 
-            moduleProjectName = moduleFileFullyQualifiedName.Substring(projectPos + 1, binPos - projectPos - 1);
-            moduleFullyQualifiedProjectFolder = moduleFileFullyQualifiedName.Substring(0, binPos - 1);
-            moduleFullyQualifiedRepositoryFolder = moduleFileFullyQualifiedName.Substring(0, projectPos);
+            moduleModelClassProjectName = moduleDLLFullyQualifiedName.Substring(projectPos + 1, binPos - projectPos - 1);
+            moduleModelClassFullyQualifiedProjectFolder = moduleDLLFullyQualifiedName.Substring(0, binPos);
+            moduleModelClassFullyQualifiedRepositoryFolder = moduleDLLFullyQualifiedName.Substring(0, projectPos);
 
-            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + name + "', '" + moduleFileFullyQualifiedName);
-            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleProjectName + "', '" + moduleFullyQualifiedProjectFolder + "', '" + moduleFullyQualifiedRepositoryFolder + "'");
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:DLL\t'" + name + "', '" + moduleDLLFullyQualifiedName);
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:ModelClass\t'" + moduleModelClassProjectName + "', '" + moduleModelClassFullyQualifiedProjectFolder + "', '" + moduleModelClassFullyQualifiedRepositoryFolder + "'");
         }
 
         public string SetTargetProjectName(string snamespace)
         {
             moduleTargetProjectName = snamespace + ".Main";
-            moduleTargetFullyQualifiedProjectFolder = moduleFullyQualifiedRepositoryFolder + "\\" + moduleTargetProjectName;
-            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:\t'" + moduleTargetProjectName + "', '" + moduleTargetFullyQualifiedProjectFolder + "'");
+            moduleTargetFullyQualifiedProjectFolder = moduleModelClassFullyQualifiedRepositoryFolder + "\\" + moduleTargetProjectName;
+            if (Trace.Info) Console.WriteLine("**INFO*** NPCModuleInfo:Target\t'" + moduleTargetProjectName + "', '" + moduleTargetFullyQualifiedProjectFolder + "'");
             return moduleTargetProjectName;
         }
     }
@@ -201,6 +214,12 @@ namespace npcc
                     case NPCLevels.NPCLevel5Extendible:
                     case NPCLevels.NPCLevel6Authorized:
                     case NPCLevels.NPCLevel7Optimized:
+
+                    case NPCLevels.NPCLevel0CustomMethods:
+                    case NPCLevels.NPCLevel1CustomMethods:
+                    case NPCLevels.NPCLevel2CustomMethods:
+                    case NPCLevels.NPCLevel3CustomMethods:
+                    case NPCLevels.NPCLevel4CustomMethods:
                         {
                             interfaceInputName = name;
                             interfaceOutputName = name.Substring(0, 1).ToUpper() + name.Substring(1);
@@ -348,7 +367,7 @@ namespace npcc
                     if (listClassInterfaces.Count == 1)
                     {
                         success = GenCode.GenerateCodeLevel0Basic(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel0Basic.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel0Basic.ToString());
                     }
 
@@ -360,7 +379,7 @@ namespace npcc
                     if (listClassInterfaces.Count == 1)
                     {
                         success = GenCode.GenerateCodeLevel1Managed(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel1Managed.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel1Managed.ToString());
                     }
 
@@ -372,7 +391,7 @@ namespace npcc
                     if (listClassInterfaces.Count == 1)
                     {
                         success = GenCode.GenerateCodeLevel2Persistable(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel2Persistable.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel2Persistable.ToString());
                     }
 
@@ -384,7 +403,7 @@ namespace npcc
                     if (listClassInterfaces.Count == 1)
                     {
                         success = GenCode.GenerateCodeLevel3Deletable(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel3Deletable.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel3Deletable.ToString());
                     }
 
@@ -396,6 +415,18 @@ namespace npcc
                     if (listClassInterfaces.Count == 1)
                     {
                         success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4Collectible.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName.EndsWith("CustomMethods"));
+                       });
+                    if (listClassInterfaces.Count >= 1)
+                    {
+                        success = GenCode.GenerateCodeCustomMethods(ctx, classIndex, listClassInterfaces);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
                     }

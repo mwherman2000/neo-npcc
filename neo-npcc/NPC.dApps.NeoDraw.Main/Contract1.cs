@@ -38,7 +38,7 @@ namespace NPC.dApps.NeoDraw.Main
             else
             {
                 entityType = NeoDrawEntityType.UnknownEntityType;
-                message = "unknown entity type \"" + entity + "\"";
+                message = "unknown entity type '" + entity + "'";
                 success = false;
             }
             NeoTrace.Trace("entityType", (BigInteger)((int)entityType));
@@ -91,7 +91,7 @@ namespace NPC.dApps.NeoDraw.Main
                 }
                 else
                 {
-                    message = "unknown operation \"" + operation + "\"";
+                    message = "unknown operation '" + operation + "'";
                     NeoTrace.Trace("**ERROR**", message);
                     success = false;
                 }
@@ -120,11 +120,16 @@ namespace NPC.dApps.NeoDraw.Main
             object[] results = { 0x0 };
 
             byte[] encodedUsername = (byte[])args[0];
-            byte[] encodedPassword = (byte[])args[1];
             NeoTrace.Trace("encodedUsername", encodedUsername);
-            NeoTrace.Trace("encodedPassword", encodedPassword);
 
-            UserCredentials uc = UserCredentials.GetElement(AppVAU, 0);
+            int indexMax = (int)NeoCounter.TakeNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
+
+            UserCredentials uc = UserCredentials.Null();
+            for (int index = 0; index <= indexMax; index++) // TODO - performance
+            {
+                uc = UserCredentials.GetElement(AppVAU, index);
+                if (UserCredentials.GetEncodedUsername(uc) == encodedUsername) break;
+            }
 
             results = new object[] { uc };
             return results;
@@ -165,8 +170,10 @@ namespace NPC.dApps.NeoDraw.Main
             NeoTrace.Trace("encodedUsername", encodedUsername);
             NeoTrace.Trace("encodedPassword", encodedPassword);
 
+            int index = (int)NeoCounter.TakeNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
+
             UserCredentials uc = UserCredentials.New(encodedUsername, encodedPassword);
-            UserCredentials.PutElement(uc, AppVAU, 0);
+            UserCredentials.PutElement(uc, AppVAU, index);
 
             results = new object[] { message };
             return results;

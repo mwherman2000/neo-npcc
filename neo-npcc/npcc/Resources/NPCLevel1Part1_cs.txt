@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// #NAMESPACE#.#CLASSNAME# - Level 1 Managed
 ///
-/// Generated:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// Processed:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
