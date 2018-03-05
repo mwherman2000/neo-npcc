@@ -14,6 +14,7 @@ namespace NPC.dApps.NeoDraw.Main
 {
     public partial class NeoCounter    
     {
+        private const string DOMAINAC = "AppCounters";
         public enum NeoCounters
         {
             UserCounter,
@@ -22,17 +23,25 @@ namespace NPC.dApps.NeoDraw.Main
 
         public static BigInteger TakeNextNumber(NeoVersionedAppUser vau, NeoCounters counter)
         {
-            NeoCounter nc = NeoCounter.GetElement(vau, (int)counter); // Get persisted counter value
+            NeoCounter nc = NeoCounter.GetElement(vau, DOMAINAC, (int)counter); // Get persisted counter value
+            NeoCounter.LogExt("TakeNextNumber", nc);
+
             if (NeoCounter.IsMissing(nc))
             {
                 nc = NeoCounter.New(); // Create a new counter value
             }
             else // Get and increment counter value by 1
             {
-                NeoCounter.SetCurrentNumber(nc, NeoCounter.GetCurrentNumber(nc) + 1);
+                BigInteger newNumber = NeoCounter.GetCurrentNumber(nc);
+                NeoTrace.Trace("newNumber", newNumber);
+                newNumber = newNumber + 1;
+                NeoTrace.Trace("newNumber", newNumber);
+                NeoCounter.SetCurrentNumber(nc, newNumber);
+                NeoCounter.LogExt("TakeNextNumber", nc);
             }
 
             NeoCounter.PutElement(nc, vau, (int)counter); // Persist the incremented current value of the counter
+            NeoCounter.LogExt("TakeNextNumber", nc);
 
             return NeoCounter.GetCurrentNumber(nc);
         }
@@ -41,7 +50,7 @@ namespace NPC.dApps.NeoDraw.Main
         {
             BigInteger result = -1;
 
-            NeoCounter nc = NeoCounter.GetElement(vau, (int)counter); // Get persisted counter value
+            NeoCounter nc = NeoCounter.GetElement(vau, DOMAINAC, (int)counter); // Get persisted counter value
             if (!NeoCounter.IsMissing(nc))
             {
                 result = NeoCounter.GetCurrentNumber(nc);

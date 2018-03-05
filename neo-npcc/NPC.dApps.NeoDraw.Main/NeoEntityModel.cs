@@ -64,6 +64,8 @@ namespace NPC.Runtime
 
         public static byte[] GetInvokingAddressScriptHash()
         {
+            return new byte[] { 0x01, 0x02, 0x03, 0x04 }; // neo-debugger debugging
+
             Transaction tx = (Transaction)ExecutionEngine.ScriptContainer;
             TransactionOutput[] refs = tx.GetReferences();
             foreach (TransactionOutput r in refs)

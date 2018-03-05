@@ -26,12 +26,12 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>bool</returns>
-        public static bool PutElement(UserCredentials e, NeoVersionedAppUser vau, int index)
+        public static bool PutElement(UserCredentials e, NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "UserCredentials");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
             byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
@@ -49,12 +49,12 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>UserCredentials</returns>
-        public static UserCredentials GetElement(NeoVersionedAppUser vau, int index)
+        public static UserCredentials GetElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "UserCredentials");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
             UserCredentials e;
             byte[] bkey;
@@ -94,7 +94,7 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>UserCredentials</returns>
-        public static UserCredentials BuryElement(NeoVersionedAppUser vau, int index)
+        public static UserCredentials BuryElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
@@ -102,7 +102,7 @@ namespace NPC.dApps.NeoDraw.Main
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "UserCredentials");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
             byte[] bkey;
             UserCredentials e;

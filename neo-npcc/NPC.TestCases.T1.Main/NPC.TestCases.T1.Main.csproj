@@ -72,9 +72,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Build.tasks" />
-  <Target Name="AfterBuild">
-    <Message Text="Start NeoContract converter, Source File: $(TargetPath)" Importance="high">
-    </Message>
-    <ConvertTask DataSource="$(TargetPath)" />
-  </Target>
-</Project>
+  <PropertyGroup>
+    <PostBuildEvent>set PATH="D:\repos\neo-debugger-tools-coz\NEO-Compiler\bin\Debug";%25PATH%25
+neon.exe $(TargetPath)</PostBuildEvent>
+  </PropertyGroup>
+</Project> 

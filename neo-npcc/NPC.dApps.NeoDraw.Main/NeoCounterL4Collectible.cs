@@ -31,7 +31,7 @@ namespace NPC.dApps.NeoDraw.Main
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "NeoCounter");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, "AppCounters", "NeoCounter");
 
             byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
@@ -48,12 +48,12 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>NeoCounter</returns>
-        public static NeoCounter GetElement(NeoVersionedAppUser vau, int index)
+        public static NeoCounter GetElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "NeoCounter");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "NeoCounter");
 
             NeoCounter e;
             byte[] bkey;
@@ -100,7 +100,7 @@ namespace NPC.dApps.NeoDraw.Main
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "NeoCounter");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, "AppCounters", "NeoCounter");
 
             byte[] bkey;
             NeoCounter e;

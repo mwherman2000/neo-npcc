@@ -14,7 +14,7 @@
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>#CLASSNAME#</returns>
-        public static #CLASSNAME# BuryElement(NeoVersionedAppUser vau, int index)
+        public static #CLASSNAME# BuryElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
@@ -22,7 +22,7 @@
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "#CLASSNAME#");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "#CLASSNAME#");
 
             byte[] bkey;
             #CLASSNAME# e;

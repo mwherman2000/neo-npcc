@@ -40,9 +40,11 @@ namespace NPC.Runtime
 {
     public class NeoTrace /* Level *all* */
     {
+        const bool TRACEON = true;
+
         public static void Trace(params object[] args)
         {
-            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify(args);
+            if (TRACEON) Neo.SmartContract.Framework.Services.Neo.Runtime.Notify(args);
         }
     }
 }
