@@ -32,9 +32,22 @@ namespace NPC.dApps.NeoDraw.Main
                 NeoCounter.SetCurrentNumber(nc, NeoCounter.GetCurrentNumber(nc) + 1);
             }
 
-            NeoCounter.PutElement(nc, vau, (int)counter); // Persist the current value of the counter
+            NeoCounter.PutElement(nc, vau, (int)counter); // Persist the incremented current value of the counter
 
-            return NeoCounter.GetCurrentNumber(nc); // Return the current value for this counter
+            return NeoCounter.GetCurrentNumber(nc);
+        }
+
+        public static BigInteger GetNextNumber(NeoVersionedAppUser vau, NeoCounters counter)
+        {
+            BigInteger result = -1;
+
+            NeoCounter nc = NeoCounter.GetElement(vau, (int)counter); // Get persisted counter value
+            if (!NeoCounter.IsMissing(nc))
+            {
+                result = NeoCounter.GetCurrentNumber(nc);
+            }
+
+            return result; // Return the current value for this counter
         }
     }
 }

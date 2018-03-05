@@ -118,17 +118,30 @@ namespace NPC.dApps.NeoDraw.Main
         {
             string message = "UserGetSingle";
             object[] results = { 0x0 };
+            UserCredentials uc = UserCredentials.Null();
 
             byte[] encodedUsername = (byte[])args[0];
             NeoTrace.Trace("encodedUsername", encodedUsername);
 
-            int indexMax = (int)NeoCounter.TakeNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
+            int indexMax = (int)NeoCounter.GetNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
+            NeoTrace.Trace("UserGetSingle.indexMax", indexMax);
 
-            UserCredentials uc = UserCredentials.Null();
-            for (int index = 0; index <= indexMax; index++) // TODO - performance
+            if (indexMax != -1)
             {
-                uc = UserCredentials.GetElement(AppVAU, index);
-                if (UserCredentials.GetEncodedUsername(uc) == encodedUsername) break;
+                for (int index = 0; index < indexMax; index++) // TODO - performance
+                {
+                    NeoTrace.Trace("UserGetSingle.index", index);
+                    uc = UserCredentials.GetElement(AppVAU, index);
+                    if (!UserCredentials.IsMissing(uc))
+                    {
+                        NeoTrace.Trace("UserGetSingle.!IsMissing(uc)", encodedUsername);
+                        if (UserCredentials.GetEncodedUsername(uc) == encodedUsername) break;
+                    }
+                    else
+                    {
+                        NeoTrace.Trace("UserGetSingle.IsMissing(uc)", index);
+                    }
+                }
             }
 
             results = new object[] { uc };

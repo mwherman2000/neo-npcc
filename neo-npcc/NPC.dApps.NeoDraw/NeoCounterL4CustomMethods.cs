@@ -19,7 +19,12 @@ namespace NPC.dApps.NeoDraw
             PointCounter
         }
 
-        public static void TakeNumber(NeoCounter e, NeoCounters counter)
+        public static void TakeNextNumber(NeoCounter e, NeoCounters counter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static BigInteger GetLastNumber(NeoCounter e, NeoCounters counter)
         {
             throw new NotImplementedException();
         }
