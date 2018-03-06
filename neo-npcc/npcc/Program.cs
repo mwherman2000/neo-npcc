@@ -20,6 +20,11 @@ namespace npcc
         NPCLevel3Deletable,
         NPCLevel4Collectible,
         NPCLevel4CollectibleExt,
+        NPCLevel4CollectibleExt0,
+        NPCLevel4CollectibleExt1,
+        NPCLevel4CollectibleExt2,
+        NPCLevel4CollectibleExt3,
+        NPCLevel4CollectibleExt4,
         NPCLevel5Extendible,
         NPCLevel6Authorized,
         NPCLevel7Optimized,
@@ -42,6 +47,11 @@ namespace npcc
         L3Deletable_cs,
         L4Collectible_cs,
         L4CollectibleExt_cs,
+        L4CollectibleExt0_cs,
+        L4CollectibleExt1_cs,
+        L4CollectibleExt2_cs,
+        L4CollectibleExt3_cs,
+        L4CollectibleExt4_cs,
         L5Extendible_cs,
         L6Authorized_cs,
         L7Optimized_cs,
@@ -214,6 +224,11 @@ namespace npcc
                     case NPCLevels.NPCLevel3Deletable:
                     case NPCLevels.NPCLevel4Collectible:
                     case NPCLevels.NPCLevel4CollectibleExt:
+                    case NPCLevels.NPCLevel4CollectibleExt0:
+                    case NPCLevels.NPCLevel4CollectibleExt1:
+                    case NPCLevels.NPCLevel4CollectibleExt2:
+                    case NPCLevels.NPCLevel4CollectibleExt3:
+                    case NPCLevels.NPCLevel4CollectibleExt4:
                     case NPCLevels.NPCLevel5Extendible:
                     case NPCLevels.NPCLevel6Authorized:
                     case NPCLevels.NPCLevel7Optimized:
@@ -284,13 +299,46 @@ namespace npcc
         public const string NPCLevel4DBuryElement_csName = "NPCLevel4DBuryElement_cs.txt";
         public const string NPCLevel4EBuryElement_csName = "NPCLevel4EBuryElement_cs.txt";
 
-        public const string NPCLevel4Part1Ext_csName = "NPCLevel4Part1Ext_cs.txt";
-        public const string NPCLevel4Part2Ext_csName = "NPCLevel4Part2Ext_cs.txt";
-        public const string NPCLevel4APutElementExt_csName = "NPCLevel4APutElementExt_cs.txt";
-        public const string NPCLevel4BGetElementExt_csName = "NPCLevel4BGetElementExt_cs.txt";
-        public const string NPCLevel4CGetElementExt_csName = "NPCLevel4CGetElementExt_cs.txt";
-        public const string NPCLevel4DBuryElementExt_csName = "NPCLevel4DBuryElementExt_cs.txt";
-        public const string NPCLevel4EBuryElementExt_csName = "NPCLevel4EBuryElementExt_cs.txt";
+        public const string NPCLevel4Part1Ext0_csName = "NPCLevel4Part1Ext0_cs.txt";
+        public const string NPCLevel4Part2Ext0_csName = "NPCLevel4Part2Ext0_cs.txt";
+        public const string NPCLevel4APutElementExt0_csName = "NPCLevel4APutElementExt0_cs.txt";
+        public const string NPCLevel4BGetElementExt0_csName = "NPCLevel4BGetElementExt0_cs.txt";
+        public const string NPCLevel4CGetElementExt0_csName = "NPCLevel4CGetElementExt0_cs.txt";
+        public const string NPCLevel4DBuryElementExt0_csName = "NPCLevel4DBuryElementExt0_cs.txt";
+        public const string NPCLevel4EBuryElementExt0_csName = "NPCLevel4EBuryElementExt0_cs.txt";
+
+        public const string NPCLevel4Part1Ext1_csName = "NPCLevel4Part1Ext1_cs.txt";
+        public const string NPCLevel4Part2Ext1_csName = "NPCLevel4Part2Ext1_cs.txt";
+        public const string NPCLevel4APutElementExt1_csName = "NPCLevel4APutElementExt1_cs.txt";
+        public const string NPCLevel4BGetElementExt1_csName = "NPCLevel4BGetElementExt1_cs.txt";
+        public const string NPCLevel4CGetElementExt1_csName = "NPCLevel4CGetElementExt1_cs.txt";
+        public const string NPCLevel4DBuryElementExt1_csName = "NPCLevel4DBuryElementExt1_cs.txt";
+        public const string NPCLevel4EBuryElementExt1_csName = "NPCLevel4EBuryElementExt1_cs.txt";
+
+        public const string NPCLevel4Part1Ext2_csName = "NPCLevel4Part1Ext2_cs.txt";
+        public const string NPCLevel4Part2Ext2_csName = "NPCLevel4Part2Ext2_cs.txt";
+        public const string NPCLevel4APutElementExt2_csName = "NPCLevel4APutElementExt2_cs.txt";
+        public const string NPCLevel4BGetElementExt2_csName = "NPCLevel4BGetElementExt2_cs.txt";
+        public const string NPCLevel4CGetElementExt2_csName = "NPCLevel4CGetElementExt2_cs.txt";
+        public const string NPCLevel4DBuryElementExt2_csName = "NPCLevel4DBuryElementExt2_cs.txt";
+        public const string NPCLevel4EBuryElementExt2_csName = "NPCLevel4EBuryElementExt2_cs.txt";
+
+        public const string NPCLevel4Part1Ext3_csName = "NPCLevel4Part1Ext3_cs.txt";
+        public const string NPCLevel4Part2Ext3_csName = "NPCLevel4Part2Ext3_cs.txt";
+        public const string NPCLevel4APutElementExt3_csName = "NPCLevel4APutElementExt3_cs.txt";
+        public const string NPCLevel4BGetElementExt3_csName = "NPCLevel4BGetElementExt3_cs.txt";
+        public const string NPCLevel4CGetElementExt3_csName = "NPCLevel4CGetElementExt3_cs.txt";
+        public const string NPCLevel4DBuryElementExt3_csName = "NPCLevel4DBuryElementExt3_cs.txt";
+        public const string NPCLevel4EBuryElementExt3_csName = "NPCLevel4EBuryElementExt3_cs.txt";
+
+        public const string NPCLevel4Part1Ext4_csName = "NPCLevel4Part1Ext4_cs.txt";
+        public const string NPCLevel4Part2Ext4_csName = "NPCLevel4Part2Ext4_cs.txt";
+        public const string NPCLevel4APutElementExt4_csName = "NPCLevel4APutElementExt4_cs.txt";
+        public const string NPCLevel4BGetElementExt4_csName = "NPCLevel4BGetElementExt4_cs.txt";
+        public const string NPCLevel4CGetElementExt4_csName = "NPCLevel4CGetElementExt4_cs.txt";
+        public const string NPCLevel4DBuryElementExt4_csName = "NPCLevel4DBuryElementExt4_cs.txt";
+        public const string NPCLevel4EBuryElementExt4_csName = "NPCLevel4EBuryElementExt4_cs.txt";
+
 
         public static string[] listDefaultAssemblies = { "Neo.SmartContract.Framework", "Neo.SmartContract.Framework.Services.System", "System.Numerics" };
 
@@ -437,9 +485,24 @@ namespace npcc
                        });
                     if (listClassInterfaces.Count == 1)
                     {
-                        success = GenCode.GenerateCodeLevel4CollectibleExt(ctx, classIndex);
+                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt.ToString());
+                        success = GenCode.GenerateCodeLevel4CollectibleExt0(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt0.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt0.ToString());
+                        success = GenCode.GenerateCodeLevel4CollectibleExt1(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt1.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt1.ToString());
+                        success = GenCode.GenerateCodeLevel4CollectibleExt2(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt2.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt2.ToString());
+                        success = GenCode.GenerateCodeLevel4CollectibleExt3(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt3.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt3.ToString());
+                        success = GenCode.GenerateCodeLevel4CollectibleExt4(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt4.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt4.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -644,7 +707,8 @@ namespace npcc
                    });
                 if (listClassFields.Count < 1)
                 {
-                    string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString();
+                    string message = "**ERROR** Input assembly file must contain 1 or more field definitions. Not " + ctx.listFieldInfo.Count.ToString() 
+                                     + ". Class: " + ctx.listClassInfo[classIndex].classInputName;
                     if (Trace.Error) Console.WriteLine(message);
                     success = false;
                 }
@@ -656,7 +720,8 @@ namespace npcc
                    });
                 if (listClassInterfaces.Count < 1)
                 {
-                    string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString();
+                    string message = "**ERROR** Input assembly file must contain 1 or more interface definitions. Not " + ctx.listClassInterfaceInfo.Count.ToString()
+                                    + ". Class: " + ctx.listClassInfo[classIndex].classInputName;
                     if (Trace.Error) Console.WriteLine(message);
                     success = false;
                 }

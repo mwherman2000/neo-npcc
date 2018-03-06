@@ -6,6 +6,7 @@ using Neo.SmartContract.Framework.Services.System;
 using NPC.Runtime;
 using System;
 using System.Numerics;
+using static NPC.dApps.NeoDraw.Main.NeoCounter;
 
 namespace NPC.dApps.NeoDraw.Main
 {
@@ -72,7 +73,7 @@ namespace NPC.dApps.NeoDraw.Main
                     }
                     else if (entityType == NeoDrawEntityType.Point)
                     {
-                        results = PointDelete(AppVAU, args);
+                        results = PointDeleteLast(AppVAU, args);
                     }
                 }
                 else if (operation == "get")
@@ -126,12 +127,11 @@ namespace NPC.dApps.NeoDraw.Main
         {
             string message = "UserGetSingle";
             object[] results = { 0x0 };
-            UserCredentials uc = UserCredentials.Null();
 
             byte[] encodedUsername = (byte[])args[0];
             NeoTrace.Trace("encodedUsername", encodedUsername);
 
-            uc = FindUser(AppVAU, encodedUsername);
+            UserCredentials uc = FindUser(AppVAU, encodedUsername);
 
             results = new object[] { uc };
             return results;
@@ -139,7 +139,32 @@ namespace NPC.dApps.NeoDraw.Main
 
         private static object[] PointGetAll(NeoVersionedAppUser AppVAU, object[] args)
         {
-            throw new NotImplementedException();
+            string message = "PointGetAll";
+            object[] results = { 0x0 };
+
+            NeoVersionedAppUser.LogExt("PointGetAll.AppVAU", AppVAU);
+
+            byte[] encodedUsername = (byte[])args[0];
+            NeoTrace.Trace("PointGetAll.encodedUsername", encodedUsername);
+            UserCredentials uc = FindUser(AppVAU, encodedUsername);
+            if (UserCredentials.IsMissing(uc))
+            {
+                UserCredentials.LogExt("PointGetAll.user missing", uc);
+            }
+            else
+            {
+                UserCredentials.LogExt("PointGetAll.user exists", uc);
+                BigInteger nPoints = NeoCounter.GetNextNumber(AppVAU, encodedUsername, NeoCounters.UserPointsCounter);
+                UserPoint[] points = new UserPoint[(int)nPoints];
+                for (int index = 0; index < nPoints; index++)
+                {
+                    UserPoint up = UserPoint.GetElement(AppVAU, encodedUsername, (int)index);
+                    points[index] = up;
+                }
+                results = points;
+            }
+
+            return results;
         }
 
         private static object[] UserGetAll(NeoVersionedAppUser AppVAU, object[] args)
@@ -147,9 +172,28 @@ namespace NPC.dApps.NeoDraw.Main
             throw new NotImplementedException();
         }
 
-        private static object[] PointDelete(NeoVersionedAppUser AppVAU, object[] args)
+        private static object[] PointDeleteLast(NeoVersionedAppUser AppVAU, object[] args)
         {
-            throw new NotImplementedException();
+            string message = "PointDeleteLast";
+            object[] results = { 0x0 };
+
+            NeoVersionedAppUser.LogExt("PointDeleteLast.AppVAU", AppVAU);
+
+            byte[] encodedUsername = (byte[])args[0];
+            NeoTrace.Trace("PointDeleteLast.encodedUsername", encodedUsername);
+            UserCredentials uc = FindUser(AppVAU, encodedUsername);
+            if (UserCredentials.IsMissing(uc))
+            {
+                UserCredentials.LogExt("PointDeleteLast.user missing", uc);
+            }
+            else
+            {
+                UserCredentials.LogExt("PointDeleteLast.user exists", uc);
+                BigInteger nPoints = NeoCounter.GiveBackLastNumber(AppVAU, encodedUsername, NeoCounters.UserPointsCounter);
+                results = new object[] { nPoints };
+            }
+
+            return results;
         }
 
         private static object[] UserDelete(NeoVersionedAppUser AppVAU, object[] args)
@@ -159,7 +203,32 @@ namespace NPC.dApps.NeoDraw.Main
 
         private static object[] PointAdd(NeoVersionedAppUser AppVAU, object[] args)
         {
-            throw new NotImplementedException();
+            string message = "PointAdd";
+            object[] results = { 0x0 };
+
+            NeoVersionedAppUser.LogExt("PointAdd.AppVAU", AppVAU);
+
+            byte[] encodedUsername = (byte[])args[0];
+            NeoTrace.Trace("PointAdd.encodedUsername", encodedUsername);
+            UserCredentials uc = FindUser(AppVAU, encodedUsername);
+            if (UserCredentials.IsMissing(uc))
+            {
+                UserCredentials.LogExt("PointAdd.user missing", uc);
+            }
+            else
+            {
+                UserCredentials.LogExt("PointAdd.user exists", uc);
+                BigInteger x = (BigInteger)args[1];
+                BigInteger y = (BigInteger)args[2];
+                NeoTrace.Trace("PointAdd.x,y", x, y);
+                UserPoint up = UserPoint.New(x, y,encodedUsername);
+                UserPoint.LogExt("PointAdd", up);
+                BigInteger index = NeoCounter.TakeNextNumber(AppVAU, encodedUsername, NeoCounters.UserPointsCounter);
+                UserPoint.PutElement(up, AppVAU, encodedUsername, (int)index);
+                results = new object[] { index };
+            }
+
+            return results;
         }
 
         private static object[] UserAdd(NeoVersionedAppUser AppVAU, object[] args)

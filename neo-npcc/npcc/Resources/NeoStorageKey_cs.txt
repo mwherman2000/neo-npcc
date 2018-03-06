@@ -218,6 +218,52 @@ namespace NPC.Runtime
             return nsk;
         }
 
+        public static NeoStorageKey New(NeoVersionedAppUser vau, byte[] domain, string className)
+        {
+            if (NeoVersionedAppUser.IsNull(vau))
+            {
+                return NeoStorageKey.Null();
+            }
+
+            NeoStorageKey nsk = new NeoStorageKey();
+            nsk._app = NeoVersionedAppUser.GetAppNameAsByteArray(vau);
+            nsk._major = NeoVersionedAppUser.GetMajor(vau);
+            nsk._minor = NeoVersionedAppUser.GetMinor(vau);
+            nsk._build = NeoVersionedAppUser.GetBuild(vau);
+            //nsk._revision = NeoVersionedAppUser.GetRevision(vau);
+            nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
+            nsk._domain = domain;
+            nsk._className = className.AsByteArray();
+            nsk._index = 0;
+            nsk._fieldName = "";
+            nsk._state = NeoEntityModel.EntityState.INIT;
+            LogExt("New(vau,bc)", nsk);
+            return nsk;
+        }
+
+        public static NeoStorageKey New(NeoVersionedAppUser vau, string domain, byte[] className)
+        {
+            if (NeoVersionedAppUser.IsNull(vau))
+            {
+                return NeoStorageKey.Null();
+            }
+
+            NeoStorageKey nsk = new NeoStorageKey();
+            nsk._app = NeoVersionedAppUser.GetAppNameAsByteArray(vau);
+            nsk._major = NeoVersionedAppUser.GetMajor(vau);
+            nsk._minor = NeoVersionedAppUser.GetMinor(vau);
+            nsk._build = NeoVersionedAppUser.GetBuild(vau);
+            //nsk._revision = NeoVersionedAppUser.GetRevision(vau);
+            nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
+            nsk._domain = domain.AsByteArray();
+            nsk._className = className;
+            nsk._index = 0;
+            nsk._fieldName = "";
+            nsk._state = NeoEntityModel.EntityState.INIT;
+            LogExt("New(vau,bc)", nsk);
+            return nsk;
+        }
+
         public static NeoStorageKey New(NeoVersionedAppUser vau, string domain, string className)
         {
             if (NeoVersionedAppUser.IsNull(vau))
@@ -347,6 +393,40 @@ namespace NPC.Runtime
 
             bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bByteArrayType)
                                         .Concat(_bEquals).Concat(bindex).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bf).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(fieldName).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bRightBrace);
+
+            NeoTrace.Trace("StorageKey(nsk,bi,fb).bkey$BSK", bkey);
+            return bkey;
+        }
+
+        public static byte[] StorageKey(NeoStorageKey nsk, string sindex, byte[] fieldName)
+        {
+            LogExt("StorageKey(nsk,bi,fb).nsk", nsk);
+            NeoTrace.Trace("StorageKey(nsk,bi,fb).nsk", sindex, fieldName);
+
+            byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bM).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._major)).AsByteArray()).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bm).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._minor)).AsByteArray()).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bb).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._build)).AsByteArray()).Concat(_bSemiColon);
+            //bkey = Helper.Concat(bkey, _br).Concat(_bColon).Concat(_bBigIntegerType)
+            //                          .Concat(_bEquals).Concat(((BigInteger)(nsk._revision)).AsByteArray()).Concat(_bComma);
+            bkey = Helper.Concat(bkey, _bu).Concat(_bColon).Concat(_bUserScriptHashType)
+                                        .Concat(_bEquals).Concat(nsk._userScriptHash).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bd).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._domain).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bc).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._className).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(sindex.AsByteArray()).Concat(_bSemiColon);
             bkey = Helper.Concat(bkey, _bf).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(fieldName).Concat(_bSemiColon);
 

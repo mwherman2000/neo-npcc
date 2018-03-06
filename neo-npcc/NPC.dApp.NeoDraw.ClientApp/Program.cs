@@ -118,6 +118,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
             byte[] hashPassword = Helpers.GetHash(password);
 
             BoardContext.Initialize();
+
             List<Point> pointList = Bresenham.GetLinePoints(new Point(2, 3), new Point(30, 5));
             BoardContext.DrawPoints(pointList, '*');
             pointList = Bresenham.GetLinePoints(new Point(20, 2), new Point(40,100));

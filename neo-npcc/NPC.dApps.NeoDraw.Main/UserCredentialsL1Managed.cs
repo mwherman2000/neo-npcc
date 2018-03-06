@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserCredentials - Level 1 Managed
 ///
-/// Processed:       2018-03-05 4:37:19 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-06 1:04:14 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>

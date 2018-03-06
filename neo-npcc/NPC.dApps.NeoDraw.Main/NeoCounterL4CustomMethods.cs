@@ -18,7 +18,8 @@ namespace NPC.dApps.NeoDraw.Main
         public enum NeoCounters
         {
             UserCounter,
-            PointCounter
+            PointCounter,
+            UserPointsCounter
         }
 
         public static BigInteger TakeNextNumber(NeoVersionedAppUser vau, NeoCounters counter)
@@ -51,6 +52,84 @@ namespace NPC.dApps.NeoDraw.Main
             BigInteger result = -1;
 
             NeoCounter nc = NeoCounter.GetElement(vau, DOMAINAC, (int)counter); // Get persisted counter value
+            if (!NeoCounter.IsMissing(nc))
+            {
+                result = NeoCounter.GetCurrentNumber(nc);
+            }
+
+            return result; // Return the current value for this counter
+        }
+
+        // Use case example: domain = user script hash, counter = NeoCounters.UserPointsCounter
+        public static BigInteger TakeNextNumber(NeoVersionedAppUser vau, byte[] domain, NeoCounters counter)
+        {
+            NeoCounter nc = NeoCounter.GetElement(vau, domain, (int)counter); // Get persisted counter value
+            NeoCounter.LogExt("TakeNextNumber", nc);
+
+            if (NeoCounter.IsMissing(nc))
+            {
+                nc = NeoCounter.New(); // Create a new counter value
+            }
+            else // Get and increment counter value by 1
+            {
+                BigInteger newNumber = NeoCounter.GetCurrentNumber(nc);
+                NeoTrace.Trace("newNumber", newNumber);
+                newNumber = newNumber + 1;
+                NeoTrace.Trace("newNumber", newNumber);
+                NeoCounter.SetCurrentNumber(nc, newNumber);
+                NeoCounter.LogExt("TakeNextNumber", nc);
+            }
+
+            NeoCounter.PutElement(nc, vau, DOMAINAC, (int)counter); // Persist the incremented current value of the counter
+            NeoCounter.LogExt("TakeNextNumber", nc);
+
+            return NeoCounter.GetCurrentNumber(nc);
+        }
+
+        public static BigInteger GetNextNumber(NeoVersionedAppUser vau, byte[] domain, NeoCounters counter)
+        {
+            BigInteger result = -1;
+
+            NeoCounter nc = NeoCounter.GetElement(vau, domain, (int)counter); // Get persisted counter value
+            if (!NeoCounter.IsMissing(nc))
+            {
+                result = NeoCounter.GetCurrentNumber(nc);
+            }
+
+            return result; // Return the current value for this counter
+        }
+
+        // Use case example: domain = user script hash, counter = NeoCounters.UserPointsCounter
+        public static BigInteger TakeNextNumber(NeoVersionedAppUser vau, string domain, NeoCounters counter)
+        {
+            NeoCounter nc = NeoCounter.GetElement(vau, domain, (int)counter); // Get persisted counter value
+            NeoCounter.LogExt("TakeNextNumber", nc);
+
+            if (NeoCounter.IsMissing(nc))
+            {
+                nc = NeoCounter.New(); // Create a new counter value
+            }
+            else // Get and increment counter value by 1
+            {
+                BigInteger newNumber = NeoCounter.GetCurrentNumber(nc);
+                NeoTrace.Trace("newNumber", newNumber);
+                newNumber = newNumber + 1;
+                NeoTrace.Trace("newNumber", newNumber);
+                NeoCounter.SetCurrentNumber(nc, newNumber);
+                NeoCounter.LogExt("TakeNextNumber", nc);
+            }
+
+            NeoCounter.PutElement(nc, vau, DOMAINAC, (int)counter); // Persist the incremented current value of the counter
+            NeoCounter.LogExt("TakeNextNumber", nc);
+
+            return NeoCounter.GetCurrentNumber(nc);
+        }
+
+        public static BigInteger GetNextNumber(NeoVersionedAppUser vau, string domain, NeoCounters counter)
+        {
+            BigInteger result = -1;
+
+            NeoCounter nc = NeoCounter.GetElement(vau, domain, (int)counter); // Get persisted counter value
             if (!NeoCounter.IsMissing(nc))
             {
                 result = NeoCounter.GetCurrentNumber(nc);

@@ -215,6 +215,12 @@
     <Compile Include="NeoCounterL2Persistable.cs" />
     <Compile Include="NeoCounterL3Deletable.cs" />
     <Compile Include="NeoCounterL4Collectible.cs" />
+    <Compile Include="NeoCounterL4CollectibleExt0.cs" />
+    <Compile Include="NeoCounterL4CollectibleExt1.cs" />
+    <Compile Include="NeoCounterL4CollectibleExt2.cs" />
+    <Compile Include="NeoCounterL4CollectibleExt3.cs" />
+    <Compile Include="NeoCounterL4CollectibleExt4.cs" />
+    <Compile Include="NeoCounterL4CustomMethodsExt0.cs" />
     <Compile Include="NeoCounterL4CustomMethods.cs" />
     <Compile Include="NeoEntityModel.cs" />
     <Compile Include="NeoStorageKey.cs" />
@@ -226,13 +232,21 @@
     <Compile Include="UserCredentialsL2Persistable.cs" />
     <Compile Include="UserCredentialsL3Deletable.cs" />
     <Compile Include="UserCredentialsL4Collectible.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt0.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt1.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt2.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt3.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt4.cs" />
     <Compile Include="UserPointL0Basic.cs" />
     <Compile Include="UserPointL1Managed.cs" />
     <Compile Include="UserPointL2Persistable.cs" />
     <Compile Include="UserPointL3Deletable.cs" />
     <Compile Include="UserPointL4Collectible.cs" />
-    <Compile Include="UserPointL4CollectibleExt.cs" />
+    <Compile Include="UserPointL4CollectibleExt0.cs" />
+    <Compile Include="UserPointL4CollectibleExt1.cs" />
+    <Compile Include="UserPointL4CollectibleExt2.cs" />
+    <Compile Include="UserPointL4CollectibleExt3.cs" />
+    <Compile Include="UserPointL4CollectibleExt4.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Contract1_cs-debug.csv" />

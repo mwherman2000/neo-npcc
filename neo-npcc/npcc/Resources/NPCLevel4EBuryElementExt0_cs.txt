@@ -1,0 +1,2 @@
+﻿
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _b#PUBLICFIELDNAME#), e.#PRIVATEFIELDNAME#); // NPCLevel4EBuryElement_cs.txt

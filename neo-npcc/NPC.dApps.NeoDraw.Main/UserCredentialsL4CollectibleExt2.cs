@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 /// <summary>
-/// NPC.dApps.NeoDraw.Main.UserPoint - Level 4 Collectible (Extended)
+/// NPC.dApps.NeoDraw.Main.UserCredentials - Level 4 Collectible (Extended)
 ///
-/// Processed:      2018-03-05 4:37:14 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-06 1:04:14 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserPoint : NeoTrace /* Level 4 Collectible */
+    public partial class UserCredentials : NeoTrace /* Level 4 Collectible */
     {
         /// <summary>
         /// Collectible methods (NPC Level 4)
@@ -26,21 +26,20 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>bool</returns>
-        public static bool PutElement(UserPoint e, NeoVersionedAppUser vau, string domain, byte[] bindex)
+        public static bool PutElement(UserCredentials e, NeoVersionedAppUser vau, byte[] domain, byte[] bindex)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
             byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA), e._state.AsBigInteger());
  
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bX), e._x); // Template: NPCLevel4APutElement_cs.txt
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bY), e._y); // Template: NPCLevel4APutElement_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedUsername), e._encodedUsername); // Template: NPCLevel4APutElement_cs.txt
-            LogExt("PutElement(vau,i).UserPoint", e); // Template: NPCLevel4BGetElement_cs.txt
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedPassword), e._encodedPassword); // Template: NPCLevel4APutElement_cs.txt
+            LogExt("PutElement(vau,i).UserCredentials", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
 
@@ -49,21 +48,21 @@ namespace NPC.dApps.NeoDraw.Main
         /// </summary>
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
-        /// <returns>UserPoint</returns>
-        public static UserPoint GetElement(NeoVersionedAppUser vau, string domain, byte[] bindex)
+        /// <returns>UserCredentials</returns>
+        public static UserCredentials GetElement(NeoVersionedAppUser vau, byte[] domain, byte[] bindex)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
-            UserPoint e;
+            UserCredentials e;
             byte[] bkey;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA));
-            NeoTrace.Trace("Get(bkey).UserPoint.bsta", bsta.Length, bsta);
+            NeoTrace.Trace("Get(bkey).UserCredentials.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
-                e = UserPoint.Missing();
+                e = UserCredentials.Missing();
             }
             else // not MISSING
             {
@@ -73,20 +72,19 @@ namespace NPC.dApps.NeoDraw.Main
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 if (sta == NeoEntityModel.EntityState.TOMBSTONED)
                 {
-                    e = UserPoint.Tombstone();
+                    e = UserCredentials.Tombstone();
                 }
                 else // not MISSING && not TOMBSTONED
                 {
-                    e = new UserPoint();
-                    BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bX)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
-                    BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bY)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
+                    e = new UserCredentials();
                     byte[] EncodedUsername = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedUsername)); // Template: NPCLevel4CGetElement_cs.txt
-                    e._x = X; e._y = Y; e._encodedUsername = EncodedUsername;  // NPCLevel4DBuryElement_cs.txt
+                    byte[] EncodedPassword = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedPassword)); // Template: NPCLevel4CGetElement_cs.txt
+                    e._encodedUsername = EncodedUsername; e._encodedPassword = EncodedPassword;  // NPCLevel4DBuryElement_cs.txt
                     e._state = sta;
                     e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
             }
-            LogExt("Get(bkey).UserPoint.e", e);
+            LogExt("Get(bkey).UserCredentials.e", e);
             return e;
         }
 
@@ -95,36 +93,35 @@ namespace NPC.dApps.NeoDraw.Main
         /// </summary>
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
-        /// <returns>UserPoint</returns>
-        public static UserPoint BuryElement(NeoVersionedAppUser vau, string domain, byte[] bindex)
+        /// <returns>UserCredentials</returns>
+        public static UserCredentials BuryElement(NeoVersionedAppUser vau, byte[] domain, byte[] bindex)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
-                return UserPoint.Null();
+                return UserCredentials.Null();
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserCredentials");
 
             byte[] bkey;
-            UserPoint e;
+            UserCredentials e;
             /*STA*/
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA));
-            NeoTrace.Trace("Bury(vau,index).UserPoint.bsta", bsta.Length, bsta);
+            NeoTrace.Trace("Bury(vau,index).UserCredentials.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
-                e = UserPoint.Missing();
+                e = UserCredentials.Missing();
             }
             else // not MISSING - bury it
             {
-                e = UserPoint.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
+                e = UserCredentials.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA), e._state.AsBigInteger());
 
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bX), e._x); // NPCLevel4EBuryElement_cs.txt
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bY), e._y); // NPCLevel4EBuryElement_cs.txt
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedUsername), e._encodedUsername); // NPCLevel4EBuryElement_cs.txt
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bEncodedPassword), e._encodedPassword); // NPCLevel4EBuryElement_cs.txt
             } // Template: NPCLevel4Part2_cs.txt
-            LogExt("Bury(vau,i).UserPoint", e);
+            LogExt("Bury(vau,i).UserCredentials", e);
             return e;
         }
     }

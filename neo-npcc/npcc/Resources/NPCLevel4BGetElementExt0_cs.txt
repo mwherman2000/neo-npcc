@@ -1,0 +1,39 @@
+﻿
+            LogExt("PutElement(vau,i).#CLASSNAME#", e); // Template: NPCLevel4BGetElement_cs.txt
+            return true;
+        }
+
+        /// <summary>
+        /// Get an element of an array of entities from Storage based on a NeoStorageKey (NPC Level 4)
+        /// </summary>
+        /// <param name="vau">vau</param>
+        /// <param name="index">index</param>
+        /// <returns>#CLASSNAME#</returns>
+        public static #CLASSNAME# GetElement(NeoVersionedAppUser vau, byte[] domain, int index)
+        {
+            if (NeoVersionedAppUser.IsNull(vau)) return Null();
+
+            Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "#CLASSNAME#");
+
+            #CLASSNAME# e;
+            byte[] bkey;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
+            NeoTrace.Trace("Get(bkey).#CLASSNAME#.bsta", bsta.Length, bsta);
+            if (bsta.Length == 0)
+            {
+                e = #CLASSNAME#.Missing();
+            }
+            else // not MISSING
+            {
+                /*EXT*/
+                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bEXT));
+                int ista = (int)bsta.AsBigInteger();
+                NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
+                if (sta == NeoEntityModel.EntityState.TOMBSTONED)
+                {
+                    e = #CLASSNAME#.Tombstone();
+                }
+                else // not MISSING && not TOMBSTONED
+                {
+                    e = new #CLASSNAME#();

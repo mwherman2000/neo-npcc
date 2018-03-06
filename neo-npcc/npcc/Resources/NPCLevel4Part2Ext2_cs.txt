@@ -1,0 +1,7 @@
+﻿
+            } // Template: NPCLevel4Part2_cs.txt
+            LogExt("Bury(vau,i).#CLASSNAME#", e);
+            return e;
+        }
+    }
+}

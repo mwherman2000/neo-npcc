@@ -7,7 +7,8 @@ namespace NPC.dApps.NeoDraw
                                         NPCLevel1Managed,
                                         NPCLevel2Persistable,
                                         NPCLevel3Deletable,
-                                        NPCLevel4Collectible
+                                        NPCLevel4Collectible,
+                                        NPCLevel4CollectibleExt
     {
         public BigInteger currentNumber; // Current value of a counter. The last number given out.
     }
