@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 4 Collectible
 ///
-/// Processed:      2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-05 4:37:08 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -26,12 +26,12 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>bool</returns>
-        public static bool PutElement(NeoCounter e, NeoVersionedAppUser vau, int index)
+        public static bool PutElement(NeoCounter e, NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "AppCounters", "NeoCounter");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "NeoCounter");
 
             byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
@@ -92,7 +92,7 @@ namespace NPC.dApps.NeoDraw.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>NeoCounter</returns>
-        public static NeoCounter BuryElement(NeoVersionedAppUser vau, int index)
+        public static NeoCounter BuryElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
@@ -100,7 +100,7 @@ namespace NPC.dApps.NeoDraw.Main
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "AppCounters", "NeoCounter");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "NeoCounter");
 
             byte[] bkey;
             NeoCounter e;

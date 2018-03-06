@@ -19,6 +19,7 @@ namespace npcc
         NPCLevel2Persistable,
         NPCLevel3Deletable,
         NPCLevel4Collectible,
+        NPCLevel4CollectibleExt,
         NPCLevel5Extendible,
         NPCLevel6Authorized,
         NPCLevel7Optimized,
@@ -40,6 +41,7 @@ namespace npcc
         L2Persistable_cs,
         L3Deletable_cs,
         L4Collectible_cs,
+        L4CollectibleExt_cs,
         L5Extendible_cs,
         L6Authorized_cs,
         L7Optimized_cs,
@@ -211,6 +213,7 @@ namespace npcc
                     case NPCLevels.NPCLevel2Persistable:
                     case NPCLevels.NPCLevel3Deletable:
                     case NPCLevels.NPCLevel4Collectible:
+                    case NPCLevels.NPCLevel4CollectibleExt:
                     case NPCLevels.NPCLevel5Extendible:
                     case NPCLevels.NPCLevel6Authorized:
                     case NPCLevels.NPCLevel7Optimized:
@@ -280,6 +283,14 @@ namespace npcc
         public const string NPCLevel4CGetElement_csName = "NPCLevel4CGetElement_cs.txt";
         public const string NPCLevel4DBuryElement_csName = "NPCLevel4DBuryElement_cs.txt";
         public const string NPCLevel4EBuryElement_csName = "NPCLevel4EBuryElement_cs.txt";
+
+        public const string NPCLevel4Part1Ext_csName = "NPCLevel4Part1Ext_cs.txt";
+        public const string NPCLevel4Part2Ext_csName = "NPCLevel4Part2Ext_cs.txt";
+        public const string NPCLevel4APutElementExt_csName = "NPCLevel4APutElementExt_cs.txt";
+        public const string NPCLevel4BGetElementExt_csName = "NPCLevel4BGetElementExt_cs.txt";
+        public const string NPCLevel4CGetElementExt_csName = "NPCLevel4CGetElementExt_cs.txt";
+        public const string NPCLevel4DBuryElementExt_csName = "NPCLevel4DBuryElementExt_cs.txt";
+        public const string NPCLevel4EBuryElementExt_csName = "NPCLevel4EBuryElementExt_cs.txt";
 
         public static string[] listDefaultAssemblies = { "Neo.SmartContract.Framework", "Neo.SmartContract.Framework.Services.System", "System.Numerics" };
 
@@ -422,13 +433,25 @@ namespace npcc
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
                        delegate (NPCClassInterfaceInfo dci)
                        {
+                           return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4CollectibleExt.ToString());
+                       });
+                    if (listClassInterfaces.Count == 1)
+                    {
+                        success = GenCode.GenerateCodeLevel4CollectibleExt(ctx, classIndex);
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt.ToString());
+                    }
+
+                    listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                       delegate (NPCClassInterfaceInfo dci)
+                       {
                            return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName.EndsWith("CustomMethods"));
                        });
                     if (listClassInterfaces.Count >= 1)
                     {
                         success = GenCode.GenerateCodeCustomMethods(ctx, classIndex, listClassInterfaces);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCEndMarker.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CustomMethods.ToString());
+                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CustomMethods.ToString());
                     }
                 }
             }
@@ -713,6 +736,23 @@ namespace npcc
                         success = false;
                     }
                 }
+
+                bool NPCLevel4CollectibleExtInterface = false;
+                listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
+                   delegate (NPCClassInterfaceInfo dci)
+                   {
+                       return (dci.interfaceClassIndex == classIndex && dci.interfaceOutputName == NPCLevels.NPCLevel4CollectibleExt.ToString());
+                   });
+                if (listClassInterfaces.Count == 1)
+                {
+                    NPCLevel4CollectibleExtInterface = true;
+                    if (!NPCLevel3DeletableInterface)
+                    {
+                        string message = "**ERROR** Class " + ctx.listClassInfo[classIndex].classInputName + " : " + NPCLevels.NPCLevel4CollectibleExt.ToString() + " requires interface " + NPCLevels.NPCLevel3Deletable.ToString();
+                        if (Trace.Error) Console.WriteLine(message);
+                        success = false;
+                    }
+                }
             }
             return success;
         }
@@ -721,7 +761,7 @@ namespace npcc
         // Reference: http://www.csharp-examples.net/catching-unhandled-exceptions/
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            string message = "**ERROR** Compile failed: CurrentDomain_UnhandledException: " + (e.ExceptionObject as Exception).ToString();
+            string message = "**ERROR** Compile stopped: " + (e.ExceptionObject as Exception).ToString();
             if (Trace.Error) Console.WriteLine(message);
 
             if (Trace.Exit) Console.WriteLine("Press enter to exit...");

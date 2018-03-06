@@ -123,6 +123,13 @@
     <EmbeddedResource Include="Resources\NPCLevel4CustomMethods_cs.txt" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\NPCLevel4APutElementExt_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4BGetElementExt_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4CGetElementExt_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4DBuryElementExt_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4EBuryElementExt_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4Part1Ext_cs.txt" />
+    <EmbeddedResource Include="Resources\NPCLevel4Part2Ext_cs.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

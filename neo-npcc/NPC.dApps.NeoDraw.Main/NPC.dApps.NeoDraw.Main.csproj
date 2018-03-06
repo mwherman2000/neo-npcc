@@ -226,15 +226,22 @@
     <Compile Include="UserCredentialsL2Persistable.cs" />
     <Compile Include="UserCredentialsL3Deletable.cs" />
     <Compile Include="UserCredentialsL4Collectible.cs" />
+    <Compile Include="UserCredentialsL4CollectibleExt.cs" />
     <Compile Include="UserPointL0Basic.cs" />
     <Compile Include="UserPointL1Managed.cs" />
     <Compile Include="UserPointL2Persistable.cs" />
     <Compile Include="UserPointL3Deletable.cs" />
     <Compile Include="UserPointL4Collectible.cs" />
+    <Compile Include="UserPointL4CollectibleExt.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Contract1_cs-debug.csv" />
+    <None Include="Contract1_cs-keep.csv" />
+    <None Include="Contract1_cs-keep.xlsx" />
     <None Include="packages.config" />
     <None Include="build.tasks" />
+    <None Include="Unknown_cs-Release.csv" />
+    <None Include="Unknown_cs-Release.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Neo.ConvertTask.dll" />

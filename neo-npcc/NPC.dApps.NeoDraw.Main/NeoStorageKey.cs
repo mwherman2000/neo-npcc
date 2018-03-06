@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.Runtime.NeoStorageKey
 ///
-/// Processed:       2018-03-04 8:25:07 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-05 4:37:19 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -286,11 +286,12 @@ namespace NPC.Runtime
 
         private static readonly byte[] _bStringType = { (byte)ContractParameterTypeLocal.String };
         private static readonly byte[] _bBigIntegerType = { (byte)ContractParameterTypeLocal.Integer };
+        private static readonly byte[] _bByteArrayType = { (byte)ContractParameterTypeLocal.ByteArray };
         private static readonly byte[] _bUserScriptHashType = { (byte)ContractParameterTypeLocal.ByteArray };
 
         public static byte[] StorageKey(NeoStorageKey nsk, int index, byte[] fieldName)
         {
-            LogExt("StorageKey(nsk,i,fb).nsk", nsk);
+            LogExt("StorageKey(nsk,ii,fb).nsk", nsk);
 
             byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
@@ -317,7 +318,41 @@ namespace NPC.Runtime
 
             bkey = Helper.Concat(bkey, _bRightBrace);
 
-            NeoTrace.Trace("StorageKey(nsk).bkey$BSK", bkey);
+            NeoTrace.Trace("StorageKey(nsk,ii,fb).bkey$BSK", bkey);
+            return bkey;
+        }
+
+        public static byte[] StorageKey(NeoStorageKey nsk, byte[] bindex, byte[] fieldName)
+        {
+            LogExt("StorageKey(nsk,bi,fb).nsk", nsk);
+            NeoTrace.Trace("StorageKey(nsk,bi,fb).nsk", bindex, fieldName);
+
+            byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bM).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._major)).AsByteArray()).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bm).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._minor)).AsByteArray()).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bb).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._build)).AsByteArray()).Concat(_bSemiColon);
+            //bkey = Helper.Concat(bkey, _br).Concat(_bColon).Concat(_bBigIntegerType)
+            //                          .Concat(_bEquals).Concat(((BigInteger)(nsk._revision)).AsByteArray()).Concat(_bComma);
+            bkey = Helper.Concat(bkey, _bu).Concat(_bColon).Concat(_bUserScriptHashType)
+                                        .Concat(_bEquals).Concat(nsk._userScriptHash).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bd).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._domain).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bc).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(nsk._className).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bByteArrayType)
+                                        .Concat(_bEquals).Concat(bindex).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bf).Concat(_bColon).Concat(_bStringType)
+                                        .Concat(_bEquals).Concat(fieldName).Concat(_bSemiColon);
+
+            bkey = Helper.Concat(bkey, _bRightBrace);
+
+            NeoTrace.Trace("StorageKey(nsk,bi,fb).bkey$BSK", bkey);
             return bkey;
         }
     }

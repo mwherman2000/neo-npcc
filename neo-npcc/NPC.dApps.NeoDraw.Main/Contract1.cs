@@ -178,12 +178,9 @@ namespace NPC.dApps.NeoDraw.Main
 
             if (UserCredentials.IsMissing(uc)) // add the unique new user
             { 
-                int index = (int)NeoCounter.TakeNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
-                NeoTrace.Trace("UserAdd.index", index);
-
                 uc = UserCredentials.New(encodedUsername, encodedPassword);
                 UserCredentials.LogExt("UserAdd.added", uc);
-                UserCredentials.PutElement(uc, AppVAU, DOMAINUCD, index);
+                UserCredentials.PutElement(uc, AppVAU, DOMAINUCD, encodedUsername);
             }
             else
             {
@@ -198,26 +195,9 @@ namespace NPC.dApps.NeoDraw.Main
         {
             UserCredentials result = UserCredentials.Missing();
 
-            int indexMax = (int)NeoCounter.GetNextNumber(AppVAU, NeoCounter.NeoCounters.UserCounter);
-            NeoTrace.Trace("UserGetSingle.indexMax", indexMax);
-            if (indexMax != -1)
-            {
-                for (int index = 0; index < indexMax; index++) // TODO - performance
-                {
-                    NeoTrace.Trace("UserGetSingle.index", index);
-                    UserCredentials uc = UserCredentials.GetElement(AppVAU, DOMAINUCD, index);
-                    if (!UserCredentials.IsMissing(uc) && UserCredentials.GetEncodedUsername(uc) == encodedUsername)
-                    {
-                        NeoTrace.Trace("UserGetSingle.!IsMissing(uc)", encodedUsername);
-                        result = uc;
-                        if (UserCredentials.GetEncodedUsername(uc) == encodedUsername) break;
-                    }
-                    else
-                    {
-                        NeoTrace.Trace("UserGetSingle.IsMissing(uc)", index);
-                    }
-                }
-            }
+            UserCredentials uc = UserCredentials.GetElement(AppVAU, DOMAINUCD, encodedUsername);
+
+            result = uc;
 
             return result;
         }

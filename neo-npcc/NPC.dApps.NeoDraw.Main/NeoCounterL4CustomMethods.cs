@@ -40,7 +40,7 @@ namespace NPC.dApps.NeoDraw.Main
                 NeoCounter.LogExt("TakeNextNumber", nc);
             }
 
-            NeoCounter.PutElement(nc, vau, (int)counter); // Persist the incremented current value of the counter
+            NeoCounter.PutElement(nc, vau, DOMAINAC, (int)counter); // Persist the incremented current value of the counter
             NeoCounter.LogExt("TakeNextNumber", nc);
 
             return NeoCounter.GetCurrentNumber(nc);

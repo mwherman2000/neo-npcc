@@ -11,6 +11,7 @@ namespace NPC.dApps.NeoDraw
     public interface NPCLevel2Persistable { }
     public interface NPCLevel3Deletable { }
     public interface NPCLevel4Collectible { }
+    public interface NPCLevel4CollectibleExt { }
 
     public interface NPCLevel0CustomMethods { }
     public interface NPCLevel1CustomMethods { }
@@ -22,7 +23,8 @@ namespace NPC.dApps.NeoDraw
                                      NPCLevel1Managed,
                                      NPCLevel2Persistable,
                                      NPCLevel3Deletable,
-                                     NPCLevel4Collectible
+                                     NPCLevel4Collectible,
+                                     NPCLevel4CollectibleExt
     {
         byte[] encodedUsername;
         byte[] encodedPassword;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.TestCases.T1.Main.Point - Level 4 Collectible
 ///
-/// Processed:      2018-03-05 12:42:53 AM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-05 3:46:10 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -26,12 +26,12 @@ namespace NPC.TestCases.T1.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>bool</returns>
-        public static bool PutElement(Point e, NeoVersionedAppUser vau, int index)
+        public static bool PutElement(Point e, NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "Point");
 
             byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
@@ -49,12 +49,12 @@ namespace NPC.TestCases.T1.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>Point</returns>
-        public static Point GetElement(NeoVersionedAppUser vau, int index)
+        public static Point GetElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "Point");
 
             Point e;
             byte[] bkey;
@@ -94,7 +94,7 @@ namespace NPC.TestCases.T1.Main
         /// <param name="vau">vau</param>
         /// <param name="index">index</param>
         /// <returns>Point</returns>
-        public static Point BuryElement(NeoVersionedAppUser vau, int index)
+        public static Point BuryElement(NeoVersionedAppUser vau, string domain, int index)
         {
             if (NeoVersionedAppUser.IsNull(vau)) // TODO - create NeoEntityModel.EntityState.BADKEY?
             {
@@ -102,7 +102,7 @@ namespace NPC.TestCases.T1.Main
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, "Point");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "Point");
 
             byte[] bkey;
             Point e;

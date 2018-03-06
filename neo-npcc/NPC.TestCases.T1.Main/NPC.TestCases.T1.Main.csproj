@@ -61,6 +61,7 @@
     <Compile Include="PointL2Persistable.cs" />
     <Compile Include="PointL3Deletable.cs" />
     <Compile Include="PointL4Collectible.cs" />
+    <Compile Include="PointL4CollectibleExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,4 +77,4 @@
     <PostBuildEvent>set PATH="D:\repos\neo-debugger-tools-coz\NEO-Compiler\bin\Debug";%25PATH%25
 neon.exe $(TargetPath)</PostBuildEvent>
   </PropertyGroup>
-</Project> 
+</Project>
