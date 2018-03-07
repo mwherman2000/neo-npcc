@@ -11,7 +11,7 @@ namespace NPC.dApps.NeoDraw.Main
 {
     public class Contract1 : SmartContract
     {
-        public static void Main()
+        public static object[] Main(string operation, string entity, object[] args)
         {
             //byte[] eu = "1234".AsByteArray();
             //byte[] ep = "4567".AsByteArray();
@@ -39,7 +39,7 @@ namespace NPC.dApps.NeoDraw.Main
             NeoTrace.Trace("UserPoint.x,y", 1, 2);
             UserPoint.LogExt("UserPoint.up2", up2);
 
-            //return false;
+            return new object[] { 0x3 };
         }
     }
 }

@@ -6,20 +6,19 @@ using Neo.SmartContract.Framework.Services.System;
 using NPC.Runtime;
 using System;
 using System.Numerics;
-using static NPC.dApps.NeoDraw.Main.NeoCounter;
 
 namespace NPC.dApps.NeoDraw.Main
 {
     public class Contract1 : SmartContract
     {
-        public static void Main()
+        public static object[] Main()
         {
-            byte[] eu = "1234".AsByteArray();
-            byte[] ep = "4567".AsByteArray();
-            NeoTrace.Trace("UserPoint.x,y", eu, ep);
-            UserCredentials uc = UserCredentials.New(eu, ep);
-            NeoTrace.Trace("UserPoint.x,y", eu, ep);
-            UserCredentials.LogExt("UserPoint.uc", uc);
+            //byte[] eu = "1234".AsByteArray();
+            //byte[] ep = "4567".AsByteArray();
+            //NeoTrace.Trace("UserPoint.x,y", eu, ep);
+            //UserCredentials uc = UserCredentials.New(eu, ep);
+            //NeoTrace.Trace("UserPoint.x,y", eu, ep);
+            //UserCredentials.LogExt("UserPoint.uc", uc);
 
             int ix = 1;
             int iy = 2;
@@ -39,6 +38,8 @@ namespace NPC.dApps.NeoDraw.Main
             UserPoint up2 = UserPoint.New(1, 2);
             NeoTrace.Trace("UserPoint.x,y", 1, 2);
             UserPoint.LogExt("UserPoint.up2", up2);
+
+            return new object[] { 0x3 };
         }
     }
 }
