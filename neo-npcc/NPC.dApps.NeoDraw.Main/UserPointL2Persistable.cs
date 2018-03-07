@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 2 Persistable
 ///
-/// Processed:       2018-03-06 1:04:14 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-06 10:27:25 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -26,8 +26,6 @@ namespace NPC.dApps.NeoDraw.Main
         private static readonly byte[] _bX = Helper.AsByteArray(_sX);
         private const string _sY = "Y"; // Template: NPCLevel2AFieldConsts_cs.txt
         private static readonly byte[] _bY = Helper.AsByteArray(_sY);
-        private const string _sEncodedUsername = "EncodedUsername"; // Template: NPCLevel2AFieldConsts_cs.txt
-        private static readonly byte[] _bEncodedUsername = Helper.AsByteArray(_sEncodedUsername);
         private const string _sSTA = "_STA"; // Template: NPCLevel2BMissing_cs.txt
         private static readonly byte[] _bSTA = Helper.AsByteArray(_sSTA);
 
@@ -47,7 +45,7 @@ namespace NPC.dApps.NeoDraw.Main
         public static UserPoint Missing()
         {
             UserPoint e = new UserPoint();
-            e._x = 0; e._y = 0; e._encodedUsername = NeoEntityModel.NullByteArray; 
+            e._x = 0; e._y = 0; 
             e._state = NeoEntityModel.EntityState.MISSING;
             LogExt("Missing().UserPoint", e);
             return e;
@@ -65,7 +63,6 @@ namespace NPC.dApps.NeoDraw.Main
 
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bX), e._x); // Template: NPCLevel2CPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bY), e._y); // Template: NPCLevel2CPut_cs.txt
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bEncodedUsername), e._encodedUsername); // Template: NPCLevel2CPut_cs.txt
             LogExt("Put(bkey).UserPoint", e); // Template: NPCLevel2DPut_cs.txt
             return true;
         }
@@ -85,7 +82,6 @@ namespace NPC.dApps.NeoDraw.Main
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, bis);
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sX, e._x); // Template: NPCLevel2EPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sY, e._y); // Template: NPCLevel2EPut_cs.txt
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sEncodedUsername, e._encodedUsername); // Template: NPCLevel2EPut_cs.txt
             LogExt("Put(skey).UserPoint", e); // Template: NPCLevel2FGet_cs.txt
             return true;
         }
@@ -113,8 +109,7 @@ namespace NPC.dApps.NeoDraw.Main
 
                 BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bX)).AsBigInteger(); //NPCLevel2GGet_cs.txt
                 BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bY)).AsBigInteger(); //NPCLevel2GGet_cs.txt
-                byte[] EncodedUsername = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEncodedUsername)); //NPCLevel2GGet_cs.txt
-                e._x = X; e._y = Y; e._encodedUsername = EncodedUsername;  // Template: NPCLevel2HGet_cs.txt
+                e._x = X; e._y = Y;  // Template: NPCLevel2HGet_cs.txt
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
@@ -145,9 +140,8 @@ namespace NPC.dApps.NeoDraw.Main
 
                 BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sX).AsBigInteger(); //NPCLevel2IGet_cs.txt
                 BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sY).AsBigInteger(); //NPCLevel2IGet_cs.txt
-                byte[] EncodedUsername = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sEncodedUsername); //NPCLevel2IGet_cs.txt
-                NeoTrace.Trace("Get(skey).e._x, e._y, e._encodedUsername", e._x, e._y, e._encodedUsername); // Template: NPCLevel2Part2_cs.txt
-                e._x = X; e._y = Y; e._encodedUsername = EncodedUsername; 
+                NeoTrace.Trace("Get(skey).e._x, e._y", e._x, e._y); // Template: NPCLevel2Part2_cs.txt
+                e._x = X; e._y = Y; 
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }

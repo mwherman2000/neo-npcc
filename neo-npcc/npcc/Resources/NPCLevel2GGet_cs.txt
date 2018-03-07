@@ -1,2 +1,2 @@
 ﻿
-                #FIELDTYPE# #PUBLICFIELDNAME# = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _b#PUBLICFIELDNAME#))#ASBIGINTEGER#; //NPCLevel2GGet_cs.txt
+                #FIELDTYPE# #PUBLICFIELDNAME# = #INT32#Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _b#PUBLICFIELDNAME#))#ASBIGINTEGER#; //NPCLevel2GGet_cs.txt

@@ -75,6 +75,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
             string username = "";
             string password = "";
             string command = "";
+            string secretPhrase = "";
             string message = "Welcome to " + ProgramName;
 
             while (notdone)
@@ -110,12 +111,38 @@ namespace NPC.dApp.NeoDraw.ClientApp
                     }
                 }
                 while (key.Key != ConsoleKey.Enter);
+                Console.WriteLine();
 
-                if (username.Length >= 1 && password.Length >= 1) notdone = false;
+                // Reference: https://stackoverflow.com/questions/3404421/password-masking-console-application
+                secretPhrase = "";
+                Console.Write("Secret Phrase: ");
+                do
+                {
+                    key = Console.ReadKey(true);
+                    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                    {
+                        secretPhrase += key.KeyChar;
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        if (key.Key == ConsoleKey.Backspace && secretPhrase.Length > 0)
+                        {
+                            secretPhrase = secretPhrase.Substring(0, (secretPhrase.Length - 1));
+                            Console.Write("\b \b");
+                        }
+                    }
+                }
+                while (key.Key != ConsoleKey.Enter);
+                Console.WriteLine();
+
+                if (username.Length >= 1 && password.Length >= 1 && secretPhrase.Length >= 1) notdone = false;
             }
 
             byte[] hashUsername = Helpers.GetHash(username);
-            byte[] hashPassword = Helpers.GetHash(password);
+            byte[] hashPassword = Helpers.GetHash(username + password + secretPhrase);
+            password = "";
+            secretPhrase = "";
 
             BoardContext.Initialize();
 
@@ -125,11 +152,10 @@ namespace NPC.dApp.NeoDraw.ClientApp
             BoardContext.DrawPoints(pointList, '.');
 
             notdone = true;
-            while(notdone)
+            message = "Welcome " + username + "\t(" + BitConverter.ToString(hashUsername).Replace("-", "") + ")";
+            while (notdone)
             {
                 BoardContext.DrawBoard(message);
-
-                message = "Welcome " + username + " (" + BitConverter.ToString(hashUsername).Replace("-", "") + ")";
 
                 Console.Write("Commmand: ");
                 command = Console.ReadLine();

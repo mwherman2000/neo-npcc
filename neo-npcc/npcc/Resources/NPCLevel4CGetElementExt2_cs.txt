@@ -1,2 +1,2 @@
 ﻿
-                    #FIELDTYPE# #PUBLICFIELDNAME# = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _b#PUBLICFIELDNAME#))#ASBIGINTEGER#; // Template: NPCLevel4CGetElement_cs.txt
+                    #FIELDTYPE# #PUBLICFIELDNAME# = #INT32#Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _b#PUBLICFIELDNAME#))#ASBIGINTEGER#; // Template: NPCLevel4CGetElement_cs.txt

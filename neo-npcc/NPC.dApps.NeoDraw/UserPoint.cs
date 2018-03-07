@@ -16,6 +16,6 @@ namespace NPC.dApps.NeoDraw
     {
         public BigInteger x;
         public BigInteger y;
-        public byte[] encodedUsername;
+        //public byte[] encodedUsername;
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 4 Collectible (Extended)
 ///
-/// Processed:      2018-03-06 1:04:14 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-06 10:27:26 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -39,7 +39,6 @@ namespace NPC.dApps.NeoDraw.Main
  
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bX), e._x); // Template: NPCLevel4APutElement_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bY), e._y); // Template: NPCLevel4APutElement_cs.txt
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bEncodedUsername), e._encodedUsername); // Template: NPCLevel4APutElement_cs.txt
             LogExt("PutElement(vau,i).UserPoint", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
@@ -80,8 +79,7 @@ namespace NPC.dApps.NeoDraw.Main
                     e = new UserPoint();
                     BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bX)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
                     BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bY)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
-                    byte[] EncodedUsername = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bEncodedUsername)); // Template: NPCLevel4CGetElement_cs.txt
-                    e._x = X; e._y = Y; e._encodedUsername = EncodedUsername;  // NPCLevel4DBuryElement_cs.txt
+                    e._x = X; e._y = Y;  // NPCLevel4DBuryElement_cs.txt
                     e._state = sta;
                     e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
@@ -122,7 +120,6 @@ namespace NPC.dApps.NeoDraw.Main
 
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bX), e._x); // NPCLevel4EBuryElement_cs.txt
                 Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bY), e._y); // NPCLevel4EBuryElement_cs.txt
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bEncodedUsername), e._encodedUsername); // NPCLevel4EBuryElement_cs.txt
             } // Template: NPCLevel4Part2_cs.txt
             LogExt("Bury(vau,i).UserPoint", e);
             return e;

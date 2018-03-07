@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{750544C0-7748-4105-8BB9-31957AAA153E}</ProjectGuid>
+    <ProjectGuid>{61154C0C-3027-4B1A-A5B7-7C9975F36DE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NPC.dApps.NeoDraw.Main</RootNamespace>
-    <AssemblyName>NPC.dApps.NeoDraw.Main</AssemblyName>
+    <RootNamespace>NPC.dApps.NeoDraw.Small</RootNamespace>
+    <AssemblyName>NPC.dApps.NeoDraw.Small</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -209,54 +209,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Contract1.cs.txt" />
     <Compile Include="Contract1.cs" />
-    <Compile Include="NeoCounterL0Basic.cs" />
-    <Compile Include="NeoCounterL1Managed.cs" />
-    <Compile Include="NeoCounterL2Persistable.cs" />
-    <Compile Include="NeoCounterL3Deletable.cs" />
-    <Compile Include="NeoCounterL4Collectible.cs" />
-    <Compile Include="NeoCounterL4CollectibleExt0.cs" />
-    <Compile Include="NeoCounterL4CollectibleExt1.cs" />
-    <Compile Include="NeoCounterL4CollectibleExt2.cs" />
-    <Compile Include="NeoCounterL4CollectibleExt3.cs" />
-    <Compile Include="NeoCounterL4CollectibleExt4.cs" />
-    <Compile Include="NeoCounterL4CustomMethodsExt0.cs" />
-    <Compile Include="NeoCounterL4CustomMethods.cs" />
     <Compile Include="NeoEntityModel.cs" />
-    <Compile Include="NeoStorageKey.cs" />
     <Compile Include="NeoTrace.cs" />
-    <Compile Include="NeoVersionedAppUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserCredentialsL0Basic.cs" />
-    <Compile Include="UserCredentialsL1Managed.cs" />
-    <Compile Include="UserCredentialsL2Persistable.cs" />
-    <Compile Include="UserCredentialsL3Deletable.cs" />
-    <Compile Include="UserCredentialsL4Collectible.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt0.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt1.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt2.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt3.cs" />
-    <Compile Include="UserCredentialsL4CollectibleExt4.cs" />
     <Compile Include="UserPointL0Basic.cs" />
     <Compile Include="UserPointL1Managed.cs" />
-    <Compile Include="UserPointL2Persistable.cs" />
-    <Compile Include="UserPointL3Deletable.cs" />
-    <Compile Include="UserPointL4Collectible.cs" />
-    <Compile Include="UserPointL4CollectibleExt0.cs" />
-    <Compile Include="UserPointL4CollectibleExt1.cs" />
-    <Compile Include="UserPointL4CollectibleExt2.cs" />
-    <Compile Include="UserPointL4CollectibleExt3.cs" />
-    <Compile Include="UserPointL4CollectibleExt4.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Contract1_cs-debug.csv" />
-    <None Include="Contract1_cs-keep.csv" />
-    <None Include="Contract1_cs-keep.xlsx" />
     <None Include="packages.config" />
     <None Include="build.tasks" />
-    <None Include="Unknown_cs-Release.csv" />
-    <None Include="Unknown_cs-Release.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Neo.ConvertTask.dll" />

@@ -152,6 +152,17 @@ namespace npcc
 
             switch (type)
             {
+                case "System.Int32":
+                    {
+                        fieldClassIndex = classIndex;
+                        fieldInputName = name;
+                        fieldPrivateFieldName = "_" + name.Substring(0, 1).ToLower() + name.Substring(1);
+                        fieldPublicFieldName = name.Substring(0, 1).ToUpper() + name.Substring(1);
+                        fieldInputType = type;
+                        fieldOutputType = "Int32";
+                        if (Trace.Info) Console.WriteLine("**INFO*** NPCFieldInfo:\t\t" + name + ", " + type + ", " + fieldOutputType);
+                        break;
+                    }
                 case "System.Numerics.BigInteger":
                     {
                         fieldClassIndex = classIndex;

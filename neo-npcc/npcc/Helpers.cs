@@ -72,6 +72,7 @@ namespace npcc
             switch (fieldInputType)
             {
                 case "System.Numerics.BigInteger":
+                case "System.Int32":
                     {
                         zeroString = "0";
                         break;

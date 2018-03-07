@@ -242,10 +242,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -273,10 +280,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -441,10 +455,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -543,10 +564,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -645,10 +673,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -747,10 +782,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -849,10 +891,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
@@ -951,10 +1000,17 @@ namespace npcc
                     if (fieldType == "BigInteger")
                     {
                         text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "");
+                    }
+                    else if (fieldType == "Int32")
+                    {
+                        text = text.Replace("#ASBIGINTEGER#", ".AsBigInteger()");
+                        text = text.Replace("#INT32#", "(Int32)");
                     }
                     else
                     {
                         text = text.Replace("#ASBIGINTEGER#", "");
+                        text = text.Replace("#INT32#", "");
                     }
                     File.AppendAllText(targetFullyQualifiedFileName, text);
                 }
