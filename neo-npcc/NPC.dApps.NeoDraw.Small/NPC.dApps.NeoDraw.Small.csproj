@@ -234,7 +234,7 @@
     <Compile Include="UserCredentialsL4Collectible.cs" />
     <Compile Include="UserCredentialsL4CollectibleExt0.cs" />
     <Compile Include="UserCredentialsL4CollectibleExt1.cs" />
-    <Content Include="UserCredentialsL4CollectibleExt2.cs.txt" />
+    <Compile Include="UserCredentialsL4CollectibleExt2.cs" />
     <Compile Include="UserPointL0Basic.cs" />
     <Compile Include="UserPointL1Managed.cs" />
     <Compile Include="UserPointL2Persistable.cs" />
@@ -251,7 +251,9 @@
     <None Include="build.tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fails.png" />
     <Content Include="Neo.ConvertTask.dll" />
+    <Content Include="Success.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="Build.tasks" />
