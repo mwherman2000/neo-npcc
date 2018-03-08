@@ -17,7 +17,8 @@ using System.Threading.Tasks;
 
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# : NeoTrace /* Level 2 Persistable */
+    public partial class #CLASSNAME# : NeoTraceRuntime /* Level 2 Persistable */
     {
         // Class name and property names
         private const string _className = "#CLASSNAME#";
+        private static readonly byte[] _bClassName = _className.AsByteArray();

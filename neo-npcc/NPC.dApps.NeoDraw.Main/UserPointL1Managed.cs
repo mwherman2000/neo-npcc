@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 1 Managed
 ///
-/// Processed:       2018-03-06 10:27:25 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserPoint : NeoTrace /* Level 1 Managed */
+    public partial class UserPoint : NeoTraceRuntime /* Level 1 Managed */
     {
         private NeoEntityModel.EntityState _state;
 
@@ -40,14 +40,14 @@ namespace NPC.dApps.NeoDraw.Main
         {
             e._x = 0; e._y = 0; 
             e._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(e).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(e).UserPoint", e);
             return e;
         }
         public static UserPoint New()
         {
             UserPoint e = new UserPoint();
             _Initialize(e);
-            LogExt("New().UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("New().UserPoint", e);
             return e;
         }
         public static UserPoint New(BigInteger X, BigInteger Y)
@@ -55,14 +55,14 @@ namespace NPC.dApps.NeoDraw.Main
             UserPoint e = new UserPoint();
             e._x = X; e._y = Y; 
             e._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(.,.).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("New(.,.).UserPoint", e);
             return e;
         }
         public static UserPoint Null()
         {
             UserPoint e = new UserPoint();
             _Initialize(e);
-            LogExt("Null().UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Null().UserPoint", e);
             return e;
         }
 
@@ -75,11 +75,11 @@ namespace NPC.dApps.NeoDraw.Main
         // Log/trace methods
         public static void Log(string label, UserPoint e)
         {
-            NeoTrace.Trace(label, e._x, e._y);
+            TraceRuntime(label, e._x, e._y);
         }
         public static void LogExt(string label, UserPoint e)
         {
-            NeoTrace.Trace(label, e._x, e._y, e._state);
+            TraceRuntime(label, e._x, e._y, e._state);
         }
     }
 }

@@ -18,13 +18,13 @@ namespace npcc
         NPCLevel1Managed,
         NPCLevel2Persistable,
         NPCLevel3Deletable,
-        NPCLevel4Collectible,
-        NPCLevel4CollectibleExt,
-        NPCLevel4CollectibleExt0,
-        NPCLevel4CollectibleExt1,
-        NPCLevel4CollectibleExt2,
-        NPCLevel4CollectibleExt3,
-        NPCLevel4CollectibleExt4,
+        NPCLevel4Collectible,       // string domain, int index     CONVENIENCE - Use .AsByteArray() for domain
+        NPCLevel4CollectibleExt,    // Interface use to trigger generation of all of the NPCLevel4Collectible.cs and NPCLevel4CollectibleExtX.cs
+        NPCLevel4CollectibleExt0,   // byte[] domain, int index     REQUIRED
+        NPCLevel4CollectibleExt1,   // string domain, byte[] bindex CONVENIENCE - Use .AsByteArray() for domain
+        NPCLevel4CollectibleExt2,   // byte[] domain, byte[] bindex REQUIRED
+        NPCLevel4CollectibleExt3,   // byte[] domain, string sindex CONVENIENCE - Use .AsByteArray() for sindex
+        NPCLevel4CollectibleExt4,   // string domain, string sindex CONVENIENCE - Use .AsByteArray() for domain and sindex
         NPCLevel5Extendible,
         NPCLevel6Authorized,
         NPCLevel7Optimized,
@@ -484,9 +484,9 @@ namespace npcc
                        });
                     if (listClassInterfaces.Count == 1)
                     {
-                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4Collectible.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
+                        //success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
+                        //if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4Collectible.ToString());
+                        //if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4Collectible.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(
@@ -496,24 +496,21 @@ namespace npcc
                        });
                     if (listClassInterfaces.Count == 1)
                     {
-                        success = GenCode.GenerateCodeLevel4Collectible(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt.ToString());
                         success = GenCode.GenerateCodeLevel4CollectibleExt0(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt0.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt0.ToString());
-                        success = GenCode.GenerateCodeLevel4CollectibleExt1(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt1.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt1.ToString());
+                        //success = GenCode.GenerateCodeLevel4CollectibleExt1(ctx, classIndex);
+                        //if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt1.ToString());
+                        //if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt1.ToString());
                         success = GenCode.GenerateCodeLevel4CollectibleExt2(ctx, classIndex);
                         if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt2.ToString());
                         if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt2.ToString());
-                        success = GenCode.GenerateCodeLevel4CollectibleExt3(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt3.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt3.ToString());
-                        success = GenCode.GenerateCodeLevel4CollectibleExt4(ctx, classIndex);
-                        if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt4.ToString());
-                        if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt4.ToString());
+                    //    success = GenCode.GenerateCodeLevel4CollectibleExt3(ctx, classIndex);
+                    //    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt3.ToString());
+                    //    if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt3.ToString());
+                    //    success = GenCode.GenerateCodeLevel4CollectibleExt4(ctx, classIndex);
+                    //    if (!success) throw new ArgumentException("Bad input assembly file (DLL): code generation failed", NPCLevels.NPCLevel4CollectibleExt4.ToString());
+                    //    if (Trace.Info) Console.WriteLine("**INFO*** Code generation succeeded:\t" + ctx.listClassInfo[classIndex].classOutputName + " \t: " + NPCLevels.NPCLevel4CollectibleExt4.ToString());
                     }
 
                     listClassInterfaces = ctx.listClassInterfaceInfo.FindAll(

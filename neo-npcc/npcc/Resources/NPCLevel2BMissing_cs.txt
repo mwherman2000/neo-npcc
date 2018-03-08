@@ -20,7 +20,7 @@
             #CLASSNAME# e = new #CLASSNAME#();
             #ALLFIELDSASSIGNEDZERO#
             e._state = NeoEntityModel.EntityState.MISSING;
-            LogExt("Missing().#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("Missing().#CLASSNAME#", e);
             return e;
         }
 

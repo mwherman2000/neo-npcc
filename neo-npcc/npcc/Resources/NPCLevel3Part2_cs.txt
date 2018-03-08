@@ -1,6 +1,6 @@
 ﻿
             } // Template: NPCLevel3Part2_cs.txt
-            LogExt("Bury(skey).#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("Bury(skey).#CLASSNAME#", e);
             return e; // return Entity e to signal if key is Missing or bad key
         }
     }

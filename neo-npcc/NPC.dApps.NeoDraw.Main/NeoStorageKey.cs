@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.Runtime.NeoStorageKey
 ///
-/// Processed:       2018-03-06 10:27:26 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
@@ -60,7 +60,7 @@ namespace NPC.Runtime
     /// Used to manage NeoStorageKeys (NSKs) and the serialization of NSKs into
     /// NeoStorageKey Object Notation (NSKON)
     /// </summary>
-    public class NeoStorageKey
+    public class NeoStorageKey : NeoTraceRuntime
     {
         private byte[] _app;
         private int _major;
@@ -70,7 +70,7 @@ namespace NPC.Runtime
         private byte[] _domain;
         private byte[] _className;
         private int _index;
-        private string _fieldName;
+        private byte[] _fieldName;
         private NeoEntityModel.EntityState _state;
 
         public static void SetAppName(NeoStorageKey nsk, byte[] value) { nsk._app = value; nsk._state = NeoEntityModel.EntityState.SET; }
@@ -97,28 +97,28 @@ namespace NPC.Runtime
         public static string GetClassNameAsString(NeoStorageKey nsk) { return nsk._className.AsString(); }
         public static void SetIndex(NeoStorageKey nsk, int value) { nsk._index = value; nsk._state = NeoEntityModel.EntityState.SET; }
         public static int GetIndex(NeoStorageKey nsk) { return nsk._index; }
-        public static void SetFieldName(NeoStorageKey nsk, string value) { nsk._fieldName = value; nsk._state = NeoEntityModel.EntityState.SET; }
-        public static string GetFieldName(NeoStorageKey nsk) { return nsk._fieldName; }
-        public static void Set(NeoStorageKey nsk, byte[] app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, byte[] domain, byte[] className, int index, string fieldName)
+        public static void SetFieldName(NeoStorageKey nsk, byte[] value) { nsk._fieldName = value; nsk._state = NeoEntityModel.EntityState.SET; }
+        public static byte[] GetFieldName(NeoStorageKey nsk) { return nsk._fieldName; }
+        public static void Set(NeoStorageKey nsk, byte[] app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, byte[] domain, byte[] className, int index, byte[] fieldName)
         {
             nsk._app = app; nsk._major = major; nsk._minor = minor; nsk._build = build; /*nsk._revision = revision*/;
             nsk._userScriptHash = userScriptHash; nsk._domain = domain; nsk._className = className; nsk._index = index; nsk._fieldName = fieldName;
             nsk._state = NeoEntityModel.EntityState.SET;
         }
-        public static void Set(NeoStorageKey nsk, string app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, string domain, string className, int index, string fieldName)
+        public static void Set(NeoStorageKey nsk, string app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, string domain, string className, int index, byte[] fieldName)
         {
             nsk._app = app.AsByteArray(); nsk._major = major; nsk._minor = minor; nsk._build = build; /*nsk._revision = revision*/;
             nsk._userScriptHash = userScriptHash; nsk._domain = domain.AsByteArray(); nsk._className = className.AsByteArray(); nsk._index = index; nsk._fieldName = fieldName;
             nsk._state = NeoEntityModel.EntityState.SET;
         }
-        public static void Set(NeoStorageKey nsk, NeoVersionedAppUser vau, byte[] userScriptHash, byte[] domain, byte[] className, int index, string fieldName)
+        public static void Set(NeoStorageKey nsk, NeoVersionedAppUser vau, byte[] userScriptHash, byte[] domain, byte[] className, int index, byte[] fieldName)
         {
             nsk._major = NeoVersionedAppUser.GetMajor(vau); nsk._minor = NeoVersionedAppUser.GetMinor(vau); nsk._build = NeoVersionedAppUser.GetBuild(vau); /*nsk._revision = NeoVersionedAppUser.GetRevision(vau);*/
             nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
             nsk._domain = domain; nsk._className = className; nsk._index = index; nsk._fieldName = fieldName;
             nsk._state = NeoEntityModel.EntityState.SET;
         }
-        public static void Set(NeoStorageKey nsk, NeoVersionedAppUser vau, byte[] userScriptHash, string domain, string className, int index, string fieldName)
+        public static void Set(NeoStorageKey nsk, NeoVersionedAppUser vau, byte[] userScriptHash, string domain, string className, int index, byte[] fieldName)
         {
             nsk._major = NeoVersionedAppUser.GetMajor(vau); nsk._minor = NeoVersionedAppUser.GetMinor(vau); nsk._build = NeoVersionedAppUser.GetBuild(vau); /*nsk._revision = NeoVersionedAppUser.GetRevision(vau);*/
             nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
@@ -145,9 +145,9 @@ namespace NPC.Runtime
             nsk._domain = NeoEntityModel.NullByteArray;
             nsk._className = NeoEntityModel.NullByteArray;
             nsk._index = 0;
-            nsk._fieldName = "";
+            nsk._fieldName = NeoEntityModel.NullByteArray;
             nsk._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(nsk).nsk", nsk);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(nsk).nsk", nsk);
             return nsk;
         }
 
@@ -155,11 +155,11 @@ namespace NPC.Runtime
         {
             NeoStorageKey nsk = new NeoStorageKey();
             _Initialize(nsk);
-            LogExt("New().nsk", nsk);
+            if (NeoTrace.RUNTIME) LogExt("New().nsk", nsk);
             return nsk;
         }
 
-        public static NeoStorageKey New(byte[] app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, byte[] domain, byte[] className, int index, string fieldName)
+        public static NeoStorageKey New(byte[] app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, byte[] domain, byte[] className, int index, byte[] fieldName)
         {
             NeoStorageKey nsk = new NeoStorageKey();
             nsk._app = app;
@@ -173,25 +173,7 @@ namespace NPC.Runtime
             nsk._index = index;
             nsk._fieldName = fieldName;
             nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(ab,m,m,b,u,cb,i,f,s).nsk", nsk);
-            return nsk;
-        }
-
-        public static NeoStorageKey New(string app, int major, int minor, int build, /*int revision,*/ byte[] userScriptHash, string domain, string className, int index, string fieldName)
-        {
-            NeoStorageKey nsk = new NeoStorageKey();
-            nsk._app = app.AsByteArray();
-            nsk._major = major;
-            nsk._minor = minor;
-            nsk._build = build;
-            //nsk._revision = revision;
-            nsk._userScriptHash = userScriptHash;
-            nsk._domain = domain.AsByteArray();
-            nsk._className = className.AsByteArray();
-            nsk._index = index;
-            nsk._fieldName = fieldName;
-            nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(as,m,m,b,u,cs,i,f,s).nsk", nsk);
+            if (NeoTrace.RUNTIME) LogExt("New(ab,m,m,b,u,cb,i,f,s).nsk", nsk);
             return nsk;
         }
 
@@ -212,78 +194,9 @@ namespace NPC.Runtime
             nsk._domain = domain;
             nsk._className = className;
             nsk._index = 0;
-            nsk._fieldName = "";
+            nsk._fieldName = NeoEntityModel.NullByteArray;
             nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(vau,bc)", nsk);
-            return nsk;
-        }
-
-        public static NeoStorageKey New(NeoVersionedAppUser vau, byte[] domain, string className)
-        {
-            if (NeoVersionedAppUser.IsNull(vau))
-            {
-                return NeoStorageKey.Null();
-            }
-
-            NeoStorageKey nsk = new NeoStorageKey();
-            nsk._app = NeoVersionedAppUser.GetAppNameAsByteArray(vau);
-            nsk._major = NeoVersionedAppUser.GetMajor(vau);
-            nsk._minor = NeoVersionedAppUser.GetMinor(vau);
-            nsk._build = NeoVersionedAppUser.GetBuild(vau);
-            //nsk._revision = NeoVersionedAppUser.GetRevision(vau);
-            nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
-            nsk._domain = domain;
-            nsk._className = className.AsByteArray();
-            nsk._index = 0;
-            nsk._fieldName = "";
-            nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(vau,bc)", nsk);
-            return nsk;
-        }
-
-        public static NeoStorageKey New(NeoVersionedAppUser vau, string domain, byte[] className)
-        {
-            if (NeoVersionedAppUser.IsNull(vau))
-            {
-                return NeoStorageKey.Null();
-            }
-
-            NeoStorageKey nsk = new NeoStorageKey();
-            nsk._app = NeoVersionedAppUser.GetAppNameAsByteArray(vau);
-            nsk._major = NeoVersionedAppUser.GetMajor(vau);
-            nsk._minor = NeoVersionedAppUser.GetMinor(vau);
-            nsk._build = NeoVersionedAppUser.GetBuild(vau);
-            //nsk._revision = NeoVersionedAppUser.GetRevision(vau);
-            nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
-            nsk._domain = domain.AsByteArray();
-            nsk._className = className;
-            nsk._index = 0;
-            nsk._fieldName = "";
-            nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(vau,bc)", nsk);
-            return nsk;
-        }
-
-        public static NeoStorageKey New(NeoVersionedAppUser vau, string domain, string className)
-        {
-            if (NeoVersionedAppUser.IsNull(vau))
-            {
-                return NeoStorageKey.Null();
-            }
-
-            NeoStorageKey nsk = new NeoStorageKey();
-            nsk._app = NeoVersionedAppUser.GetAppNameAsByteArray(vau);
-            nsk._major = NeoVersionedAppUser.GetMajor(vau);
-            nsk._minor = NeoVersionedAppUser.GetMinor(vau);
-            nsk._build = NeoVersionedAppUser.GetBuild(vau);
-            //nsk._revision = NeoVersionedAppUser.GetRevision(vau);
-            nsk._userScriptHash = NeoVersionedAppUser.GetUserScriptHash(vau);
-            nsk._domain = domain.AsByteArray();
-            nsk._className = className.AsByteArray();
-            nsk._index = 0;
-            nsk._fieldName = "";
-            nsk._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(vau,sc).nsk", nsk);
+            if (NeoTrace.RUNTIME) LogExt("New(vau,bc)", nsk);
             return nsk;
         }
 
@@ -291,7 +204,7 @@ namespace NPC.Runtime
         {
             NeoStorageKey nsk = new NeoStorageKey();
             _Initialize(nsk);
-            LogExt("Null().nsk", nsk);
+            if (NeoTrace.RUNTIME) LogExt("Null().nsk", nsk);
             return nsk;
         }
 
@@ -306,12 +219,12 @@ namespace NPC.Runtime
 
         public static void Log(string label, NeoStorageKey nsk)
         {
-            NeoTrace.Trace(label, nsk._app, nsk._major, nsk._minor, nsk._build, /*nsk._revision,*/ nsk._domain, nsk._className, nsk._index, nsk._fieldName, nsk._userScriptHash);
+            TraceRuntime(label, nsk._app, nsk._major, nsk._minor, nsk._build, /*nsk._revision,*/ nsk._domain, nsk._className, nsk._index, nsk._fieldName, nsk._userScriptHash);
         }
 
         public static void LogExt(string label, NeoStorageKey nsk)
         {
-            NeoTrace.Trace(label, nsk._app, nsk._major, nsk._minor, nsk._build, /*nsk._revision,*/ nsk._domain, nsk._className, nsk._index, nsk._fieldName, nsk._userScriptHash, nsk._state); // long values, state, extension last
+            TraceRuntime(label, nsk._app, nsk._major, nsk._minor, nsk._build, /*nsk._revision,*/ nsk._domain, nsk._className, nsk._index, nsk._fieldName, nsk._userScriptHash, nsk._state); // long values, state, extension last
         }
 
         private static readonly byte[] _bLeftBrace = "{".AsByteArray();
@@ -335,43 +248,10 @@ namespace NPC.Runtime
         private static readonly byte[] _bByteArrayType = { (byte)ContractParameterTypeLocal.ByteArray };
         private static readonly byte[] _bUserScriptHashType = { (byte)ContractParameterTypeLocal.ByteArray };
 
-        public static byte[] StorageKey(NeoStorageKey nsk, int index, byte[] fieldName)
-        {
-            LogExt("StorageKey(nsk,ii,fb).nsk", nsk);
-
-            byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
-                                        .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
-            bkey = Helper.Concat(bkey, _bM).Concat(_bColon).Concat(_bBigIntegerType)
-                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._major)).AsByteArray()).Concat(_bSemiColon);
-            bkey = Helper.Concat(bkey, _bm).Concat(_bColon).Concat(_bBigIntegerType)
-                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._minor)).AsByteArray()).Concat(_bSemiColon);
-            bkey = Helper.Concat(bkey, _bb).Concat(_bColon).Concat(_bBigIntegerType)
-                                        .Concat(_bEquals).Concat(((BigInteger)(nsk._build)).AsByteArray()).Concat(_bSemiColon);
-            //bkey = Helper.Concat(bkey, _br).Concat(_bColon).Concat(_bBigIntegerType)
-            //                          .Concat(_bEquals).Concat(((BigInteger)(nsk._revision)).AsByteArray()).Concat(_bComma);
-            bkey = Helper.Concat(bkey, _bu).Concat(_bColon).Concat(_bUserScriptHashType)
-                                        .Concat(_bEquals).Concat(nsk._userScriptHash).Concat(_bSemiColon);
-
-            bkey = Helper.Concat(bkey, _bd).Concat(_bColon).Concat(_bStringType)
-                                        .Concat(_bEquals).Concat(nsk._domain).Concat(_bSemiColon);
-            bkey = Helper.Concat(bkey, _bc).Concat(_bColon).Concat(_bStringType)
-                                        .Concat(_bEquals).Concat(nsk._className).Concat(_bSemiColon);
-
-            bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bBigIntegerType)
-                                        .Concat(_bEquals).Concat(((BigInteger)(index)).AsByteArray()).Concat(_bSemiColon);
-            bkey = Helper.Concat(bkey, _bf).Concat(_bColon).Concat(_bStringType)
-                                        .Concat(_bEquals).Concat(fieldName).Concat(_bSemiColon);
-
-            bkey = Helper.Concat(bkey, _bRightBrace);
-
-            NeoTrace.Trace("StorageKey(nsk,ii,fb).bkey$BSK", bkey);
-            return bkey;
-        }
-
         public static byte[] StorageKey(NeoStorageKey nsk, byte[] bindex, byte[] fieldName)
         {
-            LogExt("StorageKey(nsk,bi,fb).nsk", nsk);
-            NeoTrace.Trace("StorageKey(nsk,bi,fb).nsk", bindex, fieldName);
+            if (NeoTrace.RUNTIME) LogExt("StorageKey(nsk,bi,bf).nsk", nsk);
+            if (NeoTrace.RUNTIME) TraceRuntime("StorageKey(nsk,bi,bf).nsk", bindex, fieldName);
 
             byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
@@ -398,14 +278,14 @@ namespace NPC.Runtime
 
             bkey = Helper.Concat(bkey, _bRightBrace);
 
-            NeoTrace.Trace("StorageKey(nsk,bi,fb).bkey$BSK", bkey);
+            if (NeoTrace.RUNTIME) TraceRuntime("StorageKey(nsk,bi,bf).bkey$BSK", bkey);
             return bkey;
         }
 
-        public static byte[] StorageKey(NeoStorageKey nsk, string sindex, byte[] fieldName)
+        public static byte[] StorageKey(NeoStorageKey nsk, int index, byte[] fieldName)
         {
-            LogExt("StorageKey(nsk,bi,fb).nsk", nsk);
-            NeoTrace.Trace("StorageKey(nsk,bi,fb).nsk", sindex, fieldName);
+            if (NeoTrace.RUNTIME) LogExt("StorageKey(nsk,i,bf).nsk", nsk);
+            if (NeoTrace.RUNTIME) TraceRuntime("StorageKey(nsk,i,bf).nsk", index, fieldName);
 
             byte[] bkey = Helper.Concat(_bLeftBrace, _ba).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(nsk._app).Concat(_bSemiColon);
@@ -425,14 +305,14 @@ namespace NPC.Runtime
             bkey = Helper.Concat(bkey, _bc).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(nsk._className).Concat(_bSemiColon);
 
-            bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bStringType)
-                                        .Concat(_bEquals).Concat(sindex.AsByteArray()).Concat(_bSemiColon);
+            bkey = Helper.Concat(bkey, _bi).Concat(_bColon).Concat(_bBigIntegerType)
+                                        .Concat(_bEquals).Concat(((BigInteger)index).AsByteArray()).Concat(_bSemiColon);
             bkey = Helper.Concat(bkey, _bf).Concat(_bColon).Concat(_bStringType)
                                         .Concat(_bEquals).Concat(fieldName).Concat(_bSemiColon);
 
             bkey = Helper.Concat(bkey, _bRightBrace);
 
-            NeoTrace.Trace("StorageKey(nsk,bi,fb).bkey$BSK", bkey);
+            if (NeoTrace.RUNTIME) TraceRuntime("StorageKey(nsk,i,bf).bkey$BSK", bkey);
             return bkey;
         }
     }

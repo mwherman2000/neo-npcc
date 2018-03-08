@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 4 Collectible
 ///
-/// Processed:      2018-03-06 10:27:26 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserPoint : NeoTrace /* Level 4 Collectible */
+    public partial class UserPoint : NeoTraceRuntime /* Level 4 Collectible */
     {
         /// <summary>
         /// Collectible methods (NPC Level 4)
@@ -31,15 +31,17 @@ namespace NPC.dApps.NeoDraw.Main
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
-            byte[] bkey;
+            //byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
  
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bX), e._x); // Template: NPCLevel4APutElement_cs.txt
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bY), e._y); // Template: NPCLevel4APutElement_cs.txt
-            LogExt("PutElement(vau,i).UserPoint", e); // Template: NPCLevel4BGetElement_cs.txt
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bX), e._x); // Template: NPCLevel4APutElement_cs.txt
+
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bY), e._y); // Template: NPCLevel4APutElement_cs.txt
+
+            if (NeoTrace.RUNTIME) LogExt("PutElement(vau,i).UserPoint", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
 
@@ -54,20 +56,18 @@ namespace NPC.dApps.NeoDraw.Main
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
             UserPoint e;
-            byte[] bkey;
-            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
-            NeoTrace.Trace("Get(bkey).UserPoint.bsta", bsta.Length, bsta);
+            //byte[] bkey;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, index, _bSTA));
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(bkey).UserPoint.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
             }
             else // not MISSING
             {
-                /*EXT*/
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bEXT));
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 if (sta == NeoEntityModel.EntityState.TOMBSTONED)
@@ -77,14 +77,16 @@ namespace NPC.dApps.NeoDraw.Main
                 else // not MISSING && not TOMBSTONED
                 {
                     e = new UserPoint();
-                    BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bX)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
-                    BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bY)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
+                    BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, index, _bX)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
+
+                    BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, index, _bY)).AsBigInteger(); // Template: NPCLevel4CGetElement_cs.txt
+
                     e._x = X; e._y = Y;  // NPCLevel4DBuryElement_cs.txt
                     e._state = sta;
                     e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
             }
-            LogExt("Get(bkey).UserPoint.e", e);
+            if (NeoTrace.RUNTIME) LogExt("Get(bkey).UserPoint.e", e);
             return e;
         }
 
@@ -102,13 +104,12 @@ namespace NPC.dApps.NeoDraw.Main
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "UserPoint");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
-            byte[] bkey;
+            //byte[] bkey;
             UserPoint e;
-            /*STA*/
-            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA));
-            NeoTrace.Trace("Bury(vau,index).UserPoint.bsta", bsta.Length, bsta);
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, index, _bSTA));
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(vau,index).UserPoint.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
@@ -116,12 +117,14 @@ namespace NPC.dApps.NeoDraw.Main
             else // not MISSING - bury it
             {
                 e = UserPoint.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bSTA), e._state.AsBigInteger());
 
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bX), e._x); // NPCLevel4EBuryElement_cs.txt
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, index, _bY), e._y); // NPCLevel4EBuryElement_cs.txt
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bX), e._x); // NPCLevel4EBuryElement_cs.txt
+
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, index, _bY), e._y); // NPCLevel4EBuryElement_cs.txt
+
             } // Template: NPCLevel4Part2_cs.txt
-            LogExt("Bury(vau,i).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Bury(vau,i).UserPoint", e);
             return e;
         }
     }

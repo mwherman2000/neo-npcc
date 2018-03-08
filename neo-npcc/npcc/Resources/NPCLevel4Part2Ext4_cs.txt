@@ -1,6 +1,6 @@
 ﻿
             } // Template: NPCLevel4Part2_cs.txt
-            LogExt("Bury(vau,i).#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("Bury(vau,i).#CLASSNAME#", e);
             return e;
         }
     }

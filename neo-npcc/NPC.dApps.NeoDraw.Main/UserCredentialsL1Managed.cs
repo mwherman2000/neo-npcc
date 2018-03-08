@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserCredentials - Level 1 Managed
 ///
-/// Processed:       2018-03-06 10:27:26 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserCredentials : NeoTrace /* Level 1 Managed */
+    public partial class UserCredentials : NeoTraceRuntime /* Level 1 Managed */
     {
         private NeoEntityModel.EntityState _state;
 
@@ -40,14 +40,14 @@ namespace NPC.dApps.NeoDraw.Main
         {
             e._encodedUsername = NeoEntityModel.NullByteArray; e._encodedPassword = NeoEntityModel.NullByteArray; 
             e._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(e).UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(e).UserCredentials", e);
             return e;
         }
         public static UserCredentials New()
         {
             UserCredentials e = new UserCredentials();
             _Initialize(e);
-            LogExt("New().UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("New().UserCredentials", e);
             return e;
         }
         public static UserCredentials New(byte[] EncodedUsername, byte[] EncodedPassword)
@@ -55,14 +55,14 @@ namespace NPC.dApps.NeoDraw.Main
             UserCredentials e = new UserCredentials();
             e._encodedUsername = EncodedUsername; e._encodedPassword = EncodedPassword; 
             e._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(.,.).UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("New(.,.).UserCredentials", e);
             return e;
         }
         public static UserCredentials Null()
         {
             UserCredentials e = new UserCredentials();
             _Initialize(e);
-            LogExt("Null().UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("Null().UserCredentials", e);
             return e;
         }
 
@@ -75,11 +75,11 @@ namespace NPC.dApps.NeoDraw.Main
         // Log/trace methods
         public static void Log(string label, UserCredentials e)
         {
-            NeoTrace.Trace(label, e._encodedUsername, e._encodedPassword);
+            TraceRuntime(label, e._encodedUsername, e._encodedPassword);
         }
         public static void LogExt(string label, UserCredentials e)
         {
-            NeoTrace.Trace(label, e._encodedUsername, e._encodedPassword, e._state);
+            TraceRuntime(label, e._encodedUsername, e._encodedPassword, e._state);
         }
     }
 }

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserCredentials - Level 3 Deletable
 ///
-/// Processed:      2018-03-06 10:27:26 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserCredentials : NeoTrace /* Level 3 Deletable */
+    public partial class UserCredentials : NeoTraceRuntime /* Level 3 Deletable */
     {
         // Deletable methods
         public static bool IsBuried(UserCredentials e)
@@ -30,7 +30,7 @@ namespace NPC.dApps.NeoDraw.Main
             UserCredentials e = new UserCredentials();
             e._encodedUsername = NeoEntityModel.NullByteArray; e._encodedPassword = NeoEntityModel.NullByteArray; 
             e._state = NeoEntityModel.EntityState.TOMBSTONED;
-            LogExt("Tombstone().UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("Tombstone().UserCredentials", e);
             return e;
         }
 
@@ -43,7 +43,7 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserCredentials e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-            NeoTrace.Trace("Bury(bkey).bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(bkey).bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserCredentials.Missing();
@@ -56,7 +56,7 @@ namespace NPC.dApps.NeoDraw.Main
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bEncodedUsername), e._encodedUsername); // Template: NPCLevel3ABury_cs.txt
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bEncodedPassword), e._encodedPassword); // Template: NPCLevel3ABury_cs.txt
             } // Template: NPCLevel3BBury_cs.txt
-            LogExt("Bury(bkey).UserCredentials", e); 
+            if (NeoTrace.RUNTIME) LogExt("Bury(bkey).UserCredentials", e); 
             return e; // return Entity e to signal if key is Missing or bad key
         }
 
@@ -69,7 +69,7 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserCredentials e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Bury(skey).UserCredentials.bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(skey).UserCredentials.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserCredentials.Missing();
@@ -82,7 +82,7 @@ namespace NPC.dApps.NeoDraw.Main
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sEncodedUsername, e._encodedUsername); // Template: NPCLevel3CBury_cs.txt
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sEncodedPassword, e._encodedPassword); // Template: NPCLevel3CBury_cs.txt
             } // Template: NPCLevel3Part2_cs.txt
-            LogExt("Bury(skey).UserCredentials", e);
+            if (NeoTrace.RUNTIME) LogExt("Bury(skey).UserCredentials", e);
             return e; // return Entity e to signal if key is Missing or bad key
         }
     }

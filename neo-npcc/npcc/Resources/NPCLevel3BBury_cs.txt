@@ -1,6 +1,6 @@
 ﻿
             } // Template: NPCLevel3BBury_cs.txt
-            LogExt("Bury(bkey).#CLASSNAME#", e); 
+            if (NeoTrace.RUNTIME) LogExt("Bury(bkey).#CLASSNAME#", e); 
             return e; // return Entity e to signal if key is Missing or bad key
         }
 
@@ -13,7 +13,7 @@
 
             #CLASSNAME# e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Bury(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();

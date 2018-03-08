@@ -1,5 +1,5 @@
 ﻿
-            LogExt("PutElement(vau,i).#CLASSNAME#", e); // Template: NPCLevel4BGetElement_cs.txt
+            if (NeoTrace.RUNTIME) LogExt("PutElement(vau,i).#CLASSNAME#", e); // Template: NPCLevel4BGetElement_cs.txt
             return true;
         }
 
@@ -14,20 +14,18 @@
             if (NeoVersionedAppUser.IsNull(vau)) return Null();
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "#CLASSNAME#");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
             #CLASSNAME# e;
-            byte[] bkey;
-            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bSTA));
-            NeoTrace.Trace("Get(bkey).#CLASSNAME#.bsta", bsta.Length, bsta);
+            //byte[] bkey;
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, sindex, _bSTA));
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(bkey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();
             }
             else // not MISSING
             {
-                /*EXT*/
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bEXT));
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 if (sta == NeoEntityModel.EntityState.TOMBSTONED)

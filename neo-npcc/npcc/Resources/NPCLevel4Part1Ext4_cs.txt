@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# : NeoTrace /* Level 4 Collectible */
+    public partial class #CLASSNAME# : NeoTraceRuntime /* Level 4 Collectible */
     {
         /// <summary>
         /// Collectible methods (NPC Level 4)
@@ -31,9 +31,9 @@ namespace #NAMESPACE#
             if (NeoVersionedAppUser.IsNull(vau)) return false;
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "#CLASSNAME#");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
-            byte[] bkey;
+            //byte[] bkey;
             e._state = NeoEntityModel.EntityState.PUTTED;
-            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, sindex, _bSTA), e._state.AsBigInteger());
+            Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, sindex, _bSTA), e._state.AsBigInteger());
  

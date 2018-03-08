@@ -4,7 +4,7 @@
                     e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
                 }
             }
-            LogExt("Get(bkey).#CLASSNAME#.e", e);
+            if (NeoTrace.RUNTIME) LogExt("Get(bkey).#CLASSNAME#.e", e);
             return e;
         }
 
@@ -22,13 +22,12 @@
             }
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
-            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, "#CLASSNAME#");
+            NeoStorageKey nsk = NeoStorageKey.New(vau, domain, _bClassName);
 
-            byte[] bkey;
+            //byte[] bkey;
             #CLASSNAME# e;
-            /*STA*/
-            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA));
-            NeoTrace.Trace("Bury(vau,index).#CLASSNAME#.bsta", bsta.Length, bsta);
+            byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, NeoStorageKey.StorageKey(nsk, bindex, _bSTA));
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(vau,index).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();
@@ -36,4 +35,4 @@
             else // not MISSING - bury it
             {
                 e = #CLASSNAME#.Tombstone(); // TODO - should Bury() preserve the exist field values or re-initialize them? Preserve is cheaper but not as private
-                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, bkey = NeoStorageKey.StorageKey(nsk, bindex, _bSTA), e._state.AsBigInteger());
+                Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, NeoStorageKey.StorageKey(nsk, bindex, _bSTA), e._state.AsBigInteger());

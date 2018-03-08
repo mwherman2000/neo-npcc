@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 3 Deletable
 ///
-/// Processed:      2018-03-06 10:27:25 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:      2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:    https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:       Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserPoint : NeoTrace /* Level 3 Deletable */
+    public partial class UserPoint : NeoTraceRuntime /* Level 3 Deletable */
     {
         // Deletable methods
         public static bool IsBuried(UserPoint e)
@@ -30,7 +30,7 @@ namespace NPC.dApps.NeoDraw.Main
             UserPoint e = new UserPoint();
             e._x = 0; e._y = 0; 
             e._state = NeoEntityModel.EntityState.TOMBSTONED;
-            LogExt("Tombstone().UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Tombstone().UserPoint", e);
             return e;
         }
 
@@ -43,7 +43,7 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserPoint e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-            NeoTrace.Trace("Bury(bkey).bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(bkey).bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
@@ -56,7 +56,7 @@ namespace NPC.dApps.NeoDraw.Main
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bX), e._x); // Template: NPCLevel3ABury_cs.txt
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bY), e._y); // Template: NPCLevel3ABury_cs.txt
             } // Template: NPCLevel3BBury_cs.txt
-            LogExt("Bury(bkey).UserPoint", e); 
+            if (NeoTrace.RUNTIME) LogExt("Bury(bkey).UserPoint", e); 
             return e; // return Entity e to signal if key is Missing or bad key
         }
 
@@ -69,7 +69,7 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserPoint e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Bury(skey).UserPoint.bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Bury(skey).UserPoint.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
@@ -82,7 +82,7 @@ namespace NPC.dApps.NeoDraw.Main
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sX, e._x); // Template: NPCLevel3CBury_cs.txt
                 //Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sY, e._y); // Template: NPCLevel3CBury_cs.txt
             } // Template: NPCLevel3Part2_cs.txt
-            LogExt("Bury(skey).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Bury(skey).UserPoint", e);
             return e; // return Entity e to signal if key is Missing or bad key
         }
     }

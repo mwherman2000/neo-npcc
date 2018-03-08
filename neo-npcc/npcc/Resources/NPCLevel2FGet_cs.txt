@@ -1,5 +1,5 @@
 ﻿
-            LogExt("Put(skey).#CLASSNAME#", e); // Template: NPCLevel2FGet_cs.txt
+            if (NeoTrace.RUNTIME) LogExt("Put(skey).#CLASSNAME#", e); // Template: NPCLevel2FGet_cs.txt
             return true;
         }
 
@@ -12,14 +12,13 @@
 
             #CLASSNAME# e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-            NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(bkey).bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();
             }
             else // not MISSING
             {
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEXT));
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new #CLASSNAME#();

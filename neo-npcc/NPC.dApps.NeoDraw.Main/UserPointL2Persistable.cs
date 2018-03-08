@@ -10,17 +10,18 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.UserPoint - Level 2 Persistable
 ///
-/// Processed:       2018-03-06 10:27:25 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class UserPoint : NeoTrace /* Level 2 Persistable */
+    public partial class UserPoint : NeoTraceRuntime /* Level 2 Persistable */
     {
         // Class name and property names
         private const string _className = "UserPoint";
+        private static readonly byte[] _bClassName = _className.AsByteArray();
 
         private const string _sX = "X"; // Template: NPCLevel2AFieldConsts_cs.txt
         private static readonly byte[] _bX = Helper.AsByteArray(_sX);
@@ -47,7 +48,7 @@ namespace NPC.dApps.NeoDraw.Main
             UserPoint e = new UserPoint();
             e._x = 0; e._y = 0; 
             e._state = NeoEntityModel.EntityState.MISSING;
-            LogExt("Missing().UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Missing().UserPoint", e);
             return e;
         }
 
@@ -63,26 +64,26 @@ namespace NPC.dApps.NeoDraw.Main
 
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bX), e._x); // Template: NPCLevel2CPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, Helper.Concat(_bkeyTag, _bY), e._y); // Template: NPCLevel2CPut_cs.txt
-            LogExt("Put(bkey).UserPoint", e); // Template: NPCLevel2DPut_cs.txt
+            if (NeoTrace.RUNTIME) LogExt("Put(bkey).UserPoint", e); // Template: NPCLevel2DPut_cs.txt
             return true;
         }
 
         public static bool Put(UserPoint e, string key)
         {
             if (key.Length == 0) return false;
-            LogExt("Put(skey).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Put(skey).UserPoint", e);
 
             Neo.SmartContract.Framework.Services.Neo.StorageContext ctx = Neo.SmartContract.Framework.Services.Neo.Storage.CurrentContext;
             string _skeyTag = key + _classKeyTag;
-            Trace("Put(skey)._skeyTag", _skeyTag);
+            if (NeoTrace.RUNTIME) TraceRuntime("Put(skey)._skeyTag", _skeyTag);
 
             e._state = NeoEntityModel.EntityState.PUTTED;
             BigInteger bis = e._state.AsBigInteger();
-            Trace("Put(skey).bis", bis);
+            if (NeoTrace.RUNTIME) TraceRuntime("Put(skey).bis", bis);
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sSTA, bis);
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sX, e._x); // Template: NPCLevel2EPut_cs.txt
             Neo.SmartContract.Framework.Services.Neo.Storage.Put(ctx, _skeyTag + _sY, e._y); // Template: NPCLevel2EPut_cs.txt
-            LogExt("Put(skey).UserPoint", e); // Template: NPCLevel2FGet_cs.txt
+            if (NeoTrace.RUNTIME) LogExt("Put(skey).UserPoint", e); // Template: NPCLevel2FGet_cs.txt
             return true;
         }
 
@@ -95,14 +96,13 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserPoint e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bSTA));
-            NeoTrace.Trace("Get(bkey).bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(bkey).bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
             }
             else // not MISSING
             {
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, Helper.Concat(_bkeyTag, _bEXT));
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new UserPoint();
@@ -113,7 +113,7 @@ namespace NPC.dApps.NeoDraw.Main
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
-            LogExt("Get(bkey).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Get(bkey).UserPoint", e);
             return e;
         }
 
@@ -126,26 +126,25 @@ namespace NPC.dApps.NeoDraw.Main
 
             UserPoint e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Get(skey).UserPoint.bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(skey).UserPoint.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = UserPoint.Missing();
             }
             else // not MISSING
             {
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sEXT);
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new UserPoint();
 
                 BigInteger X = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sX).AsBigInteger(); //NPCLevel2IGet_cs.txt
                 BigInteger Y = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sY).AsBigInteger(); //NPCLevel2IGet_cs.txt
-                NeoTrace.Trace("Get(skey).e._x, e._y", e._x, e._y); // Template: NPCLevel2Part2_cs.txt
+                if (NeoTrace.RUNTIME) TraceRuntime("Get(skey).e._x, e._y", e._x, e._y); // Template: NPCLevel2Part2_cs.txt
                 e._x = X; e._y = Y; 
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
-            LogExt("Get(skey).UserPoint", e);
+            if (NeoTrace.RUNTIME) LogExt("Get(skey).UserPoint", e);
             return e;
         }
     }

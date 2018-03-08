@@ -381,26 +381,6 @@ namespace npcc
             string text = "";
             string targetFullyQualifiedFileName = "";
 
-            text = Helpers.GetTextResource(NPCCompilerContext.NeoVersionedAppUser_csName);
-            targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
-                                    NPCCompilerContext.NeoVersionedAppUser_csName.Replace("_cs.txt", ".cs");
-            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
-            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
-            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
-            text = text.Replace("#CLASSNAME#", "NeoVersionedAppUser");
-            File.WriteAllText(targetFullyQualifiedFileName, text);
-
-            text = Helpers.GetTextResource(NPCCompilerContext.NeoStorageKey_csName);
-            targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
-                                    NPCCompilerContext.NeoStorageKey_csName.Replace("_cs.txt", ".cs");
-            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
-            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
-            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
-            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
-            text = text.Replace("#CLASSNAME#", "NeoStorageKey");
-            File.WriteAllText(targetFullyQualifiedFileName, text);
-
             string part1Template = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4Part1_csName);
             targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
                                     ctx.listClassInfo[classIndex].classOutputName + NPCLevelsForFileNames.L4Collectible_cs.ToString().Replace("_cs", ".cs");
@@ -509,6 +489,26 @@ namespace npcc
 
             string text = "";
             string targetFullyQualifiedFileName = "";
+
+            text = Helpers.GetTextResource(NPCCompilerContext.NeoVersionedAppUser_csName);
+            targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
+                                    NPCCompilerContext.NeoVersionedAppUser_csName.Replace("_cs.txt", ".cs");
+            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
+            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
+            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
+            text = text.Replace("#CLASSNAME#", "NeoVersionedAppUser");
+            File.WriteAllText(targetFullyQualifiedFileName, text);
+
+            text = Helpers.GetTextResource(NPCCompilerContext.NeoStorageKey_csName);
+            targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +
+                                    NPCCompilerContext.NeoStorageKey_csName.Replace("_cs.txt", ".cs");
+            text = text.Replace("#PROGRAMNAME#", Program.ProgramName);
+            text = text.Replace("#PROGRAMVERSION#", Assembly.GetEntryAssembly().GetName().Version.ToString());
+            text = text.Replace("#NOWDATETIME#", DateTime.Now.ToString());
+            text = text.Replace("#NAMESPACE#", "NPC.Runtime");
+            text = text.Replace("#CLASSNAME#", "NeoStorageKey");
+            File.WriteAllText(targetFullyQualifiedFileName, text);
 
             string part1Template = Helpers.GetTextResource(NPCCompilerContext.NPCLevel4Part1Ext0_csName);
             targetFullyQualifiedFileName = ctx.listModuleInfo[0].moduleTargetFullyQualifiedProjectFolder + "\\" +

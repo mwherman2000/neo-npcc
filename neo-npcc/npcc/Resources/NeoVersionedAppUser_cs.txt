@@ -19,7 +19,7 @@ namespace NPC.Runtime
     /// NeoVersionedAppUser class
     /// Class used to support the efficient creation and management of <c>NeoStorageKeys</c>
     /// </summary>
-    public class NeoVersionedAppUser
+    public class NeoVersionedAppUser : NeoTraceRuntime
     {
         private byte[] _app;
         private int _major;
@@ -76,7 +76,7 @@ namespace NPC.Runtime
             vau._build = 0;
             //vau._revision = 0;
             vau._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(vau).vau", vau);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(vau).vau", vau);
             return vau;
         }
 
@@ -88,7 +88,7 @@ namespace NPC.Runtime
         {
             NeoVersionedAppUser vau = new NeoVersionedAppUser();
             _Initialize(vau);
-            LogExt("New().vau", vau);
+            if (NeoTrace.RUNTIME) LogExt("New().vau", vau);
             return vau;
         }
 
@@ -111,7 +111,7 @@ namespace NPC.Runtime
             //vau._revision = revision;
             vau._userScriptHash = userScriptHash;
             vau._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(ba,m,m,b,u).vau", vau);
+            if (NeoTrace.RUNTIME) LogExt("New(ba,m,m,b,u).vau", vau);
             return vau;
         }
 
@@ -134,7 +134,7 @@ namespace NPC.Runtime
             //vau._revision = revision;
             vau._userScriptHash = userScriptHash;
             vau._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(sa,m,m,b,u).vau", vau);
+            if (NeoTrace.RUNTIME) LogExt("New(sa,m,m,b,u).vau", vau);
             return vau;
         }
 
@@ -146,7 +146,7 @@ namespace NPC.Runtime
         {
             NeoVersionedAppUser vau = new NeoVersionedAppUser();
             _Initialize(vau);
-            LogExt("Null().vau", vau);
+            if (NeoTrace.RUNTIME) LogExt("Null().vau", vau);
             return vau;
         }
 
@@ -173,7 +173,7 @@ namespace NPC.Runtime
         /// <returns>void</returns>
         public static void Log(string label, NeoVersionedAppUser vau)
         {
-            NeoTrace.Trace(label, vau._app, vau._major, vau._minor, vau._build, /*vau._revision,*/ vau._userScriptHash);
+            TraceRuntime(label, vau._app, vau._major, vau._minor, vau._build, /*vau._revision,*/ vau._userScriptHash);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace NPC.Runtime
         /// <returns>void</returns>
         public static void LogExt(string label, NeoVersionedAppUser vau)
         {
-            NeoTrace.Trace(label, vau._app, vau._major, vau._minor, vau._build, /*vau._revision,*/ vau._userScriptHash, vau._state); // long values, state, extension last
+            TraceRuntime(label, vau._app, vau._major, vau._minor, vau._build, /*vau._revision,*/ vau._userScriptHash, vau._state); // long values, state, extension last
         }
     }
 }

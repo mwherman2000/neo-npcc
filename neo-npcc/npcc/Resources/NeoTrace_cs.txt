@@ -29,22 +29,50 @@ using System.Threading.Tasks;
 */
 
 /// <summary>
-/// #NAMESPACE#.#CLASSNAME#
+/// NPC.Runtime.NeoTrace
 ///
-/// Processed:       #NOWDATETIME# by #PROGRAMNAME# v#PROGRAMVERSION#
+/// Processed:       2018-03-07 7:15:18 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.Runtime
 {
-    public class NeoTrace /* Level *all* */
+    public static class NeoTrace /* Level *all* */
     {
-        const bool TRACEON = true;
+        public const bool TRACEON = true;
+        public const bool SPLASH = true;
+        public const bool ARGSRESULTS = true;
+        public const bool RUNTIME = false;
+        public const bool ERROR = true;
+        public const bool WARNING = true;
+        public const bool INFO = true;
+        public const bool VERBOSE = false;
+        public const bool TESTING = false;
+
+        public static void LogExt()
+        {
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("TRACEON", TRACEON);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("SPLASH", SPLASH);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("ARGSRESULTS", ARGSRESULTS);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("RUNTIME", RUNTIME);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("ERROR", ERROR);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("WARNING", WARNING);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("INFO", INFO);
+            Neo.SmartContract.Framework.Services.Neo.Runtime.Notify("VERBOSE", VERBOSE);
+        }
 
         public static void Trace(params object[] args)
         {
-            if (TRACEON) Neo.SmartContract.Framework.Services.Neo.Runtime.Notify(args);
+            if (NeoTrace.TRACEON) Neo.SmartContract.Framework.Services.Neo.Runtime.Notify(args);
+        }
+    }
+
+    public class NeoTraceRuntime /* Level *all* */
+    {
+        public static void TraceRuntime(params object[] args)
+        {
+            if (NeoTrace.TRACEON) Neo.SmartContract.Framework.Services.Neo.Runtime.Notify(args);
         }
     }
 }

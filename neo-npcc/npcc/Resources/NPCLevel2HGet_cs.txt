@@ -3,7 +3,7 @@
                 e._state = sta;
                 e._state = NeoEntityModel.EntityState.GETTED; /* OVERRIDE */
             }
-            LogExt("Get(bkey).#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("Get(bkey).#CLASSNAME#", e);
             return e;
         }
 
@@ -16,14 +16,13 @@
 
             #CLASSNAME# e;
             byte[] bsta = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sSTA);
-            NeoTrace.Trace("Get(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
+            if (NeoTrace.RUNTIME) TraceRuntime("Get(skey).#CLASSNAME#.bsta", bsta.Length, bsta);
             if (bsta.Length == 0)
             {
                 e = #CLASSNAME#.Missing();
             }
             else // not MISSING
             {
-                byte[] bext = Neo.SmartContract.Framework.Services.Neo.Storage.Get(ctx, _skeyTag + _sEXT);
                 int ista = (int)bsta.AsBigInteger();
                 NeoEntityModel.EntityState sta = (NeoEntityModel.EntityState)ista;
                 e = new #CLASSNAME#();

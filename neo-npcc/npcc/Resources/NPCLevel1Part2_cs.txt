@@ -4,14 +4,14 @@
         {
             #ALLFIELDSASSIGNEDZERO#
             e._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(e).#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(e).#CLASSNAME#", e);
             return e;
         }
         public static #CLASSNAME# New()
         {
             #CLASSNAME# e = new #CLASSNAME#();
             _Initialize(e);
-            LogExt("New().#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("New().#CLASSNAME#", e);
             return e;
         }
         public static #CLASSNAME# New(#ALLFIELDPARAMETERS#)
@@ -19,14 +19,14 @@
             #CLASSNAME# e = new #CLASSNAME#();
             #ALLFIELDASSIGNMENTS#
             e._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(.,.).#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("New(.,.).#CLASSNAME#", e);
             return e;
         }
         public static #CLASSNAME# Null()
         {
             #CLASSNAME# e = new #CLASSNAME#();
             _Initialize(e);
-            LogExt("Null().#CLASSNAME#", e);
+            if (NeoTrace.RUNTIME) LogExt("Null().#CLASSNAME#", e);
             return e;
         }
 
@@ -39,11 +39,11 @@
         // Log/trace methods
         public static void Log(string label, #CLASSNAME# e)
         {
-            NeoTrace.Trace(label, #ALLFIELDARGS#);
+            TraceRuntime(label, #ALLFIELDARGS#);
         }
         public static void LogExt(string label, #CLASSNAME# e)
         {
-            NeoTrace.Trace(label, #ALLFIELDARGS#, e._state);
+            TraceRuntime(label, #ALLFIELDARGS#, e._state);
         }
     }
 }

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace #NAMESPACE#
 {
-    public partial class #CLASSNAME# : NeoTrace /* Level 1 Managed */
+    public partial class #CLASSNAME# : NeoTraceRuntime /* Level 1 Managed */
     {
         private NeoEntityModel.EntityState _state;
 

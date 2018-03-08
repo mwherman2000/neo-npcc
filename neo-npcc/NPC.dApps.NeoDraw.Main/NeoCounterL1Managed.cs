@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 /// <summary>
 /// NPC.dApps.NeoDraw.Main.NeoCounter - Level 1 Managed
 ///
-/// Processed:       2018-03-06 10:27:25 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
+/// Processed:       2018-03-07 8:34:28 PM by npcc - NEO Class Framework (NPC) 2.0 Compiler v1.0.0.0
 /// NPC Project:     https://github.com/mwherman2000/neo-npcc/blob/master/README.md
 /// NPC Lead:        Michael Herman (Toronto) (mwherman@parallelspace.net)
 /// </summary>
 
 namespace NPC.dApps.NeoDraw.Main
 {
-    public partial class NeoCounter : NeoTrace /* Level 1 Managed */
+    public partial class NeoCounter : NeoTraceRuntime /* Level 1 Managed */
     {
         private NeoEntityModel.EntityState _state;
 
@@ -37,14 +37,14 @@ namespace NPC.dApps.NeoDraw.Main
         {
             e._currentNumber = 0; 
             e._state = NeoEntityModel.EntityState.NULL;
-            LogExt("_Initialize(e).NeoCounter", e);
+            if (NeoTrace.RUNTIME) LogExt("_Initialize(e).NeoCounter", e);
             return e;
         }
         public static NeoCounter New()
         {
             NeoCounter e = new NeoCounter();
             _Initialize(e);
-            LogExt("New().NeoCounter", e);
+            if (NeoTrace.RUNTIME) LogExt("New().NeoCounter", e);
             return e;
         }
         public static NeoCounter New(BigInteger CurrentNumber)
@@ -52,14 +52,14 @@ namespace NPC.dApps.NeoDraw.Main
             NeoCounter e = new NeoCounter();
             e._currentNumber = CurrentNumber; 
             e._state = NeoEntityModel.EntityState.INIT;
-            LogExt("New(.,.).NeoCounter", e);
+            if (NeoTrace.RUNTIME) LogExt("New(.,.).NeoCounter", e);
             return e;
         }
         public static NeoCounter Null()
         {
             NeoCounter e = new NeoCounter();
             _Initialize(e);
-            LogExt("Null().NeoCounter", e);
+            if (NeoTrace.RUNTIME) LogExt("Null().NeoCounter", e);
             return e;
         }
 
@@ -72,11 +72,11 @@ namespace NPC.dApps.NeoDraw.Main
         // Log/trace methods
         public static void Log(string label, NeoCounter e)
         {
-            NeoTrace.Trace(label, e._currentNumber);
+            TraceRuntime(label, e._currentNumber);
         }
         public static void LogExt(string label, NeoCounter e)
         {
-            NeoTrace.Trace(label, e._currentNumber, e._state);
+            TraceRuntime(label, e._currentNumber, e._state);
         }
     }
 }
