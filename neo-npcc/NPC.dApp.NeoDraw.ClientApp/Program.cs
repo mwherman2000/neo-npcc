@@ -11,6 +11,8 @@ namespace NPC.dApp.NeoDraw.ClientApp
     {
         public const int NROWS = 40;
         public const int NCOLS = 40;
+        public const string BAM = "BAM!";
+        public static readonly char[] BAMCHAR = Constants.BAM.ToCharArray();
     }
 
     class BoardRow
@@ -44,7 +46,33 @@ namespace NPC.dApp.NeoDraw.ClientApp
                 Console.Write("   "); Console.Write("|");
                 for (int icol = 0; icol < Constants.NCOLS; icol++)
                 {
-                    Console.Write(" " + Rows[irow].Columns[icol]);
+                    switch (Rows[irow].Columns[icol])
+                    {
+                        case '.':
+                            {
+                                ConsoleColor saved = Console.ForegroundColor;
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.Write(" " + Rows[irow].Columns[icol]);
+                                Console.ForegroundColor = saved;
+                                    break;
+                            }
+                        case '*':
+                            {
+                                ConsoleColor saved = Console.ForegroundColor;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write(" " + Rows[irow].Columns[icol]);
+                                Console.ForegroundColor = saved;
+                                break;
+                            }
+                        default:
+                            {
+                                ConsoleColor saved = Console.ForegroundColor;
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(" " + Rows[irow].Columns[icol]);
+                                Console.ForegroundColor = saved;
+                                break;
+                            }
+                    }
                 }
                 Console.Write(" |");
                 Console.WriteLine();
@@ -59,6 +87,16 @@ namespace NPC.dApp.NeoDraw.ClientApp
             {
                 if (p.X < 0 || p.X >= Constants.NCOLS) break;
                 if (p.Y < 0 || p.Y >= Constants.NROWS) break;
+                if (Rows[p.Y].Columns[p.X] != ' ')
+                {
+                    int xleft = p.X + 1;
+                    int xright = p.X + Constants.BAM.Length;
+                    if (xright >= (Constants.NCOLS - 1)) xleft = p.X - Constants.BAM.Length;
+                    for (int xoffset = 0; xoffset < Constants.BAM.Length; xoffset++)
+                    {
+                        Rows[p.Y].Columns[xleft+xoffset] = Constants.BAM.ToCharArray()[xoffset];
+                    }
+                }
                 Rows[p.Y].Columns[p.X] = ch;
             }
         }
