@@ -9,7 +9,7 @@ As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master
 * NPC Structured Storage Architecture (Nested Storage Domains)
 * NPC NeoStorageKey Specificaton
 * NPC Entity-oriented Programming Model
-* NPC C#.NPC Entity-oriented Programming Language (EPL)
+* NPC C#.NPC Entity Programming Language (EPL)
 * NPC C#.NPC Compiler (npcc)
 * NPC Source-level Execution Cost Profiler
 * NPC Integrated Entity Tracing
