@@ -1,8 +1,23 @@
-# NeoDraw - the NEO Blockchain Drawing dApp
+# NeoDraw - NEO Blockchain Multi-Person Advanced POC Drawing dApp for the NEO Persistable Classes (NPC) Entity-oriented dApp (edApp) Platform
+
+`NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity-oriented dApp (edApp) Platform which runs on the NEO Blockchain. 
+
+As a `neo-csharpcoe` compliant platform, `NPC edApp` includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack edApp development using .NET/C#, C#.NEO and the NEO Blockchain:
+
+* NPC Framework
+* NPC Entity and Domain Model
+* NPC Structured Storage Architecture (Nested Storage Domains)
+* NPC NeoStorageKey Specificaton
+* NPC Entity-oriented Programming Model
+* NPC C#.NPC Entity-oriented Programming Language (EPL)
+* NPC C#.NPC Compiler (npcc)
+* NPC Source-level Execution Cost Profiler
+* NPC Integrated Entity Tracing
+* NPC Smart-formatting Event Log Views
 
 [NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md)
 
-The `neo-csharpcoe` project is an "umbrella" project for several initiatives related to providing tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack development using .NET/C#, C#.NEO and the NEO Blockchain software platform.
+The `neo-csharpcoe` project is an "umbrella" project for several initiatives related to providing tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack development using .NET/C#, C#.NEO and the NEO Blockchain.
 
 The `neo-csharpcoe` is an independent, free, open source project that is 100% community-supported by people like yourself through your contributions of time, energy, passion, promotion, and donations. To learn more about contributing to the `neo-csharpcoe`, click [here](https://github.com/mwherman2000/neo-csharpcoe/blob/master/CONTRIBUTE.md).
 
