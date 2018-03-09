@@ -15,7 +15,7 @@ As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master
 * NPC Integrated Entity Tracing
 * NPC Smart-formatting Event Log Views
 
-[NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md)
+[NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) ([`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md))
 
 The `neo-csharpcoe` project is an "umbrella" project for several initiatives related to providing tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack development using .NET/C#, C#.NEO and the NEO Blockchain.
 
