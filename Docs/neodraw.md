@@ -45,5 +45,5 @@ This edApp was developed with the `neo-csharpcoe` [Neo Persistable Classes (NPC)
 
 ## NeoDraw Client App
 
-![NeoDraw](./images/NeoDraw0.png)
+![NeoDraw](./images/NeoDraw0Color.png)
 
