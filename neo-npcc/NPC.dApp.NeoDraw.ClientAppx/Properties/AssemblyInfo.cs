@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("neo-lux-demonpc")]
+[assembly: AssemblyTitle("NPC.dApp.NeoDraw.ClientApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("neo-lux-demonpc")]
+[assembly: AssemblyProduct("NPC.dApp.NeoDraw.ClientApp")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3c5a33b0-c015-4670-bc38-283da680cc27")]
+[assembly: Guid("32fcb442-3a30-4dcc-b53c-24fe3519f8b6")]
 
 // Version information for an assembly consists of the following four values:
 //

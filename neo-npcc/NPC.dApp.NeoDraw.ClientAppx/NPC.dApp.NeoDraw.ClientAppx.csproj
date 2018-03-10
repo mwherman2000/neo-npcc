@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A953037D-88EA-4994-8677-43944EB6BEC1}</ProjectGuid>
+    <ProjectGuid>{32FCB442-3A30-4DCC-B53C-24FE3519F8B6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>neo_lux_demo</RootNamespace>
-    <AssemblyName>neo-lux-demo</AssemblyName>
+    <RootNamespace>NPC.dApp.NeoDraw.ClientApp</RootNamespace>
+    <AssemblyName>NPC.dApp.NeoDraw.ClientApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,18 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LunarParser, Version=1.0.28.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LunarParser.1.0.28\lib\net45\LunarParser.dll</HintPath>
-    </Reference>
-    <Reference Include="NEO-Emulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo.Emulator.0.5.0\lib\net461\NEO-Emulator.dll</HintPath>
-    </Reference>
-    <Reference Include="NeoLux, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeoLux.0.2.0\lib\net461\NeoLux.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,12 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Demo.cs" />
+    <Compile Include="Bresenham.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D8D76F82-AB3C-4F5B-9E42-ED4936D79EB7}</ProjectGuid>
+    <ProjectGuid>{A8922C16-B787-4963-BB92-6CE32F9A62AF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>neo.lux.demo.npc</RootNamespace>
     <AssemblyName>neo.lux.demo.npc</AssemblyName>
@@ -151,6 +151,10 @@
     <Reference Include="NEO-Emulator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Neo.Emulator.0.7.0\lib\net461\NEO-Emulator.dll</HintPath>
     </Reference>
+    <Reference Include="NeoLux, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\neo-lux\neo-lux\bin\Debug\NeoLux.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -212,11 +216,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bresenham.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Demo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
