@@ -89,5 +89,6 @@ E: neotoronto@outlook.com
 
 T: (416) 524-7702
 
+p.s. What would you like to build with NPC? I'm building [this](https://www.youtube.com/watch?v=M86okhXTwfU).
 
 
