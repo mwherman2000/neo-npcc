@@ -1,10 +1,10 @@
 # NeoDraw - NEO Multi-Person Drawing dApp
 
-**Reference dApp for the NEO Persistable Classes (NPC) Entity-oriented dApp (edApp) Platform v1.0**
+**Reference dApp for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform v1.0**
 
-`NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity-oriented dApp (edApp) Platform running on the NEO Blockchain. 
+`NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform running on the NEO Blockchain. 
 
-As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) compliant platform, the `NPC-edApp` platform includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack edApp development using .NET/C#, C#.NEO, and the NEO Blockchain:
+As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) compliant platform, the `NPC-e-dApp` platform includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack e-dApp development using .NET/C#, C#.NEO, and the NEO Blockchain:
 
 | Component | Home Project |
 | --------- | ------------ |
@@ -12,7 +12,7 @@ As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master
 | NPC Entity and Domain Model | neo-persistableclasses |
 | NPC Structured Storage Architecture (Nested Storage Domains) | neo-persistableclasses |
 | NPC NeoStorageKey Specificaton | neo-persistableclasses |
-| NPC Entity-oriented Programming Model | neo-npcc |
+| NPC Entity Programming Model | neo-npcc |
 | NPC C#.NPC Entity Programming Language | neo-npcc |
 | NPC C#.NPC Compiler (npcc) | neo-npcc |
 | NPC Source-level Execution Cost Profiler | merged into neo-debugger-tools |
@@ -28,7 +28,7 @@ The `neo-csharpcoe` is an independent, free, open source project that is 100% co
 
 ## NPC Framework
 
-This edApp was developed with the `neo-csharpcoe` [Neo Persistable Classes (NPC) Framework]((https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md)>) including full automatic code generation of the NEO Persistable Classes using the [NPC Compiler (npcc)](https://github.com/mwherman2000/neo-npcc/blob/master/README.md).
+This e-dApp was developed with the `neo-csharpcoe` [Neo Persistable Classes (NPC) Framework]((https://github.com/mwherman2000/neo-persistableclasses/blob/master/README.md)>) including full automatic code generation of the NEO Persistable Classes using the [NPC Compiler (npcc)](https://github.com/mwherman2000/neo-npcc/blob/master/README.md).
 
 ## NeoDraw Smart Contract Protocol
 
