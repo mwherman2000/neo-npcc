@@ -1,4 +1,5 @@
 ﻿using NPC.dApps.NeoDraw;
+using Neo.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
     static class Constants
     {
         public const string ProgramName = "NeoDraw - the NEO Blockchain Multi-User Whiteboard dApp";
-        public const string helpMessage = "Enter add, delete, get, exit, or help";
+        public const string helpMessage = "Enter add, exit, or help";
 
         public const int MAXPOINTS = 20;
         public const int NROWS = 40;
@@ -45,10 +46,10 @@ namespace NPC.dApp.NeoDraw.ClientApp
         public static void DrawBoard(string message)
         {
             Program.DisplaySplash(message);
-            Console.Write("0,0 +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-"); Console.WriteLine("+");
+            Console.Write(" 0,0 +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-"); Console.WriteLine("+");
             for (int irow = 0; irow < Constants.NROWS; irow++)
             {
-                Console.Write("    "); Console.Write("|");
+                Console.Write("     "); Console.Write("|");
                 for (int icol = 0; icol < Constants.NCOLS; icol++)
                 {
                     switch (Rows[irow].Columns[icol])
@@ -91,7 +92,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
                 Console.Write(" |");
                 Console.WriteLine();
             }
-            Console.Write("    +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-");
+            Console.Write("     +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-");
             Console.WriteLine("+ {0},{1}", Constants.NROWS, Constants.NCOLS);
             Console.WriteLine();
         }
@@ -202,12 +203,16 @@ namespace NPC.dApp.NeoDraw.ClientApp
             string password = "";
             string command = "";
             string secretPhrase = "";
-            string message = "Welcome to " + Constants.ProgramName;
+            string welcome = "Welcome to " + Constants.ProgramName;
+            string message = welcome;
 
             UsersContext uctx = new UsersContext();
+            UserContext ucUser = null;
 
             while (notdone)
             {
+                BoardContext.Initialize();
+
                 DisplaySplash(message);
 
                 Console.WriteLine(" Using the Properties dialog on the top-left menu:");
@@ -264,13 +269,96 @@ namespace NPC.dApp.NeoDraw.ClientApp
                 while (key.Key != ConsoleKey.Enter);
                 Console.WriteLine();
 
-                if (username.Length >= 1 && password.Length >= 1 && secretPhrase.Length >= 1) notdone = false;
+                if (username.Length >= 1 && password.Length >= 1 && secretPhrase.Length >= 1)
+                {
+                    byte[] encodedUsername;
+                    byte[] encodedPassword;
+
+                    if (username == "100")
+                    {
+                        encodedUsername = Encoding.ASCII.GetBytes(username);
+                        encodedPassword = Encoding.ASCII.GetBytes(password);
+                    }
+                    else
+                    {
+                        encodedUsername = Helpers.GetHash(username);
+                        encodedPassword = Helpers.GetHash(username + password + secretPhrase);
+                    }
+                    password = "";
+                    secretPhrase = "";
+                    //Console.WriteLine("user: " + username);
+                    //Console.WriteLine("user.eu.true: " + encodedUsername.ToHexString());
+                    //Console.WriteLine("user.ep.true: " + encodedPassword.ToHexString());
+
+                    UserCredentials uc = NPCHelpers.GetUserCredentials(encodedUsername);
+                    if (uc == null)
+                    {
+                        //Console.WriteLine("User '" + username + "' not found");
+                        string response = "";
+                        while (response != "YES" && response != "NO")
+                        {
+                            string text = "'" + username + "' was not found in the User Directory. Do you want to register as new user [YES or NO]?";
+                            //Console.WriteLine(text);
+                            //response = Console.ReadLine();
+                        }
+                        if (response == "NO")
+                        {
+                            //Console.WriteLine("NO:  " + username);
+                            //Console.ReadLine();
+                            notdone = true;
+                        }
+                        else // YES - add user
+                        {
+                            bool success = NPCHelpers.AddUser(encodedUsername, encodedPassword);
+                            //Console.WriteLine("YES: " + username);
+                            //Console.WriteLine("YES.eu: " + Encoding.ASCII.GetString(uc.encodedUsername));
+                            //Console.WriteLine("YES.ep: " + Encoding.ASCII.GetString(uc.encodedPassword));
+                            ucUser = new UserContext(username, encodedUsername, encodedPassword);
+                            message = "The account for '" + username + "' is being created.  Try to login in minute or so.";
+                            //Console.ReadLine();
+                            notdone = true;
+                        }
+
+                    }
+                    else // found user - check password
+                    {
+                        //Console.WriteLine("User '" + username + "' found");
+                        //Console.WriteLine("uc.ep:   " + uc.encodedPassword.ToHexString() + " " + uc.encodedPassword.ToHexString().Length.ToString());
+                        //Console.WriteLine("user.ep: " + encodedPassword.ToHexString() + " " + encodedPassword.ToHexString().Length.ToString());
+                        if (uc.encodedPassword.SequenceEqual(encodedPassword))
+                        {
+                            //Console.WriteLine("User " + username + " password matches");
+
+                            ucUser = new UserContext(username, encodedUsername, encodedPassword);
+                            UserPoint[] pointsUser = NPCHelpers.GetAllPoints(ucUser.EncodedUsername);
+                            bool firstPointUser = true;
+                            foreach (UserPoint up in pointsUser)
+                            {
+                                if (firstPointUser)
+                                {
+                                    ucUser.AddPoint(up, username);
+                                    firstPointUser = false;
+                                }
+                                else
+                                {
+                                    ucUser.AddPoint(up);
+                                }
+                            }
+                            uctx.uc.Add(username, ucUser);
+                            notdone = false;
+                        }
+                        else
+                        {
+                            message = "The password for '" + username + "' does not match";
+                            //Console.WriteLine("User " + username + " password does not match");
+                            //Console.WriteLine("uc.ep:   " + uc.encodedPassword.ToHexString());
+                            //Console.WriteLine("user.ep: " + encodedPassword.ToHexString());
+                        }
+                        //Console.ReadLine();
+                    }
+                }
             }
 
-            byte[] hashUsername = Helpers.GetHash(username);
-            byte[] hashPassword = Helpers.GetHash(username + password + secretPhrase);
-            password = "";
-            secretPhrase = "";
             UserContext ucHedge = new UserContext("Hedge", "Hedge", "Hedge");
             UserPoint[] pointsHedge = new UserPoint[] { new UserPoint { x = 20, y = 2 }, new UserPoint { x = 40, y = 100 } };
             bool firstPoint = true;
@@ -312,7 +400,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
             {
                 if (firstPoint)
                 {
-                    uc100.AddPoint(up, "100");
+                    uc100.AddPoint(up, "User 100");
                     firstPoint = false;
                 }
                 else
@@ -322,30 +410,52 @@ namespace NPC.dApp.NeoDraw.ClientApp
             }
             uctx.uc.Add("100", uc100);
 
-            BoardContext.Initialize();
             BoardContext.DrawVectors(ucHedge, '*');
             BoardContext.DrawVectors(ucWall, '.');
             BoardContext.DrawVectors(uc100, '+');
 
             notdone = true;
-            message = "Welcome " + username + "\t(" + BitConverter.ToString(hashUsername).Replace("-", "") + ")";
+            welcome = "Welcome " + ucUser.Username + "\t(" + BitConverter.ToString(ucUser.EncodedUsername).Replace("-", "") + ")";
+            message = welcome;
             while (notdone)
             {
                 BoardContext.DrawBoard(message);
 
                 Console.Write("Commmand: ");
                 command = Console.ReadLine();
-                string[] parts = command.Split(' ');
+                string[] parts = command.Trim().Split(' ');
                 if (parts.Length == 0)
                 {
                     message = Constants.helpMessage;
                     continue;
                 }
+                message = welcome;
                 string verb = parts[0];
                 switch(verb)
                 {
-                    case "add":
+                    case "add": // Add point
                         {
+                            if (parts.Length != 3)
+                            {
+                                message = "Wrong number of parameters (" + parts.Length.ToString() + ").  Use: add x y";
+                            }
+                            else
+                            {
+                                int _x = -1;
+                                int _y = -1;
+                                Int32.TryParse(parts[1], out _x);
+                                Int32.TryParse(parts[2], out _y);
+                                if (_x < 0 || _x >= Constants.NCOLS || _y < 0 || _y >= Constants.NROWS)
+                                {
+                                    message = "0 < X < " + Constants.NCOLS.ToString();
+                                    message += " and 0 < Y < " + Constants.NROWS.ToString() + ".";
+                                    break;
+                                }
+                                UserPoint up = new UserPoint { x = _x, y = _y };
+                                NPCHelpers.AddPoint(ucUser.EncodedUsername, up);
+                                message = "Adding point ( " + _x.ToString() + ", " + _y.ToString() + ")";
+                                //Console.ReadLine();
+                            }
                             break;
                         }
                     case "delete":
@@ -369,9 +479,24 @@ namespace NPC.dApp.NeoDraw.ClientApp
                     default:
                         {
                             message = Constants.helpMessage;
+                            UserPoint[] pointsUser = NPCHelpers.GetAllPoints(ucUser.EncodedUsername);
+                            bool firstPointUser = true;
+                            foreach (UserPoint up in pointsUser)
+                            {
+                                if (firstPointUser)
+                                {
+                                    ucUser.AddPoint(up, username);
+                                    firstPointUser = false;
+                                }
+                                else
+                                {
+                                    ucUser.AddPoint(up);
+                                }
+                            }
                             break;
                         }
                 }
+                BoardContext.DrawVectors(ucUser, '#');
             }
             Console.WriteLine();
             Console.WriteLine("Press Enter to exit...");
@@ -386,7 +511,11 @@ namespace NPC.dApp.NeoDraw.ClientApp
             if (Trace.Splash) { for (int icol = 0; icol < Constants.NCOLS * 2 + 6; icol++) Console.Write("*"); Console.WriteLine(); }
             if (!String.IsNullOrEmpty(message))
             {
-                Console.Write(" ");  Console.WriteLine(message);
+                Console.Write(" ");
+                ConsoleColor saved = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(message);
+                Console.ForegroundColor = saved;
                 Console.WriteLine();
             }
         }

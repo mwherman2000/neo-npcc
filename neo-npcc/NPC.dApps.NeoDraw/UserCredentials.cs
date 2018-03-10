@@ -26,7 +26,7 @@ namespace NPC.dApps.NeoDraw
                                      NPCLevel4Collectible,
                                      NPCLevel4CollectibleExt
     {
-        byte[] encodedUsername;
-        byte[] encodedPassword;
+        public byte[] encodedUsername;
+        public byte[] encodedPassword;
     }
 }

@@ -80,13 +80,13 @@ namespace NeoLux.Demo
             //                  { "type":"Boolean","value":false},{"type":"Boolean","value":false},{"type":"Boolean","value":false}]}]}]}}                                                                     //TEST CASE 3: UserPoint[] points = new UserPoint[(int)nPoints]; results = points; return results; // DOESN'T WORK
 
             const string NeoDraw_ContractHash = "694ebe0840d1952b09f5435152eebbbc1f8e4b8e";
-            var response = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "getall", "point", new object[] { "100" } });
-            object[] resultsArray = (object[])response.result;
-            Console.WriteLine("resultsArray.length: " + resultsArray.Length);
-            for (int element = 0; element < resultsArray.Length; element++)
+            var response3 = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "getall", "point", new object[] { "100" } });
+            object[] resultsArray3 = (object[])response3.result;
+            Console.WriteLine("resultsArray.length: " + resultsArray3.Length);
+            for (int element = 0; element < resultsArray3.Length; element++)
             {
-                byte[] bx = (byte[])(((object[])((object[])resultsArray[element])[0])[0]);
-                byte[] by = (byte[])(((object[])((object[])resultsArray[element])[0])[1]);
+                byte[] bx = (byte[])(((object[])((object[])resultsArray3[element])[0])[0]);
+                byte[] by = (byte[])(((object[])((object[])resultsArray3[element])[0])[1]);
                 string sx = Encoding.ASCII.GetString(bx);
                 string sy = Encoding.ASCII.GetString(by);
                 Console.WriteLine("sx,sy: " + sx + " " + sy);
@@ -95,8 +95,31 @@ namespace NeoLux.Demo
                 Console.WriteLine("ix,iy: " + ix.ToString() + " " + iy.ToString());
             }
 
+            const string TestNetAccount_PrivateKey = "40f0cdc78e81005fca121d433e530bd170b0b3fb3bc465cc15d717f0ebdb8674";
+            var TestNetAccount_KeyPair = new KeyPair(TestNetAccount_PrivateKey.HexToBytes());
+            var response5 = api.CallContract(TestNetAccount_KeyPair, NeoDraw_ContractHash, new object[] { "add", "user", new object[] { "1005", "1006" } });
+
+            var response2 = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "get", "user", new object[] { "100" } });
+            object[] resultsArray2 = (object[])response2.result;
+            byte[] bencodedUsername2 = (byte[])(((object[])((object[])resultsArray2[0])[0])[0]);
+            byte[] bencodedPassword2 = (byte[])(((object[])((object[])resultsArray2[0])[0])[1]);
+            string sencodedUsername2 = Encoding.ASCII.GetString(bencodedUsername2).Replace("\0", ""); 
+            string sencodedPassword2 = Encoding.ASCII.GetString(bencodedPassword2).Replace("\0", "");
+            Console.WriteLine("sencodedUsername2,sencodedPassword2: '" + sencodedUsername2 + "' '" + sencodedPassword2 + "'");
+            Console.WriteLine("sencodedUsername2,sencodedPassword2: " + sencodedUsername2.Length + " " + sencodedPassword2.Length + "");
+
+            var response4 = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "add", "user", new object[] { "1002", "1003" } });
+            object[] resultsArray4 = (object[])response4.result;
+            byte[] bencodedUsername4 = (byte[])(((object[])((object[])resultsArray4[0])[0])[1]); //SWAPPED
+            byte[] bencodedPassword4 = (byte[])(((object[])((object[])resultsArray4[0])[0])[0]);
+            string sencodedUsername4 = Encoding.ASCII.GetString(bencodedUsername4).Replace("\0", "");
+            string sencodedPassword4 = Encoding.ASCII.GetString(bencodedPassword4).Replace("\0", "");
+            Console.WriteLine("sencodedUsername4,sencodedPassword4: '" + sencodedUsername4 + "' '" + sencodedPassword4 + "'");
+            Console.WriteLine("sencodedUsername4,sencodedPassword4: " + sencodedUsername4.Length + " " + sencodedPassword4.Length + "");
+
+
             int raIndex = 0;
-            foreach (object resultsElement in resultsArray)
+            foreach (object resultsElement in resultsArray3)
             {
                 Console.WriteLine("resultsElement:" + resultsElement.GetType().Name);
                 if (resultsElement.GetType().Name != "Object[]")

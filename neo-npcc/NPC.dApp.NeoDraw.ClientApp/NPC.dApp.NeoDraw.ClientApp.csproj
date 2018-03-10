@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="NPC.dApp.NeoDraw.ClientApp.exe.zip" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
