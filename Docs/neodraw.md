@@ -1,4 +1,4 @@
-# NeoDraw - NEO Multi-Person Drawing dApp
+# NeoDraw - NEO Multi-Person Shared Whiteboard dApp
 
 **Reference dApp for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform v1.0**
 
@@ -44,7 +44,50 @@ This e-dApp was developed with the `neo-csharpcoe` [Neo Persistable Classes (NPC
 * `help`
 * `exit`
 
-## NeoDraw Client App
+## NeoDraw Client e-dApp
 
 ![NeoDraw](./images/NeoDraw0Color.png)
+
+### How run NeoDraw
+
+NeoDraw is a Windows desktop application that was developed and tested with Windows 10 Professional.  It's fairly simply in terms of its outward construction - it should run almost anywhere except on a Mac ;-).
+
+1. Download the [NPC.dApp.NeoDraw.ClientApp.exe.zip](https://github.com/mwherman2000/neo-npcc/blob/master/neo-npcc/NPC.dApp.NeoDraw.ClientApp/NPC.dApp.NeoDraw.ClientApp.exe.zip) ZIP archive file from [here](https://github.com/mwherman2000/neo-npcc/blob/master/neo-npcc/NPC.dApp.NeoDraw.ClientApp/NPC.dApp.NeoDraw.ClientApp.exe.zip_).
+
+2. It will likely end up in your Downloads folder. Unzip it there (or wherever you'd like to extract the ZIP archive).
+
+The files in this ZIP archive file are simply the contents of the `bin/Debug` folder for the [NeoDraw client e-dApp project](https://github.com/mwherman2000/neo-npcc/tree/master/neo-npcc/NPC.dApp.NeoDraw.ClientApp) located [here](https://github.com/mwherman2000/neo-npcc/tree/master/neo-npcc/NPC.dApp.NeoDraw.ClientApp).
+
+3. Locate the `NPC.dApp.NeoDraw.ClientApp.exe` in the extraced collection of files.
+
+4. Double-click `NPC.dApp.NeoDraw.ClientApp.exe` to open it and start it up.
+
+5. You will be prompted for:
+* Username
+* Password
+* Secret phrase
+
+Use anything except single characters (I've used most of the alphabet already during testing).
+
+**NOTE:* Don't use any of your regular usernames or passwords.  There's no need to.  All usernames and passwords are stored in the NeoDraw User Directory as SHA256 digital signatures.  It will be difficult to track anything you do in NeoDraw back to youself.
+
+6. Once you're logged in, some scenery will be displayed: a Wall and a Hedge.  This is just part of the NeoDraw app.
+
+7. However, the "User 100" points and vectors are being replayed from the block chain.  Everyone gets to see what User 100 has drawn on the shared whiteboard.
+
+**NOTE:** In the future, this capability will be replaced with an "Add a Friend" command to playback the drawings created by anyone who will tell you their userid.  There is no way to hack NeoDraw to find out what another person's username or passord or secret phrase is.  They're hashed and except for your usename, are thrown away almost right away.
+
+8. The only command that is currently activitated is: `add x y` where `0 < X < 50` and `0 < Y < 40`.
+
+Enjoy and have fun but importantly begin to imagine the impact that a platform like `NPC-e-dApp` is going to have on global blockchain e-dApp development.
+
+Best regards,
+
+Michael Herman (Toronto)
+
+E: neotoronto@outlook.com
+
+T: (416) 524-7702
+
+
 
