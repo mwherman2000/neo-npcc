@@ -1,6 +1,6 @@
 # NeoDraw - NEO Multi-Person Shared Whiteboard dApp
 
-**Reference dApp for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform 2.0**
+**Reference dApp for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform 2.0** 
 
 `NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform running on the NEO Blockchain. 
 
