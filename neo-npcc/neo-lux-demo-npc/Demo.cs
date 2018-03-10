@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Text;
 using Neo.Cryptography;
 
 namespace NeoLux.Demo
@@ -52,8 +52,8 @@ namespace NeoLux.Demo
             //                  {"type":"Boolean","value":false},{"type":"Boolean","value":false},{"type":"Boolean","value":false},
             //                  {"type":"Boolean","value":false},{"type":"Boolean","value":false},{"type":"Boolean","value":false}]}]}]}}
 
-            const string NeoDraw_ContractHash = "694ebe0840d1952b09f5435152eebbbc1f8e4b8e";
-            var response = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "getall", "point", new object[] { "100" } });
+            //const string NeoDraw_ContractHash = "694ebe0840d1952b09f5435152eebbbc1f8e4b8e";
+            //var response = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "getall", "point", new object[] { "100" } });
             // TEST CASE 3: UserPoint[] points = new UserPoint[(int)nPoints]; results = points; return results;
             //{ "jsonrpc":"2.0","id":1,
             //  "result":{ "script":"0331303051c105706f696e7406676574616c6c678e4b8e1fbcbbee525143f5092b95d14008be4e69",
@@ -79,8 +79,22 @@ namespace NeoLux.Demo
             //                  { "type":"Boolean","value":false},{"type":"Boolean","value":false},{"type":"Boolean","value":false},
             //                  { "type":"Boolean","value":false},{"type":"Boolean","value":false},{"type":"Boolean","value":false}]}]}]}}                                                                     //TEST CASE 3: UserPoint[] points = new UserPoint[(int)nPoints]; results = points; return results; // DOESN'T WORK
 
+            const string NeoDraw_ContractHash = "694ebe0840d1952b09f5435152eebbbc1f8e4b8e";
+            var response = api.TestInvokeScript(NeoDraw_ContractHash, new object[] { "getall", "point", new object[] { "100" } });
             object[] resultsArray = (object[])response.result;
             Console.WriteLine("resultsArray.length: " + resultsArray.Length);
+            for (int element = 0; element < resultsArray.Length; element++)
+            {
+                byte[] bx = (byte[])(((object[])((object[])resultsArray[element])[0])[0]);
+                byte[] by = (byte[])(((object[])((object[])resultsArray[element])[0])[1]);
+                string sx = Encoding.ASCII.GetString(bx);
+                string sy = Encoding.ASCII.GetString(by);
+                Console.WriteLine("sx,sy: " + sx + " " + sy);
+                int ix = Int32.Parse(sx);
+                int iy = Int32.Parse(sy);
+                Console.WriteLine("ix,iy: " + ix.ToString() + " " + iy.ToString());
+            }
+
             int raIndex = 0;
             foreach (object resultsElement in resultsArray)
             {

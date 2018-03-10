@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPC.dApps.NeoDraw;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,8 +10,12 @@ namespace NPC.dApp.NeoDraw.ClientApp
 {
     static class Constants
     {
+        public const string ProgramName = "NeoDraw - the NEO Blockchain Multi-User Whiteboard dApp";
+        public const string helpMessage = "Enter add, delete, get, exit, or help";
+
+        public const int MAXPOINTS = 20;
         public const int NROWS = 40;
-        public const int NCOLS = 40;
+        public const int NCOLS = 50;
         public const string BAM = "BAM!";
         public static readonly char[] BAMCHAR = Constants.BAM.ToCharArray();
     }
@@ -40,10 +45,10 @@ namespace NPC.dApp.NeoDraw.ClientApp
         public static void DrawBoard(string message)
         {
             Program.DisplaySplash(message);
-            Console.Write("   "); for (int icol = 0; icol < Constants.NCOLS*2 + 3; icol++) Console.Write("-"); Console.WriteLine();
+            Console.Write("0,0 +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-"); Console.WriteLine("+");
             for (int irow = 0; irow < Constants.NROWS; irow++)
             {
-                Console.Write("   "); Console.Write("|");
+                Console.Write("    "); Console.Write("|");
                 for (int icol = 0; icol < Constants.NCOLS; icol++)
                 {
                     switch (Rows[irow].Columns[icol])
@@ -64,6 +69,15 @@ namespace NPC.dApp.NeoDraw.ClientApp
                                 Console.ForegroundColor = saved;
                                 break;
                             }
+                        case '!':
+                            {
+                                Console.Beep();
+                                ConsoleColor saved = Console.ForegroundColor;
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(" " + Rows[irow].Columns[icol]);
+                                Console.ForegroundColor = saved;
+                                break;
+                            }
                         default:
                             {
                                 ConsoleColor saved = Console.ForegroundColor;
@@ -77,36 +91,110 @@ namespace NPC.dApp.NeoDraw.ClientApp
                 Console.Write(" |");
                 Console.WriteLine();
             }
-            Console.Write("   "); for (int icol = 0; icol < Constants.NCOLS*2 + 3; icol++) Console.Write("-"); Console.WriteLine();
+            Console.Write("    +"); for (int icol = 0; icol < Constants.NCOLS*2 + 1; icol++) Console.Write("-");
+            Console.WriteLine("+ {0},{1}", Constants.NROWS, Constants.NCOLS);
             Console.WriteLine();
         }
 
-        internal static void DrawPoints(List<Point> pointList, char ch)
+        public static void DrawVectors(UserContext uc, char ch)
         {
-            foreach(Point p in pointList)
+            bool firstVisiblePointDrawn = false;
+            for (int pindex = 1; pindex < uc.NPoints; pindex++) // for every pair of points....
             {
-                if (p.X < 0 || p.X >= Constants.NCOLS) break;
-                if (p.Y < 0 || p.Y >= Constants.NROWS) break;
-                if (Rows[p.Y].Columns[p.X] != ' ')
+                List<UserPoint> vectorPoints = Bresenham.GetLinePoints(uc.Points[pindex-1], uc.Points[pindex]); // draw vector
+                foreach (UserPoint p in vectorPoints)
                 {
-                    int xleft = p.X + 1;
-                    int xright = p.X + Constants.BAM.Length;
-                    if (xright >= (Constants.NCOLS - 1)) xleft = p.X - Constants.BAM.Length;
-                    for (int xoffset = 0; xoffset < Constants.BAM.Length; xoffset++)
+                    if (p.x < 0 || p.x >= Constants.NCOLS) break;
+                    if (p.y < 0 || p.y >= Constants.NROWS) break;
+
+                    if (Char.IsWhiteSpace(Rows[(int)p.y].Columns[(int)p.x])
+                        /*|| Char.IsLetterOrDigit(Rows[(int)p.y].Columns[(int)p.x])*/
+                        /*|| Rows[(int)p.y].Columns[(int)p.x] != ch*/)
                     {
-                        Rows[p.Y].Columns[xleft+xoffset] = Constants.BAM.ToCharArray()[xoffset];
+                        // Do nothing - no BAM!
+                    }
+                    else 
+                    {
+                        string name = Constants.BAM;
+                        int xleft = (int)p.x + 1;
+                        int xright = (int)p.x + name.Length;
+                        if (xright >= (Constants.NCOLS - 1)) xleft = (int)p.x - name.Length;
+                        for (int xoffset = 0; xoffset < name.Length; xoffset++)
+                        {
+                            Rows[(int)p.y].Columns[xleft + xoffset] = Constants.BAM.ToCharArray()[xoffset];
+                        }
+                    }
+                    Rows[(int)p.y].Columns[(int)p.x] = ch;
+
+                    if (!firstVisiblePointDrawn) // Draw name
+                    {
+                        string name = uc.VectorStartNames[0];
+                        int xleft = (int)p.x + 1;
+                        int xright = (int)p.x + name.Length;
+                        if (xright >= (Constants.NCOLS - 1)) xleft = (int)p.x - name.Length;
+                        for (int xoffset = 0; xoffset < name.Length; xoffset++)
+                        {
+                            if ((int)p.y - 1 < 0)
+                            {
+                                Rows[(int)p.y + 1].Columns[xleft + xoffset] = name.ToCharArray()[xoffset];
+                            }
+                            else
+                            {
+                                Rows[(int)p.y - 1].Columns[xleft + xoffset] = name.ToCharArray()[xoffset];
+                            }
+                        }
+                        firstVisiblePointDrawn = true;
                     }
                 }
-                Rows[p.Y].Columns[p.X] = ch;
             }
         }
     }
 
+    class UserContext
+    {
+        public string Username;
+        public byte[] EncodedUsername;
+        public byte[] EncodedPassword;
+        public int NPoints = 0;
+        public UserPoint[] Points = new UserPoint[Constants.MAXPOINTS];
+        public string[] VectorStartNames = new string[Constants.MAXPOINTS];
+        
+        public UserContext(string username, byte[] encodedUsername, byte[] encodedPassword)
+        {
+            this.Username = username;
+            this.EncodedUsername = encodedUsername;
+            this.EncodedPassword = encodedPassword;
+        }
+
+        public UserContext(string username, string encodedUsername, string encodedPassword)
+        {
+            this.Username = username;
+            this.EncodedUsername = Encoding.ASCII.GetBytes(encodedUsername);
+            this.EncodedPassword = Encoding.ASCII.GetBytes(encodedPassword);
+        }
+
+        public void AddPoint(UserPoint up)
+        {
+            Points[NPoints] = up;
+            VectorStartNames[NPoints] = "";
+            NPoints++;
+        }
+
+        public void AddPoint(UserPoint up, string name)
+        {
+            Points[NPoints] = up;
+            VectorStartNames[NPoints] = name;
+            NPoints++;
+        }
+    }
+
+    class UsersContext
+    {
+        public Dictionary<string, UserContext> uc = new Dictionary<string, UserContext>(); // indexed by username (unencoded)
+    }
+
     class Program
     {
-        const string ProgramName = "NeoDraw - the NEO Blockchain Drawing dApp";
-        const string helpMessage = "Enter add, delete, get, exit, or help";
-
         static void Main(string[] args)
         {
             bool notdone = true;
@@ -114,7 +202,9 @@ namespace NPC.dApp.NeoDraw.ClientApp
             string password = "";
             string command = "";
             string secretPhrase = "";
-            string message = "Welcome to " + ProgramName;
+            string message = "Welcome to " + Constants.ProgramName;
+
+            UsersContext uctx = new UsersContext();
 
             while (notdone)
             {
@@ -181,13 +271,61 @@ namespace NPC.dApp.NeoDraw.ClientApp
             byte[] hashPassword = Helpers.GetHash(username + password + secretPhrase);
             password = "";
             secretPhrase = "";
+            UserContext ucHedge = new UserContext("Hedge", "Hedge", "Hedge");
+            UserPoint[] pointsHedge = new UserPoint[] { new UserPoint { x = 20, y = 2 }, new UserPoint { x = 40, y = 100 } };
+            bool firstPoint = true;
+            foreach (UserPoint up in pointsHedge)
+            {
+                if (firstPoint)
+                {
+                    ucHedge.AddPoint(up, "Hedge");
+                    firstPoint = false;
+                }
+                else
+                {
+                    ucHedge.AddPoint(up);
+                }
+            }
+            uctx.uc.Add("Hedge", ucHedge);
+
+            UserContext ucWall = new UserContext("Wall", "Wall", "Wall");
+            UserPoint[] pointsWall = new UserPoint[] { new UserPoint { x = 2, y = 3 }, new UserPoint { x = 30, y = 5 } };
+            firstPoint = true;
+            foreach (UserPoint up in pointsWall)
+            {
+                if (firstPoint)
+                {
+                    ucWall.AddPoint(up, "Wall");
+                    firstPoint = false;
+                }
+                else
+                {
+                    ucWall.AddPoint(up);
+                }
+            }
+            uctx.uc.Add("Wall", ucWall);
+
+            UserContext uc100 = new UserContext("100", "100", "100");
+            UserPoint[] points100 = NPCHelpers.GetAllPoints(uc100.EncodedUsername);
+            firstPoint = true;
+            foreach (UserPoint up in points100)
+            {
+                if (firstPoint)
+                {
+                    uc100.AddPoint(up, "100");
+                    firstPoint = false;
+                }
+                else
+                {
+                    uc100.AddPoint(up);
+                }
+            }
+            uctx.uc.Add("100", uc100);
 
             BoardContext.Initialize();
-
-            List<Point> pointList = Bresenham.GetLinePoints(new Point(2, 3), new Point(30, 5));
-            BoardContext.DrawPoints(pointList, '*');
-            pointList = Bresenham.GetLinePoints(new Point(20, 2), new Point(40,100));
-            BoardContext.DrawPoints(pointList, '.');
+            BoardContext.DrawVectors(ucHedge, '*');
+            BoardContext.DrawVectors(ucWall, '.');
+            BoardContext.DrawVectors(uc100, '+');
 
             notdone = true;
             message = "Welcome " + username + "\t(" + BitConverter.ToString(hashUsername).Replace("-", "") + ")";
@@ -200,7 +338,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
                 string[] parts = command.Split(' ');
                 if (parts.Length == 0)
                 {
-                    message = helpMessage;
+                    message = Constants.helpMessage;
                     continue;
                 }
                 string verb = parts[0];
@@ -225,12 +363,12 @@ namespace NPC.dApp.NeoDraw.ClientApp
                         }
                     case "help":
                         {
-                            message = helpMessage;
+                            message = Constants.helpMessage;
                             break;
                         }
                     default:
                         {
-                            message = helpMessage;
+                            message = Constants.helpMessage;
                             break;
                         }
                 }
@@ -244,7 +382,7 @@ namespace NPC.dApp.NeoDraw.ClientApp
         {
             Console.Clear();
             if (Trace.Splash) { for (int icol = 0; icol < Constants.NCOLS * 2 + 6; icol++) Console.Write("*"); Console.WriteLine(); }
-            if (Trace.Splash) Console.WriteLine(" " + ProgramName + " v" + Assembly.GetEntryAssembly().GetName().Version.ToString());
+            if (Trace.Splash) Console.WriteLine(" " + Constants.ProgramName + " v" + Assembly.GetEntryAssembly().GetName().Version.ToString());
             if (Trace.Splash) { for (int icol = 0; icol < Constants.NCOLS * 2 + 6; icol++) Console.Write("*"); Console.WriteLine(); }
             if (!String.IsNullOrEmpty(message))
             {
