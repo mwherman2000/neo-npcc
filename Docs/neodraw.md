@@ -6,16 +6,19 @@
 
 As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) compliant platform, the `NPC-edApp` platform includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack edApp development using .NET/C#, C#.NEO, and the NEO Blockchain:
 
-* NPC Framework
-* NPC Entity and Domain Model
-* NPC Structured Storage Architecture (Nested Storage Domains)
-* NPC NeoStorageKey Specificaton
-* NPC Entity-oriented Programming Model
-* NPC C#.NPC Entity Programming Language (EPL)
-* NPC C#.NPC Compiler (npcc)
-* NPC Source-level Execution Cost Profiler
-* NPC Integrated Entity Tracing
-* NPC Smart-formatting Event Log Views
+| Component | Home Project |
+| --------- | ------------ |
+| NPC Framework | neo-persistableclasses |
+| NPC Entity and Domain Model | neo-persistableclasses |
+| NPC Structured Storage Architecture (Nested Storage Domains) | neo-persistableclasses |
+| NPC NeoStorageKey Specificaton | neo-persistableclasses |
+| NPC Entity-oriented Programming Model | neo-npcc |
+| NPC C#.NPC Entity Programming Language | neo-npcc |
+| NPC C#.NPC Compiler (npcc) | neo-npcc |
+| NPC Source-level Execution Cost Profiler | merged into neo-debugger-tools |
+| NPC Integrated Entity Tracing | neo-npcc |
+| NPC Smart-formatting Event Log Views | merged into neo-gui-developer and neo-debugger-tools |
+| NPC JSON Entity Deserialization | [merged into neo-lex](https://github.com/CityOfZion/neo-lux/pull/9) |
 
 [NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) ([`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md))
 
