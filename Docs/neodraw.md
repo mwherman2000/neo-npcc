@@ -41,8 +41,6 @@ This edApp was developed with the `neo-csharpcoe` [Neo Persistable Classes (NPC)
 ## NeoDraw Client App Commands
 
 * `add    point x y`
-* `delete point`
-* `get    user`
 * `help`
 * `exit`
 
