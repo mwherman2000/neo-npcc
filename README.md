@@ -3,7 +3,7 @@ NEO Persistable Classes (NPC) Compiler (npcc) - Compiler for the NEO Persistable
 
 [NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md)
 
-The `neo-csharpcoe` project is an "umbrella" project for several initiatives related to providing tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack development using .NET/C# and C#.NEO and the NEO Blockchain.
+The `neo-csharpcoe` project is an "umbrella" project for several initiatives related to providing tools and libraries (code), frameworks, how-to documentation, and best practices for enterprise application development using .NET/C# and C#.NEO and the NEO Blockchain.
 
 The `neo-csharpcoe` is an independent, free, open source project that is 100% community-supported by people like yourself through your contributions of time, energy, passion, promotion, and donations. To learn more about contributing to the `neo-csharpcoe`, click [here](https://github.com/mwherman2000/neo-csharpcoe/blob/master/CONTRIBUTE.md).
 
@@ -15,7 +15,7 @@ PREVIOUS NPC V1.0 PROJECT can be found [here](https://github.com/mwherman2000/ne
 
 * NEO Persistable Classes
 * Long name: NEO Persistable Class (NPC) Framework 2.0
-* Byline: An Efficient Object-Oriented Framework for C#.NEO Smart Contract Development 
+* Byline: An Efficient Entity-based Framework for C#.NEO Smart Contract Development 
 
 ## What is the subset of C# supported by the NEO compiler and NEO VM?
 

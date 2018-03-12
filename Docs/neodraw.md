@@ -2,9 +2,9 @@
 
 **Reference dApp for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform 2.0** 
 
-`NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity dApp (e-dApp) Platform running on the NEO Blockchain. 
+`NeoDraw` is advanced proof-of-concept distributed application (dApp) for the NEO Persistable Classes (NPC) Entity-based dApp (e-dApp) Platform running on the NEO Blockchain. 
 
-As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) compliant platform, the `NPC-e-dApp` platform includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for full-stack e-dApp development using .NET/C#, C#.NEO, and the NEO Blockchain:
+As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) compliant platform, the `NPC-e-dApp` platform includes a full suite of tools and libraries (code), frameworks, how-to documentation, and best practices for enterprise application e-dApp development using .NET/C#, C#.NEO, and the NEO Blockchain:
 
 | Component | Home Project |
 | --------- | ------------ |
