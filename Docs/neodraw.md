@@ -19,6 +19,7 @@ As a [`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master
 | NPC Integrated Entity Tracing | [neo-npcc](https://github.com/mwherman2000/neo-npcc) |
 | NPC Smart-formatting Event Log Views | merged into [neo-gui-developer](https://github.com/CityOfZion/neo-gui-developer) and [neo-debugger-tools](https://github.com/CityOfZion/neo-debugger-tools) |
 | NPC JSON Entity Deserialization | [merged into neo-lex](https://github.com/CityOfZion/neo-lux/pull/9) |
+| NPC NEO-KONG (Key-Object Notation for Geeks) Specification | [neo-persistableclasses](https://github.com/mwherman2000/neo-persistableclasses) |
 
 [NEO Blockchain C# Center of Excellence](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md) ([`neo-csharpcoe`](https://github.com/mwherman2000/neo-csharpcoe/blob/master/README.md))
 
