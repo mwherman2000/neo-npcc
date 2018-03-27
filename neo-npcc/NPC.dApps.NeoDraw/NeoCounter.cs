@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace NPC.dApps.NeoDraw
 {
@@ -10,6 +9,6 @@ namespace NPC.dApps.NeoDraw
                                         NPCLevel4Collectible,
                                         NPCLevel4CollectibleExt
     {
-        public BigInteger currentNumber; // Current value of a counter. The last number given out.
+        public BigInteger currentNumber; // Next number to give out
     }
 }

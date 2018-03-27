@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NPC.dApps.NeoDraw
+﻿namespace NPC.dApps.NeoDraw
 {
     public interface NPCLevel0Basic { }
     public interface NPCLevel1Managed { }
